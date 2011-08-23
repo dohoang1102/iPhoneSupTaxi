@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8C9EDBA613FD97BC008B46FF /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9EDBA513FD97BC008B46FF /* libxml2.dylib */; };
+		8C9EDBAA13FD98E2008B46FF /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9EDBA913FD98E2008B46FF /* GDataXMLNode.m */; };
+		8CAD0A0E13FDB64800F6B5E9 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A0D13FDB64800F6B5E9 /* Offer.m */; };
+		8CAD0A1213FDBDD100F6B5E9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1113FDBDD100F6B5E9 /* Response.m */; };
+		8CAD0A1513FDC82E00F6B5E9 /* ParserClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1413FDC82E00F6B5E9 /* ParserClass.m */; };
+		8CAD0A1913FDCCB100F6B5E9 /* CarrierListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1713FDCCAF00F6B5E9 /* CarrierListViewController.m */; };
+		8CAD0A1A13FDCCB100F6B5E9 /* CarrierListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1813FDCCB000F6B5E9 /* CarrierListViewController.xib */; };
+		8CAD0A2D13FFC8D300F6B5E9 /* CellForDisplayOffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */; };
+		8CC43BA3140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BA1140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld */; };
+		8CC43BDB1401120D00CDA7B3 /* SupTaxiDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BDA1401120D00CDA7B3 /* SupTaxiDataModel.m */; };
+		8CC43BDD1401122D00CDA7B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CC43BDC1401122D00CDA7B3 /* CoreData.framework */; };
+		8CC43BE31401247100CDA7B3 /* MyAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BE11401247100CDA7B3 /* MyAddressViewController.m */; };
+		8CC43BE41401247100CDA7B3 /* MyAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CC43BE21401247100CDA7B3 /* MyAddressViewController.xib */; };
+		8CC43BE8140124C800CDA7B3 /* EditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BE6140124C800CDA7B3 /* EditAddressViewController.m */; };
+		8CC43BE9140124C800CDA7B3 /* EditAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CC43BE7140124C800CDA7B3 /* EditAddressViewController.xib */; };
+		8CC43BEC1401435B00CDA7B3 /* MyAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BEB1401435A00CDA7B3 /* MyAddress.m */; };
+		8CE39A9D13F87FFC00C1E9E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CE39A9C13F87FFC00C1E9E2 /* UIKit.framework */; };
+		8CE39A9F13F87FFC00C1E9E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CE39A9E13F87FFC00C1E9E2 /* Foundation.framework */; };
+		8CE39AA113F87FFC00C1E9E2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CE39AA013F87FFC00C1E9E2 /* CoreGraphics.framework */; };
+		8CE39AA713F87FFC00C1E9E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39AA513F87FFC00C1E9E2 /* InfoPlist.strings */; };
+		8CE39AAA13F87FFC00C1E9E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE39AA913F87FFC00C1E9E2 /* main.m */; };
+		8CE39AAD13F87FFC00C1E9E2 /* SupTaxiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE39AAC13F87FFC00C1E9E2 /* SupTaxiAppDelegate.m */; };
+		8CE39AB013F87FFC00C1E9E2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39AAE13F87FFC00C1E9E2 /* MainWindow.xib */; };
+		8CE39AB313F87FFC00C1E9E2 /* TaxiOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE39AB213F87FFC00C1E9E2 /* TaxiOrderViewController.m */; };
+		8CE39AB613F87FFC00C1E9E2 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE39AB513F87FFC00C1E9E2 /* SecondViewController.m */; };
+		8CE39AB913F87FFC00C1E9E2 /* TaxiOrderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39AB713F87FFC00C1E9E2 /* TaxiOrderView.xib */; };
+		8CE39ABC13F87FFC00C1E9E2 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39ABA13F87FFC00C1E9E2 /* SecondView.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8C9EDBA513FD97BC008B46FF /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		8C9EDBA813FD98E2008B46FF /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		8C9EDBA913FD98E2008B46FF /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		8CAD0A0C13FDB64800F6B5E9 /* Offer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Offer.h; sourceTree = "<group>"; };
+		8CAD0A0D13FDB64800F6B5E9 /* Offer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Offer.m; sourceTree = "<group>"; };
+		8CAD0A1013FDBDD100F6B5E9 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
+		8CAD0A1113FDBDD100F6B5E9 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
+		8CAD0A1313FDC82E00F6B5E9 /* ParserClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserClass.h; sourceTree = "<group>"; };
+		8CAD0A1413FDC82E00F6B5E9 /* ParserClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParserClass.m; sourceTree = "<group>"; };
+		8CAD0A1613FDCCAE00F6B5E9 /* CarrierListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarrierListViewController.h; sourceTree = "<group>"; };
+		8CAD0A1713FDCCAF00F6B5E9 /* CarrierListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarrierListViewController.m; sourceTree = "<group>"; };
+		8CAD0A1813FDCCB000F6B5E9 /* CarrierListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarrierListViewController.xib; sourceTree = "<group>"; };
+		8CAD0A2B13FFC8D200F6B5E9 /* CellForDisplayOffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellForDisplayOffers.h; sourceTree = "<group>"; };
+		8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellForDisplayOffers.m; sourceTree = "<group>"; };
+		8CC43BA2140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SupTaxiDataModel.xcdatamodel; sourceTree = "<group>"; };
+		8CC43BD91401120D00CDA7B3 /* SupTaxiDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupTaxiDataBase.h; sourceTree = "<group>"; };
+		8CC43BDA1401120D00CDA7B3 /* SupTaxiDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupTaxiDataModel.m; sourceTree = "<group>"; };
+		8CC43BDC1401122D00CDA7B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8CC43BE01401247100CDA7B3 /* MyAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAddressViewController.h; sourceTree = "<group>"; };
+		8CC43BE11401247100CDA7B3 /* MyAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAddressViewController.m; sourceTree = "<group>"; };
+		8CC43BE21401247100CDA7B3 /* MyAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAddressViewController.xib; sourceTree = "<group>"; };
+		8CC43BE5140124C800CDA7B3 /* EditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAddressViewController.h; sourceTree = "<group>"; };
+		8CC43BE6140124C800CDA7B3 /* EditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAddressViewController.m; sourceTree = "<group>"; };
+		8CC43BE7140124C800CDA7B3 /* EditAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditAddressViewController.xib; sourceTree = "<group>"; };
+		8CC43BEA1401435A00CDA7B3 /* MyAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAddress.h; sourceTree = "<group>"; };
+		8CC43BEB1401435A00CDA7B3 /* MyAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAddress.m; sourceTree = "<group>"; };
+		8CE39A9813F87FFC00C1E9E2 /* SupTaxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SupTaxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CE39A9C13F87FFC00C1E9E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8CE39A9E13F87FFC00C1E9E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8CE39AA013F87FFC00C1E9E2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8CE39AA413F87FFC00C1E9E2 /* SupTaxi-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SupTaxi-Info.plist"; sourceTree = "<group>"; };
+		8CE39AA613F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8CE39AA813F87FFC00C1E9E2 /* SupTaxi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SupTaxi-Prefix.pch"; sourceTree = "<group>"; };
+		8CE39AA913F87FFC00C1E9E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8CE39AAB13F87FFC00C1E9E2 /* SupTaxiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupTaxiAppDelegate.h; sourceTree = "<group>"; };
+		8CE39AAC13F87FFC00C1E9E2 /* SupTaxiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupTaxiAppDelegate.m; sourceTree = "<group>"; };
+		8CE39AAF13F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		8CE39AB113F87FFC00C1E9E2 /* TaxiOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxiOrderViewController.h; sourceTree = "<group>"; };
+		8CE39AB213F87FFC00C1E9E2 /* TaxiOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxiOrderViewController.m; sourceTree = "<group>"; };
+		8CE39AB413F87FFC00C1E9E2 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		8CE39AB513F87FFC00C1E9E2 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		8CE39AB813F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TaxiOrderView.xib; sourceTree = "<group>"; };
+		8CE39ABB13F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8CE39A9513F87FFC00C1E9E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CC43BDD1401122D00CDA7B3 /* CoreData.framework in Frameworks */,
+				8C9EDBA613FD97BC008B46FF /* libxml2.dylib in Frameworks */,
+				8CE39A9D13F87FFC00C1E9E2 /* UIKit.framework in Frameworks */,
+				8CE39A9F13F87FFC00C1E9E2 /* Foundation.framework in Frameworks */,
+				8CE39AA113F87FFC00C1E9E2 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8C92C41313FAF48F007D5CD4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BDF1401242800CDA7B3 /* MyAddresses */,
+				8C92C41513FAF503007D5CD4 /* Taxi Order */,
+				8CE39AB413F87FFC00C1E9E2 /* SecondViewController.h */,
+				8CE39AB513F87FFC00C1E9E2 /* SecondViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8C92C41413FAF4A6007D5CD4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BDE1401241200CDA7B3 /* MyAddresses */,
+				8C92C41613FAF523007D5CD4 /* Taxi Order */,
+				8CE39ABA13F87FFC00C1E9E2 /* SecondView.xib */,
+				8CE39AAE13F87FFC00C1E9E2 /* MainWindow.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8C92C41513FAF503007D5CD4 /* Taxi Order */ = {
+			isa = PBXGroup;
+			children = (
+				8CC9514614005BAD00116885 /* Show order result */,
+				8CE39AB113F87FFC00C1E9E2 /* TaxiOrderViewController.h */,
+				8CE39AB213F87FFC00C1E9E2 /* TaxiOrderViewController.m */,
+			);
+			name = "Taxi Order";
+			sourceTree = "<group>";
+		};
+		8C92C41613FAF523007D5CD4 /* Taxi Order */ = {
+			isa = PBXGroup;
+			children = (
+				8CC9514814005BFC00116885 /* Show order result */,
+				8CE39AB713F87FFC00C1E9E2 /* TaxiOrderView.xib */,
+			);
+			name = "Taxi Order";
+			sourceTree = "<group>";
+		};
+		8C9EDBA713FD98BD008B46FF /* GDataXML */ = {
+			isa = PBXGroup;
+			children = (
+				8C9EDBA813FD98E2008B46FF /* GDataXMLNode.h */,
+				8C9EDBA913FD98E2008B46FF /* GDataXMLNode.m */,
+			);
+			name = GDataXML;
+			path = SupTaxi;
+			sourceTree = "<group>";
+		};
+		8CAD0A0B13FDB61F00F6B5E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8CC9514B140061F800116885 /* Data Base */,
+				8CC95149140061AD00116885 /* XML */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8CC43BDE1401241200CDA7B3 /* MyAddresses */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BE7140124C800CDA7B3 /* EditAddressViewController.xib */,
+				8CC43BE21401247100CDA7B3 /* MyAddressViewController.xib */,
+			);
+			name = MyAddresses;
+			sourceTree = "<group>";
+		};
+		8CC43BDF1401242800CDA7B3 /* MyAddresses */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BE01401247100CDA7B3 /* MyAddressViewController.h */,
+				8CC43BE11401247100CDA7B3 /* MyAddressViewController.m */,
+				8CC43BE5140124C800CDA7B3 /* EditAddressViewController.h */,
+				8CC43BE6140124C800CDA7B3 /* EditAddressViewController.m */,
+			);
+			name = MyAddresses;
+			sourceTree = "<group>";
+		};
+		8CC43BED1401437D00CDA7B3 /* My Address */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BEA1401435A00CDA7B3 /* MyAddress.h */,
+				8CC43BEB1401435A00CDA7B3 /* MyAddress.m */,
+			);
+			name = "My Address";
+			sourceTree = "<group>";
+		};
+		8CC9514614005BAD00116885 /* Show order result */ = {
+			isa = PBXGroup;
+			children = (
+				8CC9514714005BD300116885 /* Custom Cell */,
+				8CAD0A1613FDCCAE00F6B5E9 /* CarrierListViewController.h */,
+				8CAD0A1713FDCCAF00F6B5E9 /* CarrierListViewController.m */,
+			);
+			name = "Show order result";
+			sourceTree = "<group>";
+		};
+		8CC9514714005BD300116885 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8CAD0A2B13FFC8D200F6B5E9 /* CellForDisplayOffers.h */,
+				8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */,
+			);
+			name = "Custom Cell";
+			sourceTree = "<group>";
+		};
+		8CC9514814005BFC00116885 /* Show order result */ = {
+			isa = PBXGroup;
+			children = (
+				8CAD0A1813FDCCB000F6B5E9 /* CarrierListViewController.xib */,
+			);
+			name = "Show order result";
+			sourceTree = "<group>";
+		};
+		8CC95149140061AD00116885 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				8CAD0A1413FDC82E00F6B5E9 /* ParserClass.m */,
+				8CAD0A1313FDC82E00F6B5E9 /* ParserClass.h */,
+				8CC9514A140061C400116885 /* TaxiOrder */,
+			);
+			name = XML;
+			sourceTree = "<group>";
+		};
+		8CC9514A140061C400116885 /* TaxiOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8CAD0A0C13FDB64800F6B5E9 /* Offer.h */,
+				8CAD0A0D13FDB64800F6B5E9 /* Offer.m */,
+				8CAD0A1013FDBDD100F6B5E9 /* Response.h */,
+				8CAD0A1113FDBDD100F6B5E9 /* Response.m */,
+			);
+			name = TaxiOrder;
+			sourceTree = "<group>";
+		};
+		8CC9514B140061F800116885 /* Data Base */ = {
+			isa = PBXGroup;
+			children = (
+				8CC43BED1401437D00CDA7B3 /* My Address */,
+				8CC43BA1140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld */,
+				8CC43BD91401120D00CDA7B3 /* SupTaxiDataBase.h */,
+				8CC43BDA1401120D00CDA7B3 /* SupTaxiDataModel.m */,
+			);
+			name = "Data Base";
+			sourceTree = "<group>";
+		};
+		8CE39A8D13F87FFC00C1E9E2 = {
+			isa = PBXGroup;
+			children = (
+				8CC43BDC1401122D00CDA7B3 /* CoreData.framework */,
+				8CE39AA213F87FFC00C1E9E2 /* SupTaxi */,
+				8CE39A9B13F87FFC00C1E9E2 /* Frameworks */,
+				8CE39A9913F87FFC00C1E9E2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8CE39A9913F87FFC00C1E9E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8CE39A9813F87FFC00C1E9E2 /* SupTaxi.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8CE39A9B13F87FFC00C1E9E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8C9EDBA713FD98BD008B46FF /* GDataXML */,
+				8C9EDBA513FD97BC008B46FF /* libxml2.dylib */,
+				8CE39A9C13F87FFC00C1E9E2 /* UIKit.framework */,
+				8CE39A9E13F87FFC00C1E9E2 /* Foundation.framework */,
+				8CE39AA013F87FFC00C1E9E2 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8CE39AA213F87FFC00C1E9E2 /* SupTaxi */ = {
+			isa = PBXGroup;
+			children = (
+				8CAD0A0B13FDB61F00F6B5E9 /* Model */,
+				8C92C41413FAF4A6007D5CD4 /* Views */,
+				8C92C41313FAF48F007D5CD4 /* Controllers */,
+				8CE39AAB13F87FFC00C1E9E2 /* SupTaxiAppDelegate.h */,
+				8CE39AAC13F87FFC00C1E9E2 /* SupTaxiAppDelegate.m */,
+				8CE39AA313F87FFC00C1E9E2 /* Supporting Files */,
+			);
+			path = SupTaxi;
+			sourceTree = "<group>";
+		};
+		8CE39AA313F87FFC00C1E9E2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8CE39AA413F87FFC00C1E9E2 /* SupTaxi-Info.plist */,
+				8CE39AA513F87FFC00C1E9E2 /* InfoPlist.strings */,
+				8CE39AA813F87FFC00C1E9E2 /* SupTaxi-Prefix.pch */,
+				8CE39AA913F87FFC00C1E9E2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8CE39A9713F87FFC00C1E9E2 /* SupTaxi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8CE39ABF13F87FFC00C1E9E2 /* Build configuration list for PBXNativeTarget "SupTaxi" */;
+			buildPhases = (
+				8CE39A9413F87FFC00C1E9E2 /* Sources */,
+				8CE39A9513F87FFC00C1E9E2 /* Frameworks */,
+				8CE39A9613F87FFC00C1E9E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SupTaxi;
+			productName = SupTaxi;
+			productReference = 8CE39A9813F87FFC00C1E9E2 /* SupTaxi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8CE39A8F13F87FFC00C1E9E2 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 8CE39A9213F87FFC00C1E9E2 /* Build configuration list for PBXProject "SupTaxi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8CE39A8D13F87FFC00C1E9E2;
+			productRefGroup = 8CE39A9913F87FFC00C1E9E2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8CE39A9713F87FFC00C1E9E2 /* SupTaxi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8CE39A9613F87FFC00C1E9E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CE39AA713F87FFC00C1E9E2 /* InfoPlist.strings in Resources */,
+				8CE39AB013F87FFC00C1E9E2 /* MainWindow.xib in Resources */,
+				8CE39AB913F87FFC00C1E9E2 /* TaxiOrderView.xib in Resources */,
+				8CE39ABC13F87FFC00C1E9E2 /* SecondView.xib in Resources */,
+				8CAD0A1A13FDCCB100F6B5E9 /* CarrierListViewController.xib in Resources */,
+				8CC43BE41401247100CDA7B3 /* MyAddressViewController.xib in Resources */,
+				8CC43BE9140124C800CDA7B3 /* EditAddressViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8CE39A9413F87FFC00C1E9E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CE39AAA13F87FFC00C1E9E2 /* main.m in Sources */,
+				8CE39AAD13F87FFC00C1E9E2 /* SupTaxiAppDelegate.m in Sources */,
+				8CE39AB313F87FFC00C1E9E2 /* TaxiOrderViewController.m in Sources */,
+				8CE39AB613F87FFC00C1E9E2 /* SecondViewController.m in Sources */,
+				8C9EDBAA13FD98E2008B46FF /* GDataXMLNode.m in Sources */,
+				8CAD0A0E13FDB64800F6B5E9 /* Offer.m in Sources */,
+				8CAD0A1213FDBDD100F6B5E9 /* Response.m in Sources */,
+				8CAD0A1513FDC82E00F6B5E9 /* ParserClass.m in Sources */,
+				8CAD0A1913FDCCB100F6B5E9 /* CarrierListViewController.m in Sources */,
+				8CAD0A2D13FFC8D300F6B5E9 /* CellForDisplayOffers.m in Sources */,
+				8CC43BA3140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld in Sources */,
+				8CC43BDB1401120D00CDA7B3 /* SupTaxiDataModel.m in Sources */,
+				8CC43BE31401247100CDA7B3 /* MyAddressViewController.m in Sources */,
+				8CC43BE8140124C800CDA7B3 /* EditAddressViewController.m in Sources */,
+				8CC43BEC1401435B00CDA7B3 /* MyAddress.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8CE39AA513F87FFC00C1E9E2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8CE39AA613F87FFC00C1E9E2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8CE39AAE13F87FFC00C1E9E2 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8CE39AAF13F87FFC00C1E9E2 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		8CE39AB713F87FFC00C1E9E2 /* TaxiOrderView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8CE39AB813F87FFC00C1E9E2 /* en */,
+			);
+			name = TaxiOrderView.xib;
+			sourceTree = "<group>";
+		};
+		8CE39ABA13F87FFC00C1E9E2 /* SecondView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8CE39ABB13F87FFC00C1E9E2 /* en */,
+			);
+			name = SecondView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8CE39ABD13F87FFC00C1E9E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "${SDKROOT}/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8CE39ABE13F87FFC00C1E9E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "${SDKROOT}/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		8CE39AC013F87FFC00C1E9E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SupTaxi/SupTaxi-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "${SDKROOT}/usr/include/libxml2/**";
+				INFOPLIST_FILE = "SupTaxi/SupTaxi-Info.plist";
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8CE39AC113F87FFC00C1E9E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SupTaxi/SupTaxi-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "${SDKROOT}/usr/include/libxml2/**";
+				INFOPLIST_FILE = "SupTaxi/SupTaxi-Info.plist";
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8CE39A9213F87FFC00C1E9E2 /* Build configuration list for PBXProject "SupTaxi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8CE39ABD13F87FFC00C1E9E2 /* Debug */,
+				8CE39ABE13F87FFC00C1E9E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8CE39ABF13F87FFC00C1E9E2 /* Build configuration list for PBXNativeTarget "SupTaxi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8CE39AC013F87FFC00C1E9E2 /* Debug */,
+				8CE39AC113F87FFC00C1E9E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8CC43BA1140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8CC43BA2140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodel */,
+			);
+			currentVersion = 8CC43BA2140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodel */;
+			path = SupTaxiDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8CE39A8F13F87FFC00C1E9E2 /* Project object */;
+}
