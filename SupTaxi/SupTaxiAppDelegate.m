@@ -6,6 +6,8 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+// test commit from Novik Igor
+
 #import "SupTaxiAppDelegate.h"
 
 @implementation SupTaxiAppDelegate
