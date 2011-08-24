@@ -13,6 +13,12 @@
     
 }
 
+@property (nonatomic, retain) IBOutlet UIView *headerView;
+@property (nonatomic, retain) IBOutlet UIView *footerView;
+
+@property (nonatomic, retain) IBOutlet UIView *innerFooterView;
+
+
 @property (nonatomic, retain) Response *resultResponse;
 
 @end

@@ -1,9 +1,14 @@
 #import "CarrierListViewController.h"
 #import "Response.h"
-#import "CellForDisplayOffers.h"
 #import "Offer.h"
+#import <QuartzCore/QuartzCore.h>
+#import "OrderShowCell.h"
 
 @implementation CarrierListViewController
+
+@synthesize headerView = headerView_;
+@synthesize footerView = footerView_;
+@synthesize innerFooterView = innerFooterView_;
 
 @synthesize resultResponse = resultResponse_;
 
@@ -18,6 +23,10 @@
 
 - (void)dealloc
 {
+    [headerView_ release];
+    [footerView_ release];
+    [innerFooterView_ release];
+    
     [resultResponse_ release];
     [super dealloc];
 }
@@ -35,7 +44,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // делаем прозрачный фон
+    headerView_.backgroundColor = [UIColor clearColor];
+    
+    // скругляем углы
+    innerFooterView_.layer.cornerRadius = 10;
+    
+    // кнопка заказать
+    UIBarButtonItem *orderButton = [[UIBarButtonItem alloc] initWithTitle:@"Заказать" style:UIBarButtonItemStylePlain target:self action:@selector(orderAction)];
+    self.navigationItem.rightBarButtonItem = orderButton;
+    [orderButton release];
+    
+    // цвет navigation bar
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1];
 }
 
 - (void)viewDidUnload
@@ -53,43 +74,34 @@
 
 #pragma mark -
 #pragma UITableViewDelegate methods
+// высота каждой ячейки
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UILabel *label;
-//    if (section == 0) {
-//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
-//        label.text = @"Выберите перевозчика";
-//        label.textAlignment = UITextAlignmentCenter;
-//        
-//    } if (section == 1) {
-//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
-//        label.text = @"Выберите перевозчика";
-//        label.textAlignment = UITextAlignmentCenter;
-//        
-//    }
-//    
-//    return label;
-//}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+// высота шапки
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 120.0)];
-    label.text = @"Выберите перевозчика";
-    label.textAlignment = UITextAlignmentCenter;
-    return label;
+	return 50.0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+// высота нижней части
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section 
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, tableView.frame.size.height + 10.0, tableView.frame.size.width, 120.0)];
-    label.text = @"Другая инфа";
-    label.textAlignment = UITextAlignmentCenter;
-    return label;
+	return 120.0;
+}
+
+// шапка таблицы
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{    
+    return headerView_;
+}
+
+// нижняя часть таблицы
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section 
+{    
+    return footerView_;
 }
 
 #pragma mark -
@@ -105,18 +117,20 @@
     return 1;
 }
 
-#warning требуется кастомизация
+// 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //CellForDisplayOffers *cell = (CellForDisplayOffers *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
-    UITableViewCell *cell = (CellForDisplayOffers *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
+    OrderShowCell *cell = (OrderShowCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellId"] autorelease];        
+        cell = [[[OrderShowCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CellId"] autorelease];        
     }
     
     Offer *offer = [resultResponse_.offers objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:10];
-    cell.textLabel.text = [NSString stringWithFormat:@"Company: %@    Arrival time: %d         MinPrice: %d", offer.carrierName, offer.arrivalTime, offer.minPrice];
+    
+    cell.carrierLogo.image = nil;
+    cell.timeLabel.text = [NSString stringWithFormat:@"~ %d минут", offer.arrivalTime]; 
+    cell.priceLabel.text = [NSString stringWithFormat:@"%d руб**", offer.minPrice]; 
     
     return cell;
 }
