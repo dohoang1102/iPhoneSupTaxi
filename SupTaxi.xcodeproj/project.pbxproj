@@ -14,7 +14,6 @@
 		8CAD0A1513FDC82E00F6B5E9 /* ParserClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1413FDC82E00F6B5E9 /* ParserClass.m */; };
 		8CAD0A1913FDCCB100F6B5E9 /* CarrierListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1713FDCCAF00F6B5E9 /* CarrierListViewController.m */; };
 		8CAD0A1A13FDCCB100F6B5E9 /* CarrierListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CAD0A1813FDCCB000F6B5E9 /* CarrierListViewController.xib */; };
-		8CAD0A2D13FFC8D300F6B5E9 /* CellForDisplayOffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */; };
 		8CC43BA3140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BA1140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld */; };
 		8CC43BDB1401120D00CDA7B3 /* SupTaxiDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC43BDA1401120D00CDA7B3 /* SupTaxiDataModel.m */; };
 		8CC43BDD1401122D00CDA7B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CC43BDC1401122D00CDA7B3 /* CoreData.framework */; };
@@ -34,6 +33,8 @@
 		8CE39AB613F87FFC00C1E9E2 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE39AB513F87FFC00C1E9E2 /* SecondViewController.m */; };
 		8CE39AB913F87FFC00C1E9E2 /* TaxiOrderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39AB713F87FFC00C1E9E2 /* TaxiOrderView.xib */; };
 		8CE39ABC13F87FFC00C1E9E2 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE39ABA13F87FFC00C1E9E2 /* SecondView.xib */; };
+		8F9B79E014053444009BB33C /* OrderShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9B79DF14053444009BB33C /* OrderShowCell.m */; };
+		8F9B79F014056061009BB33C /* GrayColorNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9B79EF14056061009BB33C /* GrayColorNavigationBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,8 +50,6 @@
 		8CAD0A1613FDCCAE00F6B5E9 /* CarrierListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarrierListViewController.h; sourceTree = "<group>"; };
 		8CAD0A1713FDCCAF00F6B5E9 /* CarrierListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarrierListViewController.m; sourceTree = "<group>"; };
 		8CAD0A1813FDCCB000F6B5E9 /* CarrierListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarrierListViewController.xib; sourceTree = "<group>"; };
-		8CAD0A2B13FFC8D200F6B5E9 /* CellForDisplayOffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellForDisplayOffers.h; sourceTree = "<group>"; };
-		8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellForDisplayOffers.m; sourceTree = "<group>"; };
 		8CC43BA2140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SupTaxiDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8CC43BD91401120D00CDA7B3 /* SupTaxiDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupTaxiDataBase.h; sourceTree = "<group>"; };
 		8CC43BDA1401120D00CDA7B3 /* SupTaxiDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupTaxiDataModel.m; sourceTree = "<group>"; };
@@ -80,6 +79,10 @@
 		8CE39AB513F87FFC00C1E9E2 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		8CE39AB813F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TaxiOrderView.xib; sourceTree = "<group>"; };
 		8CE39ABB13F87FFC00C1E9E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+		8F9B79DE14053444009BB33C /* OrderShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderShowCell.h; sourceTree = "<group>"; };
+		8F9B79DF14053444009BB33C /* OrderShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderShowCell.m; sourceTree = "<group>"; };
+		8F9B79EE14056061009BB33C /* GrayColorNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayColorNavigationBar.h; sourceTree = "<group>"; };
+		8F9B79EF14056061009BB33C /* GrayColorNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrayColorNavigationBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,7 @@
 		8C92C41313FAF48F007D5CD4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8F9B79F11405606B009BB33C /* Common */,
 				8CC43BDF1401242800CDA7B3 /* MyAddresses */,
 				8C92C41513FAF503007D5CD4 /* Taxi Order */,
 				8CE39AB413F87FFC00C1E9E2 /* SecondViewController.h */,
@@ -200,8 +204,8 @@
 		8CC9514714005BD300116885 /* Custom Cell */ = {
 			isa = PBXGroup;
 			children = (
-				8CAD0A2B13FFC8D200F6B5E9 /* CellForDisplayOffers.h */,
-				8CAD0A2C13FFC8D300F6B5E9 /* CellForDisplayOffers.m */,
+				8F9B79DE14053444009BB33C /* OrderShowCell.h */,
+				8F9B79DF14053444009BB33C /* OrderShowCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -300,6 +304,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8F9B79F11405606B009BB33C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8F9B79EE14056061009BB33C /* GrayColorNavigationBar.h */,
+				8F9B79EF14056061009BB33C /* GrayColorNavigationBar.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -373,12 +386,13 @@
 				8CAD0A1213FDBDD100F6B5E9 /* Response.m in Sources */,
 				8CAD0A1513FDC82E00F6B5E9 /* ParserClass.m in Sources */,
 				8CAD0A1913FDCCB100F6B5E9 /* CarrierListViewController.m in Sources */,
-				8CAD0A2D13FFC8D300F6B5E9 /* CellForDisplayOffers.m in Sources */,
 				8CC43BA3140110E800CDA7B3 /* SupTaxiDataModel.xcdatamodeld in Sources */,
 				8CC43BDB1401120D00CDA7B3 /* SupTaxiDataModel.m in Sources */,
 				8CC43BE31401247100CDA7B3 /* MyAddressViewController.m in Sources */,
 				8CC43BE8140124C800CDA7B3 /* EditAddressViewController.m in Sources */,
 				8CC43BEC1401435B00CDA7B3 /* MyAddress.m in Sources */,
+				8F9B79E014053444009BB33C /* OrderShowCell.m in Sources */,
+				8F9B79F014056061009BB33C /* GrayColorNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
