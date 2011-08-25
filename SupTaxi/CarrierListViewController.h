@@ -12,6 +12,7 @@
 @interface CarrierListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     
 }
+@property (nonatomic, retain) IBOutlet UIImageView *backgroundImage;
 
 @property (nonatomic, retain) IBOutlet UIView *headerView;
 @property (nonatomic, retain) IBOutlet UIView *footerView;

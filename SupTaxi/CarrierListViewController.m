@@ -3,12 +3,14 @@
 #import "Offer.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OrderShowCell.h"
+#import "BarButtonItemGreenColor.h"
 
 @implementation CarrierListViewController
 
 @synthesize headerView = headerView_;
 @synthesize footerView = footerView_;
 @synthesize innerFooterView = innerFooterView_;
+@synthesize backgroundImage = backgroundImage_;
 
 @synthesize resultResponse = resultResponse_;
 
@@ -41,6 +43,21 @@
 
 #pragma mark - View lifecycle
 
+- (void)tileBackground
+{
+    UIImage *wave = [UIImage imageNamed:@"bg.png"];
+    CGSize imageViewSize = backgroundImage_.bounds.size;
+    UIGraphicsBeginImageContext(imageViewSize);
+    CGRect imageRect;
+    imageRect.origin = CGPointMake(0.0, 0.0);
+    imageRect.size = CGSizeMake(wave.size.width, wave.size.height);
+    CGContextRef imageContext = UIGraphicsGetCurrentContext();
+    CGContextDrawTiledImage(imageContext, imageRect, wave.CGImage);
+    UIImage *finishedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    backgroundImage_.image = finishedImage;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,11 +69,28 @@
     
     // кнопка заказать
     UIBarButtonItem *orderButton = [[UIBarButtonItem alloc] initWithTitle:@"Заказать" style:UIBarButtonItemStylePlain target:self action:@selector(orderAction)];
+    //UIColor *buttonColor = [UIColor colorWithRed:2.0/255.0 green:12.0/255.0 blue:2.0/255.0 alpha:1];
+    //UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:buttonColor andTitle:@"Заказать" andTarget:self andSelector:@selector(orderAction)];
     self.navigationItem.rightBarButtonItem = orderButton;
     [orderButton release];
     
     // цвет navigation bar
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1];
+    
+    // делаем прозрачным бэкграунд таблицы
+    NSArray *subviews = [self.view subviews];
+    for (UIView *view in subviews) 
+    {
+        if ([view isKindOfClass:[UITableView class]]) 
+        {
+            view.backgroundColor = [UIColor clearColor];
+        }
+    }
+    
+    // заполняем бэкграунд
+    [self tileBackground];
+    // делаем невидимой кнопку назад
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)viewDidUnload
