@@ -2,6 +2,7 @@
 #import "CarrierListViewController.h"
 #import "Response.h"
 #import "ParserClass.h"
+#import "BarButtonItemGreenColor.h"
 
 @implementation TaxiOrderViewController
 
@@ -149,6 +150,10 @@
 
 #pragma mark - life cycle controller methods
 
+- (void)clearForm
+{
+    
+}
 
 
 - (void)viewDidLoad
@@ -160,8 +165,16 @@
                                                              @"3", @"VIP",
                                                              @"4", @"Грузовой", nil];
     
-//    fromPoint_ = [[UITextField alloc] init];
-//    toPoint_ = [[UITextField alloc] init];
+    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+    
+    // кнопка очистить
+    UIBarButtonItem *clearBtn = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Очистить" andTarget:self andSelector:@selector(clearForm)];
+    self.navigationItem.leftBarButtonItem = clearBtn;
+    [clearBtn release];
+    
+    UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Заказать" andTarget:self andSelector:@selector(orderTaxi:)];
+    self.navigationItem.rightBarButtonItem = orderButton;
+    [orderButton release];
 }
 
 

@@ -52,7 +52,7 @@
         CGFloat boundsX = contexctRect.origin.x;
         CGRect frame;
         
-        frame = CGRectMake(boundsX, 0, 70.0, 50.0);
+        frame = CGRectMake(boundsX, 0, 36.0, 27.0);
         self.carrierLogo.frame = frame;
         
         frame = CGRectMake(carrierLogo.frame.origin.x + carrierLogo.frame.size.width + 10.0, 10.0, 50.0, 20.0);

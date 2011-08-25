@@ -9,7 +9,7 @@
 // test commit from Novik Igor
 
 #import "SupTaxiAppDelegate.h"
-
+#import "TabBarBackgroundView.h"
 @implementation SupTaxiAppDelegate
 
 
@@ -17,15 +17,20 @@
 
 @synthesize tabBarController=_tabBarController;
 
-@synthesize navigationController = _navigationController;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     // Add the tab bar controller's current view as a subview of the window
     self.window.rootViewController = self.tabBarController;
     
+    CGRect frame = CGRectMake(0.0, 0.0, _tabBarController.tabBar.bounds.size.width, 48);
+    TabBarBackgroundView *bacgroundView = [[TabBarBackgroundView alloc] initWithFrame:frame];
+    //bacgroundView.backgroundColor = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+    [_tabBarController.tabBar insertSubview:bacgroundView atIndex:0];
+    [bacgroundView release];
+    
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

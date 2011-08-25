@@ -151,6 +151,23 @@
     return 1;
 }
 
+- (UIImage *)getImageWithCarrierName:(NSString *)carrierName
+{
+    UIImage *image;
+    
+    if ([carrierName isEqualToString:@"Командир"]) {
+        image = [UIImage imageNamed:@"comandir.png"];
+    } else if ([carrierName isEqualToString:@"Новое желтое"]){
+        image = [UIImage imageNamed:@"new-yellow.png"];
+    } else if ([carrierName isEqualToString:@"Женское"]){
+        image = [UIImage imageNamed:@"comandir.png"];
+    } else if ([carrierName isEqualToString:@"Люкс"]){
+        image = [UIImage imageNamed:@"luks.png"];
+    }
+    
+    return image;
+}
+
 // 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -162,7 +179,7 @@
     
     Offer *offer = [resultResponse_.offers objectAtIndex:indexPath.row];
     
-    cell.carrierLogo.image = nil;
+    cell.carrierLogo.image = [self getImageWithCarrierName:offer.carrierName];
     cell.timeLabel.text = [NSString stringWithFormat:@"~ %d минут", offer.arrivalTime]; 
     cell.priceLabel.text = [NSString stringWithFormat:@"%d руб**", offer.minPrice]; 
     
