@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* SupTaxiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* SupTaxiAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		28193060112F816700ECF9B4 /* SupTaxi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2819305F112F816700ECF9B4 /* SupTaxi.xcdatamodeld */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
+		49085066140BB080004F4963 /* btn_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908505B140BB080004F4963 /* btn_bg.png */; };
+		49085067140BB080004F4963 /* btn_change_locations.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908505C140BB080004F4963 /* btn_change_locations.png */; };
+		49085068140BB080004F4963 /* btn_field_addressbook.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908505D140BB080004F4963 /* btn_field_addressbook.png */; };
+		49085069140BB080004F4963 /* btn_field_date_pick.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908505E140BB080004F4963 /* btn_field_date_pick.png */; };
+		4908506A140BB080004F4963 /* btn_tb_history.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908505F140BB080004F4963 /* btn_tb_history.png */; };
+		4908506B140BB080004F4963 /* btn_tb_my_address.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085060140BB080004F4963 /* btn_tb_my_address.png */; };
+		4908506C140BB080004F4963 /* btn_tb_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085061140BB080004F4963 /* btn_tb_settings.png */; };
+		4908506D140BB080004F4963 /* car_type_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085062140BB080004F4963 /* car_type_1.png */; };
+		4908506E140BB080004F4963 /* form_field_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085063140BB080004F4963 /* form_field_bg.png */; };
+		4908506F140BB080004F4963 /* form_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085064140BB080004F4963 /* form_line.png */; };
+		49085070140BB080004F4963 /* logo_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085065140BB080004F4963 /* logo_header.png */; };
+		49085078140BC325004F4963 /* logo_header copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085077140BC325004F4963 /* logo_header copy.png */; };
+		490850B5140BC965004F4963 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490850B4140BC965004F4963 /* MapKit.framework */; };
+		4908510D140BD66A004F4963 /* btn_bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4908510C140BD66A004F4963 /* btn_bg1.png */; };
+		49085165140BF7D7004F4963 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085163140BF7D7004F4963 /* car_type_2.png */; };
+		49085166140BF7D7004F4963 /* car_type_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 49085164140BF7D7004F4963 /* car_type_0.png */; };
+		49085242140C0847004F4963 /* OrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49085241140C0847004F4963 /* OrderViewController.xib */; };
+		4908524E140C0878004F4963 /* BarButtonItemGreenColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085245140C0878004F4963 /* BarButtonItemGreenColor.m */; };
+		4908524F140C0878004F4963 /* GrayColorNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085247140C0878004F4963 /* GrayColorNavigationBar.m */; };
+		49085250140C0878004F4963 /* TabBarBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085249140C0878004F4963 /* TabBarBackgroundView.m */; };
+		49085251140C0878004F4963 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4908524D140C0878004F4963 /* OrderViewController.m */; };
+		4908526C140C1375004F4963 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085264140C1375004F4963 /* Offer.m */; };
+		4908526E140C1375004F4963 /* ServerResponce.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085268140C1375004F4963 /* ServerResponce.m */; };
+		4908526F140C1375004F4963 /* ServerResponceXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4908526A140C1375004F4963 /* ServerResponceXMLParser.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* SupTaxiAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupTaxiAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* SupTaxiAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupTaxiAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* SupTaxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SupTaxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28C3AD890F43EF2300507BA6 /* SupTaxi.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = SupTaxi.xcdatamodel; sourceTree = "<group>"; };
+		28D801B30F44B63D00FB423F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* SupTaxi_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupTaxi_Prefix.pch; sourceTree = "<group>"; };
+		4908505B140BB080004F4963 /* btn_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_bg.png; sourceTree = "<group>"; };
+		4908505C140BB080004F4963 /* btn_change_locations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_change_locations.png; sourceTree = "<group>"; };
+		4908505D140BB080004F4963 /* btn_field_addressbook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_field_addressbook.png; sourceTree = "<group>"; };
+		4908505E140BB080004F4963 /* btn_field_date_pick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_field_date_pick.png; sourceTree = "<group>"; };
+		4908505F140BB080004F4963 /* btn_tb_history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tb_history.png; sourceTree = "<group>"; };
+		49085060140BB080004F4963 /* btn_tb_my_address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tb_my_address.png; sourceTree = "<group>"; };
+		49085061140BB080004F4963 /* btn_tb_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tb_settings.png; sourceTree = "<group>"; };
+		49085062140BB080004F4963 /* car_type_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_1.png; sourceTree = "<group>"; };
+		49085063140BB080004F4963 /* form_field_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_field_bg.png; sourceTree = "<group>"; };
+		49085064140BB080004F4963 /* form_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_line.png; sourceTree = "<group>"; };
+		49085065140BB080004F4963 /* logo_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_header.png; sourceTree = "<group>"; };
+		49085077140BC325004F4963 /* logo_header copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_header copy.png"; sourceTree = "<group>"; };
+		490850B4140BC965004F4963 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4908510C140BD66A004F4963 /* btn_bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_bg1.png; sourceTree = "<group>"; };
+		49085163140BF7D7004F4963 /* car_type_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_2.png; sourceTree = "<group>"; };
+		49085164140BF7D7004F4963 /* car_type_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_0.png; sourceTree = "<group>"; };
+		49085241140C0847004F4963 /* OrderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderViewController.xib; sourceTree = "<group>"; };
+		49085244140C0878004F4963 /* BarButtonItemGreenColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItemGreenColor.h; sourceTree = "<group>"; };
+		49085245140C0878004F4963 /* BarButtonItemGreenColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItemGreenColor.m; sourceTree = "<group>"; };
+		49085246140C0878004F4963 /* GrayColorNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayColorNavigationBar.h; sourceTree = "<group>"; };
+		49085247140C0878004F4963 /* GrayColorNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrayColorNavigationBar.m; sourceTree = "<group>"; };
+		49085248140C0878004F4963 /* TabBarBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarBackgroundView.h; sourceTree = "<group>"; };
+		49085249140C0878004F4963 /* TabBarBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarBackgroundView.m; sourceTree = "<group>"; };
+		4908524C140C0878004F4963 /* OrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
+		4908524D140C0878004F4963 /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
+		49085263140C1375004F4963 /* Offer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Offer.h; sourceTree = "<group>"; };
+		49085264140C1375004F4963 /* Offer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Offer.m; sourceTree = "<group>"; };
+		49085267140C1375004F4963 /* ServerResponce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResponce.h; sourceTree = "<group>"; };
+		49085268140C1375004F4963 /* ServerResponce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponce.m; sourceTree = "<group>"; };
+		49085269140C1375004F4963 /* ServerResponceXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResponceXMLParser.h; sourceTree = "<group>"; };
+		4908526A140C1375004F4963 /* ServerResponceXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponceXMLParser.m; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* SupTaxi-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SupTaxi-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */,
+				490850B5140BC965004F4963 /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				49085260140C1375004F4963 /* Logic */,
+				49085243140C0878004F4963 /* BarCustomization */,
+				4908524B140C0878004F4963 /* ViewControllers */,
+				1D3623240D0F684500981E51 /* SupTaxiAppDelegate.h */,
+				1D3623250D0F684500981E51 /* SupTaxiAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* SupTaxi.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* SupTaxi_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				49085240140C0847004F4963 /* Xib */,
+				4908505A140BB080004F4963 /* Images */,
+				2819305F112F816700ECF9B4 /* SupTaxi.xcdatamodeld */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* SupTaxi-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				28D801B30F44B63D00FB423F /* CoreData.framework */,
+				490850B4140BC965004F4963 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4908505A140BB080004F4963 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				49085163140BF7D7004F4963 /* car_type_2.png */,
+				49085164140BF7D7004F4963 /* car_type_0.png */,
+				4908510C140BD66A004F4963 /* btn_bg1.png */,
+				49085077140BC325004F4963 /* logo_header copy.png */,
+				4908505B140BB080004F4963 /* btn_bg.png */,
+				4908505C140BB080004F4963 /* btn_change_locations.png */,
+				4908505D140BB080004F4963 /* btn_field_addressbook.png */,
+				4908505E140BB080004F4963 /* btn_field_date_pick.png */,
+				4908505F140BB080004F4963 /* btn_tb_history.png */,
+				49085060140BB080004F4963 /* btn_tb_my_address.png */,
+				49085061140BB080004F4963 /* btn_tb_settings.png */,
+				49085062140BB080004F4963 /* car_type_1.png */,
+				49085063140BB080004F4963 /* form_field_bg.png */,
+				49085064140BB080004F4963 /* form_line.png */,
+				49085065140BB080004F4963 /* logo_header.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		49085240140C0847004F4963 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				49085241140C0847004F4963 /* OrderViewController.xib */,
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
+		49085243140C0878004F4963 /* BarCustomization */ = {
+			isa = PBXGroup;
+			children = (
+				49085244140C0878004F4963 /* BarButtonItemGreenColor.h */,
+				49085245140C0878004F4963 /* BarButtonItemGreenColor.m */,
+				49085246140C0878004F4963 /* GrayColorNavigationBar.h */,
+				49085247140C0878004F4963 /* GrayColorNavigationBar.m */,
+				49085248140C0878004F4963 /* TabBarBackgroundView.h */,
+				49085249140C0878004F4963 /* TabBarBackgroundView.m */,
+			);
+			path = BarCustomization;
+			sourceTree = "<group>";
+		};
+		4908524B140C0878004F4963 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4908524C140C0878004F4963 /* OrderViewController.h */,
+				4908524D140C0878004F4963 /* OrderViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		49085260140C1375004F4963 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				4908528A140C192A004F4963 /* Objects */,
+				49085267140C1375004F4963 /* ServerResponce.h */,
+				49085268140C1375004F4963 /* ServerResponce.m */,
+				49085269140C1375004F4963 /* ServerResponceXMLParser.h */,
+				4908526A140C1375004F4963 /* ServerResponceXMLParser.m */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		4908528A140C192A004F4963 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				49085263140C1375004F4963 /* Offer.h */,
+				49085264140C1375004F4963 /* Offer.m */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* SupTaxi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SupTaxi" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SupTaxi;
+			productName = SupTaxi;
+			productReference = 1D6058910D05DD3D006BFB54 /* SupTaxi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SupTaxi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* SupTaxi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				49085066140BB080004F4963 /* btn_bg.png in Resources */,
+				49085067140BB080004F4963 /* btn_change_locations.png in Resources */,
+				49085068140BB080004F4963 /* btn_field_addressbook.png in Resources */,
+				49085069140BB080004F4963 /* btn_field_date_pick.png in Resources */,
+				4908506A140BB080004F4963 /* btn_tb_history.png in Resources */,
+				4908506B140BB080004F4963 /* btn_tb_my_address.png in Resources */,
+				4908506C140BB080004F4963 /* btn_tb_settings.png in Resources */,
+				4908506D140BB080004F4963 /* car_type_1.png in Resources */,
+				4908506E140BB080004F4963 /* form_field_bg.png in Resources */,
+				4908506F140BB080004F4963 /* form_line.png in Resources */,
+				49085070140BB080004F4963 /* logo_header.png in Resources */,
+				49085078140BC325004F4963 /* logo_header copy.png in Resources */,
+				4908510D140BD66A004F4963 /* btn_bg1.png in Resources */,
+				49085165140BF7D7004F4963 /* car_type_2.png in Resources */,
+				49085166140BF7D7004F4963 /* car_type_0.png in Resources */,
+				49085242140C0847004F4963 /* OrderViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* SupTaxiAppDelegate.m in Sources */,
+				28193060112F816700ECF9B4 /* SupTaxi.xcdatamodeld in Sources */,
+				4908524E140C0878004F4963 /* BarButtonItemGreenColor.m in Sources */,
+				4908524F140C0878004F4963 /* GrayColorNavigationBar.m in Sources */,
+				49085250140C0878004F4963 /* TabBarBackgroundView.m in Sources */,
+				49085251140C0878004F4963 /* OrderViewController.m in Sources */,
+				4908526C140C1375004F4963 /* Offer.m in Sources */,
+				4908526E140C1375004F4963 /* ServerResponce.m in Sources */,
+				4908526F140C1375004F4963 /* ServerResponceXMLParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SupTaxi_Prefix.pch;
+				INFOPLIST_FILE = "SupTaxi-Info.plist";
+				PRODUCT_NAME = SupTaxi;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SupTaxi_Prefix.pch;
+				INFOPLIST_FILE = "SupTaxi-Info.plist";
+				PRODUCT_NAME = SupTaxi;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SupTaxi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SupTaxi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2819305F112F816700ECF9B4 /* SupTaxi.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				28C3AD890F43EF2300507BA6 /* SupTaxi.xcdatamodel */,
+			);
+			currentVersion = 28C3AD890F43EF2300507BA6 /* SupTaxi.xcdatamodel */;
+			path = SupTaxi.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
