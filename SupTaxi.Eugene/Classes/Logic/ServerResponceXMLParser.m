@@ -7,20 +7,22 @@
 //
 
 #import "ServerResponceXMLParser.h"
+#import "AditionalPrecompileds.h"
 
 @interface ServerResponceXMLParser(Private)
 
-- (void)ParseChannelElementName:(NSString *)name withStringValue:(NSString*)value;
+//- (void)ParseOfferResponseElementName:(NSString *)name withStringValue:(NSString*)value;
 
 @end
 
 
 @implementation ServerResponceXMLParser
-
+/*
 - (void)ParseOfferResponseElementName:(NSString *)name withStringValue:(NSString*)value
 {
+	
 }
-
+*/
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
 	if (_elementString) 
@@ -41,35 +43,50 @@ didStartElement:(NSString *)elementName
 {
 	SAFE_REASSIGN(_elementName, elementName);
 	
-	NSObject * newObject = [ResponceObject CreateNewObjectForXMLTag:elementName];
+	NSLog(@"\n elementName %@ \n", elementName);
+	
+	/*NSObject * newObject = [NSObject CreateNewObjectForXMLTag:elementName];
 	if (newObject) 
 	{
-		[_arr addObject:newObject];
-		[newObject release];
-		_element = newObject;
 		
-		SAFE_REASSIGN(_elementCreatedByName, elementName);
+		*/
+	if ([elementName isEqualToString:@"Offer"])
+	{
+		
+		NSString * CarrierNameString = [attributeDict objectForKey:@"CarrierName"];
+		NSString * ArrivalTimeString = [attributeDict objectForKey:@"ArrivalTime"];
+		NSString * MinPriceString = [attributeDict objectForKey:@"MinPrice"];
+		Offer * e = [[Offer alloc] initWithCarrierName:CarrierNameString arrivalTime:[ArrivalTimeString intValue] minPrice:[MinPriceString intValue]];
+		[_arr addObject:e];
+		[e release];
+		//_element = e;
+		
+	}else if ([elementName isEqualToString:@"Response"])
+	{
+		NSString * TypeString = [attributeDict objectForKey:@"Type"];
+		NSString * ResultString = [attributeDict objectForKey:@"Result"];
+		NSString * GuidString = [attributeDict objectForKey:@"Guid"];
+		Response * resp = [[Response alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
+		[_arr addObject:resp];
+		[resp release];
+		//_element = resp;
 	}
+	
+	SAFE_REASSIGN(_elementCreatedByName, elementName);
+	//}
 }
-
-- (void)parser:(NSXMLParser *)parser 
+- (void) parser:(NSXMLParser *)parser 
  didEndElement:(NSString *)elementName 
   namespaceURI:(NSString *)namespaceURI 
  qualifiedName:(NSString *)qName
 {
 	//TODO: check element
-	NSString * elementString = [_elementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
-	if ([elementName isEqualToString:@"Status"]) 
+	/*NSString * elementString = [_elementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
+	
+	if ([elementName isEqualToString:@"Request"]) 
 	{
-		_status = [elementString integerValue];
-	}
-	else if ([elementName isEqualToString:@"Count"])
-	{
-		_count = (NSUInteger)[elementString integerValue];
-	}
-	else 
-		
-		
+		NSLog(@"Element string : %@", elementString);
+	}*/
 	if (_element)
 	{
 		
@@ -91,7 +108,7 @@ didStartElement:(NSString *)elementName
 }
 
 
-- (BOOL) ParseURLString:(NSString*)urlString toArray:(NSMutableArray*)arr
+- (BOOL) ParseURLString:(NSString*)urlString withDataString:(NSString*)requestString toArray:(NSMutableArray*)arr
 {
 	_count = 0;
 	_status = 0;
@@ -109,8 +126,25 @@ didStartElement:(NSString *)elementName
 			//NSString * str = [NSString stringWithContentsOfURL:url 
 			//										  encoding:NSUTF8StringEncoding 
 			//											 error:nil];
-			NSXMLParser * parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-			//NSXMLParser * parser = [[NSXMLParser alloc] initWithData:[str dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES]];
+			
+			NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length:[requestString length]];
+			
+			// адрес сервера куда отправляется запрос
+			NSString *URLString = [NSString stringWithString:urlString];
+			
+			NSLog(@"RequestString: %@  \n RequestData %@", requestString, requestData);
+			
+			NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URLString]];
+			[request setHTTPMethod:@"POST"];// метод отправки запроса
+			[request setHTTPBody:requestData];
+			
+			NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+			
+			[request release];
+				
+			//NSLog(@"\n ResponseData %@", responseData);
+			NSXMLParser * parser = [[NSXMLParser alloc] initWithData:responseData];
+			//NSXMLParser * parser = [[NSXMLParser alloc] initWithData:[responseData dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES]];
 			
 			[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 			

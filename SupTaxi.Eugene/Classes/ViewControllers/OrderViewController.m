@@ -8,12 +8,26 @@
 
 #import "OrderViewController.h"
 #import "BarButtonItemGreenColor.h"
+#import "ServerResponce.h"
+#import "AppProgress.h"
 
+@interface OrderViewController(Private)
+
+- (void) SendOrderThreadMethod:(id)obj;
+- (void) ShowOrderResult:(id)obj;
+
+@end
 
 @implementation OrderViewController
 
 #define kSelectButtonIndex 1
 #define kCancelButtonIndex 2
+
+#define USER_GUID_KEY @"uGUID"
+#define FROM_KEY @"FROMFIELD"
+#define TO_KEY @"TOFIELD"
+#define DATE_KEY @"DATAFIELD"
+#define VTYPE_KEY @"VTYPEFIELD"
 
 @synthesize carTypes = carTypes_;
 
@@ -25,6 +39,53 @@
 @synthesize txtDateTime;
 @synthesize lblCarType;
 @synthesize imgCarType;
+
+- (void) SendOrderThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Отправка заказа"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * guid = [d objectForKey:USER_GUID_KEY];
+		NSString * from = [d objectForKey:FROM_KEY];
+		NSString * to = [d objectForKey:TO_KEY];
+		NSString * date = [d objectForKey:DATE_KEY];
+		NSUInteger vType = [[d objectForKey:VTYPE_KEY] intValue];
+		
+		if ([responce SendOrderRequestNotRegular:guid 
+											from:from 
+											  to:to 
+											date:date 
+									 vehicleType:vType ])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				_orderResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(ShowOrderResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) ShowOrderResult:(id)obj
+{
+	NSLog(@"%@", _orderResponse._result);
+}
 
 #pragma mark - Action methods viewController
 
@@ -74,13 +135,9 @@
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row
 		  forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-	NSString *imageName = [[NSString alloc] initWithFormat:@"car_type_%@.png", [carTypes_.allValues objectAtIndex: row]];
-	//NSLog(imageName);
-	UIImage *img = [UIImage imageNamed:imageName];
-	[imageName release];
-	UIImageView *temp = [[UIImageView alloc] initWithImage:img];        
+	NSString *imageName = [[NSString alloc] initWithFormat:@"car_type_%i.png", [[carTypes_.allValues objectAtIndex: row] intValue]];
+	UIImageView *temp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];        
 	temp.frame = CGRectMake(0, 0, 61, 25);
-	
 	UILabel *channelLabel = [[UILabel alloc] initWithFrame:CGRectMake(63, 0, 100, 25)];
 	channelLabel.text = [carTypes_.allKeys objectAtIndex:row];
 	channelLabel.textAlignment = UITextAlignmentLeft;
@@ -89,6 +146,7 @@
 	UIView *tmpView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 170, 29)];
 	[tmpView insertSubview:temp atIndex:0];
 	[tmpView insertSubview:channelLabel atIndex:1];
+	[temp release];
 	return tmpView;
 }
 
@@ -96,9 +154,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"0", @"Эконом",
-				 @"1", @"Бизнес",
-				 @"2", @"Грузовой", nil];
+	carType_ = @"1";
+	
+	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"Эконом",
+				 @"2", @"Бизнес",
+				 @"3", @"Грузовой", nil];
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
@@ -122,7 +182,17 @@
 }
 
 - (IBAction)orderTaxi:(id)sender
-{    
+{
+    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
+	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
+	[d setValue:@"4" forKey:USER_GUID_KEY];
+	[d setValue:fromPoint_.text forKey:FROM_KEY];
+	[d setValue:toPoint_.text forKey:TO_KEY];
+	[d setValue:txtDateTime.text forKey:DATE_KEY];
+	
+	[NSThread detachNewThreadSelector:@selector(SendOrderThreadMethod:)
+							 toTarget:self 
+						   withObject:d];
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -168,7 +238,7 @@
         if (actionSheet.tag == kDateActionsheet) {
             NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
             
-            [dateFomatter setDateFormat:@"dd.MM.YYYY HH:mm"];
+            [dateFomatter setDateFormat:@"YYYY-MM-dd HH:mm"];
             UIDatePicker *picker = (UIDatePicker *)[actionSheet viewWithTag:kDatePickerTag];
             NSDate *selectDate = [picker date];
             dateTime_ = [[NSString alloc] initWithFormat:@"%@", [dateFomatter stringFromDate:selectDate]];

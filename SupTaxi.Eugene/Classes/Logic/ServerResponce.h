@@ -13,13 +13,14 @@
 {
 @private
 	NSMutableArray * _dataItems;
+	
+	
 }
-
 
 - (NSArray *) GetDataItems;
 
-
-- (BOOL) OffersForOrderRequest:(NSString*)orderID;
+- (BOOL) SendOrderRequestNotRegular:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType;
+- (BOOL) GetOffersForOrderRequest:(NSString*)orderGuid;
 
 + (NSString *)GetRootURL;
 

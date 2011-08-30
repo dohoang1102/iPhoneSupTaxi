@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ResponceObject.h"
+#import "Response.h"
 #import "Offer.h"
 
 @interface ServerResponceXMLParser : NSObject <NSXMLParserDelegate>
@@ -28,6 +28,6 @@
 - (NSUInteger) GetCount;
 - (NSUInteger) GetStatus;
 
-- (BOOL) ParseURLString:(NSString*)urlString toArray:(NSMutableArray*)arr;
+- (BOOL) ParseURLString:(NSString*)urlString withDataString:(NSString*)requestString toArray:(NSMutableArray*)arr;
 
 @end

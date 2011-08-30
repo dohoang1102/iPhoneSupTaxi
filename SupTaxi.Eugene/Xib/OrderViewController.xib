@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="16"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -369,7 +369,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Бизнес</string>
+								<string key="IBUIText">Эконом</string>
 								<reference key="IBUIFont" ref="668988179"/>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
@@ -879,7 +879,14 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/OrderViewController.h</string>
+						<string key="minorKey">Classes/ViewControllers/OrderViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Logic/AditionalPrecompileds.h</string>
 					</object>
 				</object>
 			</object>
@@ -1133,7 +1140,7 @@
 				<string>{40, 31}</string>
 				<string>{24, 17}</string>
 				<string>{9, 14}</string>
-				<string>{61, 25}</string>
+				<string>{60, 25}</string>
 				<string>{221, 26}</string>
 				<string>{1283, 12}</string>
 			</object>

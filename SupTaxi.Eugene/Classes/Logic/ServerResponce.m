@@ -9,7 +9,6 @@
 #import "ServerResponce.h"
 #import "ServerResponceXMLParser.h"
 
-
 @interface ServerResponce(Private)
 
 - (void) Clear;
@@ -26,15 +25,16 @@
 	return ((NSArray*)_dataItems);
 }
 
-- (BOOL) ProcessURLString:(NSString*)urlString
+- (BOOL) ProcessURLString:(NSString*)urlString withData:(NSString*)requestData
 {
 	_dataItems = [[NSMutableArray alloc] init];
 	if (_dataItems) 
 	{
 		ServerResponceXMLParser * parser = [[ServerResponceXMLParser alloc] init];
-		BOOL rslt = [parser ParseURLString:urlString toArray:_dataItems];
+		BOOL rslt = [parser ParseURLString:urlString withDataString:requestData toArray:_dataItems];
 		if (rslt) 
 		{
+			//NSLog(@"Response: %@", _dataItems);
 			//_navigateCount = [parser GetCount];
 		}
 		[parser release];
@@ -43,15 +43,30 @@
 	return NO;
 }
 
-//Список каналов:
-- (BOOL) OffersForOrderRequest:(NSString*)orderID
+//Sending an order to server (not Regular)
+- (BOOL) SendOrderRequestNotRegular:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType
 {
 	[self Clear];
-	NSString * urlString = [[ServerResponce GetRootURL] 
-							stringByAppendingFormat:@""];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"false\" Schedule=\"\" />", guid, from, to, orderDate, vehicleType];
+    
 	if (urlString) 
 	{
-		return [self ProcessURLString:urlString];
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Getting an offers from our order
+- (BOOL) GetOffersForOrderRequest:(NSString*)orderGuid
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	//NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%@\" IsRegular=\"false\" Schedule=\"\" />", guid, from, to, orderDate, vehicleType];
+    
+	if (urlString) 
+	{
+		return NO; //[self ProcessURLString:urlString withData:requestString];
 	}
 	return false;
 }
@@ -59,7 +74,8 @@
 
 - (void) Clear
 {
-	SAFE_RELEASE(_dataItems);
+	//SAFE_RELEASE(_dataItems);
+	[_dataItems release];
 }
 
 - (id)init
@@ -81,7 +97,7 @@
 
 + (NSString*)GetRootURL
 {
-	return @"";
+	return @"http://188.127.249.37/process/index";
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Response.h"
 
 #define kEconomicalCarType 1;
 #define kBusinessCarType 2;
@@ -15,6 +16,9 @@
 
 @interface OrderViewController : UIViewController<UIActionSheetDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
 
+@private
+	Response * _orderResponse;
+	
 }
 
 @property (nonatomic, retain) NSDictionary *carTypes;
