@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -281,12 +283,15 @@
 								<string>8CC43BDF1401242800CDA7B3</string>
 								<string>8C92C41513FAF503007D5CD4</string>
 								<string>8CC9514614005BAD00116885</string>
+								<string>8CC9514714005BD300116885</string>
 								<string>1C37FABC05509CD000000102</string>
 								<string>1CC0EA4004350EF90044410B</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>44</integer>
+									<integer>42</integer>
 									<integer>41</integer>
 									<integer>40</integer>
 									<integer>33</integer>
@@ -295,7 +300,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 409}, {242, 680}}</string>
+							<string>{{0, 328}, {242, 680}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -314,7 +319,7 @@
 							<real>242</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>456 186 1070 739 0 0 1680 1028 </string>
+						<string>456 187 1070 739 0 0 1680 1028 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -325,14 +330,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>CarrierListViewController.m</string>
+								<string>OrderShowCell.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,17 +343,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>CarrierListViewController.m</string>
+										<string>OrderShowCell.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>49B839D0140EB4DC0063357A</string>
+										<string>49B83DFD14101BF20063357A</string>
 										<key>history</key>
 										<array>
 											<string>490852AA140C1D75004F4963</string>
 											<string>490852AB140C1D75004F4963</string>
-											<string>490852AC140C1D75004F4963</string>
-											<string>490852AD140C1D75004F4963</string>
 											<string>490852AF140C1D75004F4963</string>
 											<string>490852B0140C1D75004F4963</string>
 											<string>490852B1140C1D75004F4963</string>
@@ -375,7 +376,6 @@
 											<string>49CBC46E140D783600D2DCC9</string>
 											<string>49B839BE140EB4DC0063357A</string>
 											<string>49B839BF140EB4DC0063357A</string>
-											<string>49B839C0140EB4DC0063357A</string>
 											<string>49B839C1140EB4DC0063357A</string>
 											<string>49B839C2140EB4DC0063357A</string>
 											<string>49B839C3140EB4DC0063357A</string>
@@ -390,7 +390,10 @@
 											<string>49B839CC140EB4DC0063357A</string>
 											<string>49B839CD140EB4DC0063357A</string>
 											<string>49B839CE140EB4DC0063357A</string>
-											<string>49B839CF140EB4DC0063357A</string>
+											<string>49B83DFA14101BF20063357A</string>
+											<string>49B83DFB14101BF20063357A</string>
+											<string>49B83DFC14101BF20063357A</string>
+											<string>490852AD140C1D75004F4963</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -404,7 +407,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {806, 691}}</string>
 								<key>RubberWindowFrame</key>
-								<string>456 186 1070 739 0 0 1680 1028 </string>
+								<string>456 187 1070 739 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -424,7 +427,7 @@
 								<key>Frame</key>
 								<string>{{0, 696}, {806, 2}}</string>
 								<key>RubberWindowFrame</key>
-								<string>456 186 1070 739 0 0 1680 1028 </string>
+								<string>456 187 1070 739 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -448,9 +451,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>49B839D1140EB4DC0063357A</string>
+				<string>49B83D89141002740063357A</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>49B839D2140EB4DC0063357A</string>
+				<string>49B83D8A141002740063357A</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -588,14 +591,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>49592A711407FC31001570C2</string>
 		<string>/Users/ezavalko/Projects/Taxi/Src/iPhoneSupTaxi/SupTaxi.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>456 186 1070 739 0 0 1680 1028 </string>
+	<string>456 187 1070 739 0 0 1680 1028 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -672,7 +672,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>49592A711407FC31001570C2</string>
-				<string>49B83880140E63F50063357A</string>
+				<string>49B83D8B141002740063357A</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

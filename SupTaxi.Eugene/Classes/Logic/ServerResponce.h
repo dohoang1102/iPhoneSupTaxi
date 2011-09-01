@@ -23,7 +23,6 @@
 - (BOOL) RegisterUserRequest:(NSString*)email password:(NSString*)password firstName:(NSString*)fName secondName:(NSString*)sName phone:(NSString*)phone;
 - (BOOL) LoginUserRequest:(NSString*)email password:(NSString*)password;
 
-
 - (BOOL) GetOffersForOrderRequest:(NSString*)orderGuid;
 
 + (NSString *)GetRootURL;

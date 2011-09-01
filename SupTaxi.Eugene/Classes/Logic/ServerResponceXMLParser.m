@@ -50,22 +50,36 @@ didStartElement:(NSString *)elementName
 		NSString * CarrierNameString = [attributeDict objectForKey:@"CarrierName"];
 		NSString * ArrivalTimeString = [attributeDict objectForKey:@"ArrivalTime"];
 		NSString * MinPriceString = [attributeDict objectForKey:@"MinPrice"];
-		Offer * e = [[Offer alloc] initWithCarrierName:CarrierNameString arrivalTime:[ArrivalTimeString intValue] minPrice:[MinPriceString intValue]];
-		[_arr addObject:e];
-		[e release];
+		Offer * offer = [[Offer alloc] initWithCarrierName:CarrierNameString arrivalTime:[ArrivalTimeString intValue] minPrice:[MinPriceString intValue]];
+		ResponseOffers * response = (ResponseOffers *) [_arr objectAtIndex:0];
+		[response addAnOffer:offer];
+		[_arr insertObject:response atIndex:0];
+		[offer release];
+		[response release];
 		
 	}else if ([elementName isEqualToString:@"Response"])
 	{
 		NSString * TypeString = [attributeDict objectForKey:@"Type"];
-		NSString * ResultString = [attributeDict objectForKey:@"Result"];
+		BOOL Result = [[attributeDict objectForKey:@"Result"] boolValue];
 		NSString * GuidString = [attributeDict objectForKey:@"Guid"];
 		
-		if ([ResultString isEqualToString:@"Login"]) {
-			ResponseLogin * resp = [[ResponseLogin alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
+		if ([TypeString isEqualToString:@"Login"]) {
+			ResponseLogin * resp = [[ResponseLogin alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
+			resp._wrongPassword = [[attributeDict objectForKey:@"WrongPass"] boolValue];
+			resp._firstName = [attributeDict objectForKey:@"FirstName"];
+			resp._secondName = [attributeDict objectForKey:@"SecondName"];
+			
+			[_arr addObject:resp];
+			[resp release];
+		}else if ([TypeString isEqualToString:@"Order.Offers"]) {
+			ResponseOffers * resp = [[ResponseOffers alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
+			resp._status = [[attributeDict objectForKey:@"Status"] boolValue];
+			resp._from = [attributeDict objectForKey:@"From"];
+			resp._to = [attributeDict objectForKey:@"To"];
 			[_arr addObject:resp];
 			[resp release];
 		}else{
-			Response * resp = [[Response alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
+			Response * resp = [[Response alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
 			[_arr addObject:resp];
 			[resp release];
 		}		
@@ -81,12 +95,12 @@ didStartElement:(NSString *)elementName
 {
 	
 	//TODO: check element
-	/*NSString * elementString = [_elementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
+	NSString * elementString = [_elementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
 	
-	if ([elementName isEqualToString:@"h1"]) 
+	if ([elementName isEqualToString:@"Message"]) 
 	{
-		NSLog(@"Element string : %@", elementString);
-	}*/
+		NSLog(@"Error message : %@", elementString);
+	}
 	if (_element)
 	{
 		

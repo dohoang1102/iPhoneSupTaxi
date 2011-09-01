@@ -10,6 +10,7 @@
 #import "BarButtonItemGreenColor.h"
 #import "ServerResponce.h"
 #import "AppProgress.h"
+#import "SupTaxiAppDelegate.h"
 
 @interface RegisterViewController(Private)
  
@@ -19,6 +20,9 @@
 - (void) AuthenticateResult:(id)obj;
 
 - (void) showAlertMessage:(NSString *)alertMessage;
+
+- (BOOL) textFieldValidate;
+- (void) textFieldUnFocus;
 
 @end
 
@@ -36,6 +40,9 @@
 @synthesize txtName;
 @synthesize txtPhone;
 @synthesize btnAccept;
+
+@synthesize _registerResponse;
+@synthesize _loginResponse;
 
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -70,7 +77,7 @@
 		{
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
-				_registerResponse = [resultData objectAtIndex:0]; 
+				self._registerResponse = [resultData objectAtIndex:0]; 
 			}
 			
 			[self performSelectorOnMainThread:@selector(RegisterResult:) 
@@ -105,7 +112,7 @@
 		{
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
-				_loginResponse = [resultData objectAtIndex:0]; 
+				self._loginResponse = [resultData objectAtIndex:0]; 
 			}
 			
 			[self performSelectorOnMainThread:@selector(AuthenticateResult:) 
@@ -128,6 +135,24 @@
 		[self showAlertMessage:@"Ошибка запроса регистрации!"];
 		return;
 	}
+	
+	if (_registerResponse._result == NO) //ошибка регистрации:
+	{
+		[self showAlertMessage:@"Не удалось зарегистрироватся!"];
+		return;	
+	}
+	else if (_loginResponse._result == YES) //зарегистрировались успешно
+	{
+		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+		[d setValue:self.txtEmail.text forKey:USER_EMAIL_KEY];
+		[d setValue:self.txtPassword.text forKey:USER_PASSWORD_KEY];
+		
+		[NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+								 toTarget:self 
+							   withObject:d];
+		
+		//[self showAlertMessage:@"Регистрация прошла успешно!"];
+	}
 	NSLog(@"%@", _registerResponse._result);
 }
 
@@ -139,7 +164,8 @@
 		return;
 	}
 	
-	if ([_loginResponse._result isEqualToString:@"false"]) {
+	if (_loginResponse._result == NO && _loginResponse._wrongPassword == NO) //неправильный ни email ни пароль:
+	{
 		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 		[d setValue:self.txtEmail.text forKey:USER_EMAIL_KEY];
 		[d setValue:self.txtName.text forKey:USER_NAME_KEY];
@@ -149,30 +175,44 @@
 		
 		[NSThread detachNewThreadSelector:@selector(RegisterThreadMethod:)
 								 toTarget:self 
-							   withObject:d];		
-	}else {
-		NSLog(@"%@", _loginResponse._result);
+							   withObject:d];	
 	}
-
-	
-	NSLog(@"%@", _loginResponse._result);
+	else if (_loginResponse._result == NO && _loginResponse._wrongPassword == YES) //неправильный пароль
+	{
+		[self showAlertMessage:@"Проверьте правильность вашего пароля!"];
+	}
+	else if (_loginResponse._result == YES && _loginResponse._wrongPassword == NO) //правильный пароль и мыло
+	{
+		//TODO: Save userData
+		[prefManager updateUserCredentialsWithEmail:txtEmail.text andPassword:txtPassword.text];
+		[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
+		[prefManager updateUserGuid:_loginResponse._guid];
+		
+		[self showAlertMessage:@"Вы успешно авторизованы!"];
+		//TODO: Get back to Order and send it
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
+	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
 	// кнопка заказать
     UIBarButtonItem *registerButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Готово" andTarget:self andSelector:@selector(registerAction:)];
     self.navigationItem.rightBarButtonItem = registerButton;
-    //[registerButton release];
-	
+    
 	// кнопка отмена
     UIBarButtonItem *registerDeclineButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(registerActionDecline:)];
     self.navigationItem.leftBarButtonItem = registerDeclineButton;
-    //[registerDeclineButton release];
+    
+	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+	self.navigationItem.titleView = img;
+	[img release];
 	
 	[self.navigationItem setHidesBackButton:YES];
 }
@@ -205,6 +245,9 @@
 
 - (IBAction)registerAction:(id)sender
 {
+	[self textFieldUnFocus];
+	if ([self textFieldValidate] == NO) return;
+	
 	if (self.btnAccept.selected == NO) {
 		[self showAlertMessage:@"Не приняв условия регистрации Вы не можете быть зарегистрированным!"];
 		return;
@@ -220,6 +263,47 @@
 	
 }
 
+-(void)textFieldUnFocus {
+	[self.txtEmail resignFirstResponder];
+	[self.txtPassword resignFirstResponder];
+	[self.txtLastName resignFirstResponder];
+	[self.txtName resignFirstResponder];
+}
+
+-(BOOL)textFieldValidate {
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поля, Email и Пароль обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	NSArray *fieldArray;
+	int i = 0;
+	
+	fieldArray = [[NSArray arrayWithObjects: 
+				   [NSString stringWithFormat:@"%@",self.txtEmail.text],
+				   [NSString stringWithFormat:@"%@",self.txtPassword.text],nil] retain];
+	
+	@try {
+		for (NSString *fieldText in fieldArray){
+			if([fieldText isEqualToString:@""]){
+				[alert show]; 
+				return NO;
+				break;
+			}
+			i++;
+		}
+		
+		// check that all the field were passed (i == array.count) if so execute
+		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
+			return YES;        
+		}
+	}
+	@catch (NSException * e) {
+		NSLog(@"%@", e);
+	}
+	@finally {
+		[alert release];
+		[fieldArray release];
+	}
+	return NO;
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -252,6 +336,9 @@
 	[txtName release];
 	[txtPhone release];
 	[btnAccept release];
+	
+	[_loginResponse release];
+	[_registerResponse release];
 	
     [super dealloc];
 }

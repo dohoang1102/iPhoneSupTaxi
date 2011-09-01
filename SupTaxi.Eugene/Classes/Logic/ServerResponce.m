@@ -62,11 +62,11 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	//NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%@\" IsRegular=\"false\" Schedule=\"\" />", guid, from, to, orderDate, vehicleType];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order.Offers\" Guid=\"%@\" />", orderGuid];
     
 	if (urlString) 
 	{
-		return NO; //[self ProcessURLString:urlString withData:requestString];
+		return [self ProcessURLString:urlString withData:requestString];
 	}
 	return false;
 }

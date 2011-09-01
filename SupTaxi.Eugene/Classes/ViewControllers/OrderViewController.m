@@ -12,11 +12,15 @@
 #import "BarButtonItemGreenColor.h"
 #import "ServerResponce.h"
 #import "AppProgress.h"
+#import	"SupTaxiAppDelegate.h"
 
 @interface OrderViewController(Private)
 
 - (void) SendOrderThreadMethod:(id)obj;
 - (void) ShowOrderResult:(id)obj;
+- (void) showAlertMessage:(NSString *)alertMessage;
+- (void) textFieldUnFocus;
+- (BOOL) textFieldValidate;
 
 @end
 
@@ -41,6 +45,8 @@
 @synthesize txtDateTime;
 @synthesize lblCarType;
 @synthesize imgCarType;
+
+@synthesize _orderResponse;
 
 - (void) SendOrderThreadMethod:(id)obj
 {
@@ -68,7 +74,7 @@
 		{
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
-				_orderResponse = [resultData objectAtIndex:0]; 
+				self._orderResponse = [resultData objectAtIndex:0]; 
 			}
 			
 			[self performSelectorOnMainThread:@selector(ShowOrderResult:) 
@@ -86,17 +92,11 @@
 
 - (void) ShowOrderResult:(id)obj
 {
-	if (!_orderResponse)
-	{
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
-														 message:@"Ошибка отправки заказа, повторите, пожалуйста, еще раз!" 
-														delegate:nil 
-											   cancelButtonTitle:@"OK" 
-											   otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+	if (!_orderResponse || _orderResponse._result == NO)
+		[self showAlertMessage:@"Ошибка отправки заказа, повторите, пожалуйста, позже!"];
+	if (_orderResponse._result == YES) {
+		[self showAlertMessage:@"Ваш заказ принят на обработку, ожидайте ответ оператора!"];
 	}
-	NSLog(@"%@", _orderResponse._result);
 }
 
 #pragma mark - Action methods viewController
@@ -105,6 +105,8 @@
 #define kDateActionsheet 101
 - (IBAction)chooseDateTime:(id)sender
 {
+	[self textFieldUnFocus];
+	
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите дату и время" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
     [actionSheet setFrame:CGRectMake(0, 0, 320, 480)];
@@ -126,6 +128,8 @@
 #define kCarTypeActionsheet 201
 - (IBAction)chooseCarType:(id)sender
 {
+	[self textFieldUnFocus];
+	
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите тип автомобиля" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
     [actionSheet setFrame:CGRectMake(0, 0, 320, 480)]; //CGRectMake(0, 117, 320, 383)];
@@ -166,6 +170,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
+	
 	carType_ = @"1";
 	
 	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"Эконом",
@@ -188,20 +194,69 @@
 
 - (IBAction)clearForm:(id)sender
 {
-    
+	[self.fromPoint setText:@""];
+	[self.toPoint setText:@""];
+	[self.txtDateTime setText:@""];
+	[self.imgCarType setImage:[UIImage imageNamed:@"car_type_1.png"]];
+	NSString * carTypeKey = [[NSString alloc] initWithString:[carTypes_.allKeys objectAtIndex:1]];
+	[self.lblCarType setText:carTypeKey];
+}
+
+-(void)textFieldUnFocus {
+	[self.fromPoint resignFirstResponder];
+	[self.toPoint resignFirstResponder];
+}
+
+-(BOOL)textFieldValidate {
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Пожалуйста, заполните все поля." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	NSArray *fieldArray;
+	int i = 0;
+	
+	fieldArray = [[NSArray arrayWithObjects: 
+				   [NSString stringWithFormat:@"%@",self.fromPoint.text],
+				   [NSString stringWithFormat:@"%@",self.toPoint.text],
+				   [NSString stringWithFormat:@"%@",self.txtDateTime.text],nil] retain];
+	
+	@try {
+		for (NSString *fieldText in fieldArray){
+			if([fieldText isEqualToString:@""]){
+				[alert show]; 
+				return NO;
+				break;
+			}
+			i++;
+		}
+		
+		// check that all the field were passed (i == array.count) if so execute
+		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
+			return YES;        
+		}
+	}
+	@catch (NSException * e) {
+		NSLog(@"%@", e);
+	}
+	@finally {
+		[alert release];
+		[fieldArray release];
+	}
+	return NO;
 }
 
 - (IBAction)orderTaxi:(id)sender
 {
-	RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
-    [self.navigationController pushViewController:registerViewController animated:YES];
-    [registerViewController release];
+	if ([self textFieldValidate] == NO) return;
 	
-	return;
-	
+	if (prefManager.prefs.userGuid == nil) {
+		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+		[self.navigationController pushViewController:registerViewController animated:YES];
+		[registerViewController release];
+		return;
+	}
+		
     NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
-	[d setValue:@"4" forKey:USER_GUID_KEY];
+	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	[d setValue:fromPoint_.text forKey:FROM_KEY];
 	[d setValue:toPoint_.text forKey:TO_KEY];
 	[d setValue:txtDateTime.text forKey:DATE_KEY];
@@ -214,7 +269,7 @@
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+    [self textFieldUnFocus];
     return YES;
 }
 
@@ -280,6 +335,17 @@
     }
 }
 
+- (void) showAlertMessage:(NSString *)alertMessage
+{
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -312,6 +378,8 @@
     [toPoint_ release];
     [dateTime_ release];
     [carType_ release];
+	
+	[_orderResponse release];
 	
     [super dealloc];
 }

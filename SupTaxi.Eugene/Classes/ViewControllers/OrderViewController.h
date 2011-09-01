@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Response.h"
+#import "PreferencesManager.h"
 
 #define kEconomicalCarType 1;
 #define kBusinessCarType 2;
@@ -17,8 +18,8 @@
 @interface OrderViewController : UIViewController<UIActionSheetDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
 
 @private
-	Response * _orderResponse;
-	
+	Response *			_orderResponse;
+	PreferencesManager * prefManager;
 }
 
 @property (nonatomic, retain) NSDictionary *carTypes;
@@ -30,6 +31,8 @@
 
 @property (nonatomic, copy) NSString *dateTime;
 @property (nonatomic, copy) NSString *carType;
+
+@property (nonatomic, retain) Response * _orderResponse;
 
 - (IBAction)chooseDateTime:(id)sender;
 - (IBAction)chooseCarType:(id)sender;

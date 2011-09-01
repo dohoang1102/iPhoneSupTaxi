@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Offer.h"
 
 @interface Response : NSObject {
 
 }
 
 @property (nonatomic, copy) NSString *_responseType;
-@property (nonatomic, copy) NSString *_result;
+@property (nonatomic, assign) BOOL _result;
 @property (nonatomic, copy) NSString *_guid;
 
-- (id)initWithResponseType:(NSString *)responseType andResult:(NSString *)result;
-- (id)initWithResponseType:(NSString *)responseType result:(NSString *)result andGuid:(NSString *)guid;
+- (id)initWithResponseType:(NSString *)responseType andResult:(BOOL)result;
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result andGuid:(NSString *)guid;
 
 @end
 
@@ -28,5 +28,19 @@
 
 @property (nonatomic, copy) NSString *_firstName;
 @property (nonatomic, copy) NSString *_secondName;
+@property (nonatomic, assign) BOOL _wrongPassword;
+
+@end
+
+@interface ResponseOffers : Response {
+	
+}
+
+@property (nonatomic, copy) NSString *_from;
+@property (nonatomic, copy) NSString *_to;
+@property (nonatomic, assign) BOOL _status;
+@property (nonatomic, retain) NSMutableArray * _offers; 
+
+- (void)addAnOffer:(Offer *)offer;
 
 @end

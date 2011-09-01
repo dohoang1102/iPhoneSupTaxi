@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Response.h"
+#import "PreferencesManager.h"
 
 @interface RegisterViewController : UIViewController <UITextFieldDelegate> {
 @private
 	Response		* _registerResponse;
 	ResponseLogin	* _loginResponse;
+	
+	PreferencesManager * prefManager;
 }
 
 @property (nonatomic, retain) IBOutlet UITextField *txtEmail;
@@ -22,6 +25,10 @@
 @property (nonatomic, retain) IBOutlet UITextField *txtPhone;
 
 @property (nonatomic, retain) IBOutlet UIButton *btnAccept;
+
+@property (nonatomic, retain) Response		* _registerResponse;
+@property (nonatomic, retain) ResponseLogin	* _loginResponse;
+
 
 - (IBAction) selectCheckBox:(id)sender;
 - (IBAction) registerAction:(id)sender;

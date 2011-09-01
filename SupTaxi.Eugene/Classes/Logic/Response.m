@@ -15,21 +15,21 @@
 @synthesize _result;
 @synthesize _guid;
 
-- (id)initWithResponseType:(NSString *)responseType andResult:(NSString *)result{
+- (id)initWithResponseType:(NSString *)responseType andResult:(BOOL)result{
     self = [super init];
     if (self != nil) {
         self._responseType = responseType;
-        self._result = result;
+         [self set_result:result];
     }
     
     return self;
 }
 
-- (id)initWithResponseType:(NSString *)responseType result:(NSString *)result andGuid:(NSString *)guid{
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result andGuid:(NSString *)guid{
     self = [super init];
     if (self != nil) {
         self._responseType = responseType;
-        self._result = result;
+        [self set_result:result];
 		self._guid = guid;
     }
     
@@ -39,7 +39,6 @@
 - (void)dealloc
 {
     self._responseType = nil;
-	self._result = nil;
 	self._guid = nil;
     [super dealloc];
 }
@@ -50,11 +49,42 @@
 
 @synthesize _firstName;
 @synthesize _secondName;
+@synthesize _wrongPassword;
 
 - (void)dealloc
 {
     self._firstName = nil;
 	self._secondName = nil;
+    [super dealloc];
+}
+
+@end
+
+@implementation ResponseOffers
+
+@synthesize _status;
+@synthesize _offers;
+@synthesize _from;
+@synthesize _to;
+
+
+-(id)init{
+	if ((self = [super init])) {
+		_offers = [NSMutableArray array];
+	}
+	return self;
+}
+
+- (void)addAnOffer:(Offer *)offer
+{
+	[self._offers addObject:offer];
+}
+
+- (void)dealloc
+{
+	self._from = nil;
+	self._to = nil;
+	[_offers release];
     [super dealloc];
 }
 

@@ -8,21 +8,65 @@
 
 #import "SupTaxiAppDelegate.h"
 #import "TabBarBackgroundView.h"
+#import "ServerResponce.h"
+
+@interface SupTaxiAppDelegate(Private)
+
+- (void) CheckOrderOffersThreadMethod:(id)obj;
+- (void) ShowOrderOffers:(id)obj;
+
+@end
 
 @implementation SupTaxiAppDelegate
 
 @synthesize window;
 @synthesize tabsController;
+@synthesize prefManager;
+@synthesize currentOrderGuid;
+@synthesize _offerResponse;
 
 + (SupTaxiAppDelegate *)sharedAppDelegate
 {
     return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
 }
 
+- (void) CheckOrderOffersThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSString * guid = (NSString*)obj;
+		
+		if ([responce GetOffersForOrderRequest:guid])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._offerResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(ShowOrderResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	[pool release];
+}
+
+- (void) ShowOrderOffers:(id)obj
+{
+	
+}
+
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+	
+	prefManager = [[PreferencesManager alloc] init];
 	
 	CGRect frame = CGRectMake(0.0, 0.0, self.tabsController.tabBar.bounds.size.width, 48);
     TabBarBackgroundView *bacgroundView = [[TabBarBackgroundView alloc] initWithFrame:frame];
@@ -199,14 +243,19 @@
      */
 }
 
+
+
 - (void)dealloc {
     
     [managedObjectContext_ release];
     [managedObjectModel_ release];
     [persistentStoreCoordinator_ release];
-    
+	
+	[prefManager release];
+    [currentOrderGuid release];
+	
+	[_offerResponse release];	
 	[tabsController release];
-    [tabsController release];
     [super dealloc];
 }
 

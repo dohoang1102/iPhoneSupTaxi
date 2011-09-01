@@ -42,9 +42,14 @@
 		4987A5CA140E320C009C0A12 /* field_1Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C5140E320C009C0A12 /* field_1Line.png */; };
 		4987A5CB140E320C009C0A12 /* field_3Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C6140E320C009C0A12 /* field_3Line.png */; };
 		49B8388B140E64370063357A /* LocalOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B8388A140E64370063357A /* LocalOrder.m */; };
-		49B8389E140E7E9B0063357A /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B8389D140E7E9B0063357A /* UserData.m */; };
-		49B838CA140E977F0063357A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B838C8140E977F0063357A /* LogInViewController.m */; };
-		49B838CB140E977F0063357A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B838C9140E977F0063357A /* LogInViewController.xib */; };
+		49B83BAF140FB0890063357A /* PListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B83BAC140FB0890063357A /* PListData.m */; };
+		49B83BB0140FB0890063357A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B83BAE140FB0890063357A /* Preferences.m */; };
+		49B83BCB140FBDB70063357A /* PreferencesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B83BCA140FBDB70063357A /* PreferencesManager.m */; };
+		49B83D8F141007140063357A /* CarriersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B83D8D141007140063357A /* CarriersViewController.xib */; };
+		49B83D90141007140063357A /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B83D8E141007140063357A /* RegisterViewController.xib */; };
+		49B83D93141007280063357A /* CarriersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B83D92141007280063357A /* CarriersViewController.m */; };
+		49B83D9F14100A4A0063357A /* OrderShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B83D9E14100A4A0063357A /* OrderShowCell.m */; };
+		49B83DDF1410176E0063357A /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B83DDE1410176E0063357A /* 37x-Checkmark.png */; };
 		49CBC272140D25CC00D2DCC9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC271140D25CC00D2DCC9 /* Response.m */; };
 		49CBC285140D32AC00D2DCC9 /* AppProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC282140D32AC00D2DCC9 /* AppProgress.m */; };
 		49CBC286140D32AC00D2DCC9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC284140D32AC00D2DCC9 /* MBProgressHUD.m */; };
@@ -53,7 +58,6 @@
 		49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC422140D5DAC00D2DCC9 /* car_type_2.png */; };
 		49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_3.png */; };
 		49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */; };
-		49CBC43D140D602B00D2DCC9 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,11 +107,19 @@
 		4987A5C6140E320C009C0A12 /* field_3Line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = field_3Line.png; sourceTree = "<group>"; };
 		49B83889140E64370063357A /* LocalOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalOrder.h; sourceTree = "<group>"; };
 		49B8388A140E64370063357A /* LocalOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalOrder.m; sourceTree = "<group>"; };
-		49B8389C140E7E9B0063357A /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
-		49B8389D140E7E9B0063357A /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
-		49B838C7140E977F0063357A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
-		49B838C8140E977F0063357A /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
-		49B838C9140E977F0063357A /* LogInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInViewController.xib; path = ../Classes/ViewControllers/LogInViewController.xib; sourceTree = "<group>"; };
+		49B83BAB140FB0890063357A /* PListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListData.h; sourceTree = "<group>"; };
+		49B83BAC140FB0890063357A /* PListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PListData.m; sourceTree = "<group>"; };
+		49B83BAD140FB0890063357A /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		49B83BAE140FB0890063357A /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		49B83BC9140FBDB70063357A /* PreferencesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesManager.h; sourceTree = "<group>"; };
+		49B83BCA140FBDB70063357A /* PreferencesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesManager.m; sourceTree = "<group>"; };
+		49B83D8D141007140063357A /* CarriersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarriersViewController.xib; sourceTree = "<group>"; };
+		49B83D8E141007140063357A /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		49B83D91141007280063357A /* CarriersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarriersViewController.h; sourceTree = "<group>"; };
+		49B83D92141007280063357A /* CarriersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarriersViewController.m; sourceTree = "<group>"; };
+		49B83D9D14100A4A0063357A /* OrderShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderShowCell.h; sourceTree = "<group>"; };
+		49B83D9E14100A4A0063357A /* OrderShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderShowCell.m; sourceTree = "<group>"; };
+		49B83DDE1410176E0063357A /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		49CBC270140D25CC00D2DCC9 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		49CBC271140D25CC00D2DCC9 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
 		49CBC281140D32AC00D2DCC9 /* AppProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppProgress.h; sourceTree = "<group>"; };
@@ -121,7 +133,6 @@
 		49CBC423140D5DAC00D2DCC9 /* car_type_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_3.png; sourceTree = "<group>"; };
 		49CBC439140D602B00D2DCC9 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
-		49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RegisterViewController.xib; path = ../Classes/ViewControllers/RegisterViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SupTaxi-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SupTaxi-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,9 +155,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				49B83BAA140FB0890063357A /* PlistData */,
 				49B8387E140E60BD0063357A /* LocalDataStorage */,
 				49085260140C1375004F4963 /* Logic */,
 				49085243140C0878004F4963 /* BarCustomization */,
+				49B83D9C14100A4A0063357A /* CustomCells */,
 				4908524B140C0878004F4963 /* ViewControllers */,
 				1D3623240D0F684500981E51 /* SupTaxiAppDelegate.h */,
 				1D3623250D0F684500981E51 /* SupTaxiAppDelegate.m */,
@@ -211,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				4987A5C1140E320C009C0A12 /* Reg */,
+				49B83DDE1410176E0063357A /* 37x-Checkmark.png */,
 				49CBC421140D5DAC00D2DCC9 /* car_type_1.png */,
 				49CBC422140D5DAC00D2DCC9 /* car_type_2.png */,
 				49CBC423140D5DAC00D2DCC9 /* car_type_3.png */,
@@ -233,9 +247,9 @@
 		49085240140C0847004F4963 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				49B83D8D141007140063357A /* CarriersViewController.xib */,
+				49B83D8E141007140063357A /* RegisterViewController.xib */,
 				49085241140C0847004F4963 /* OrderViewController.xib */,
-				49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */,
-				49B838C9140E977F0063357A /* LogInViewController.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -256,12 +270,12 @@
 		4908524B140C0878004F4963 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				49B83D91141007280063357A /* CarriersViewController.h */,
+				49B83D92141007280063357A /* CarriersViewController.m */,
 				4908524C140C0878004F4963 /* OrderViewController.h */,
 				4908524D140C0878004F4963 /* OrderViewController.m */,
 				49CBC439140D602B00D2DCC9 /* RegisterViewController.h */,
 				49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */,
-				49B838C7140E977F0063357A /* LogInViewController.h */,
-				49B838C8140E977F0063357A /* LogInViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -309,10 +323,31 @@
 			children = (
 				49B83889140E64370063357A /* LocalOrder.h */,
 				49B8388A140E64370063357A /* LocalOrder.m */,
-				49B8389C140E7E9B0063357A /* UserData.h */,
-				49B8389D140E7E9B0063357A /* UserData.m */,
 			);
 			path = LocalDataStorage;
+			sourceTree = "<group>";
+		};
+		49B83BAA140FB0890063357A /* PlistData */ = {
+			isa = PBXGroup;
+			children = (
+				49B83BAB140FB0890063357A /* PListData.h */,
+				49B83BAC140FB0890063357A /* PListData.m */,
+				49B83BAD140FB0890063357A /* Preferences.h */,
+				49B83BAE140FB0890063357A /* Preferences.m */,
+				49B83BC9140FBDB70063357A /* PreferencesManager.h */,
+				49B83BCA140FBDB70063357A /* PreferencesManager.m */,
+			);
+			name = PlistData;
+			path = LocalDataStorage/PlistData;
+			sourceTree = "<group>";
+		};
+		49B83D9C14100A4A0063357A /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				49B83D9D14100A4A0063357A /* OrderShowCell.h */,
+				49B83D9E14100A4A0063357A /* OrderShowCell.m */,
+			);
+			path = CustomCells;
 			sourceTree = "<group>";
 		};
 		49CBC280140D32AC00D2DCC9 /* Progress */ = {
@@ -392,13 +427,14 @@
 				49CBC424140D5DAC00D2DCC9 /* car_type_1.png in Resources */,
 				49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */,
 				49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */,
-				49CBC43D140D602B00D2DCC9 /* RegisterViewController.xib in Resources */,
 				4987A5C7140E320C009C0A12 /* background.png in Resources */,
 				4987A5C8140E320C009C0A12 /* checkbox_checked.png in Resources */,
 				4987A5C9140E320C009C0A12 /* checkbox_unchecked.png in Resources */,
 				4987A5CA140E320C009C0A12 /* field_1Line.png in Resources */,
 				4987A5CB140E320C009C0A12 /* field_3Line.png in Resources */,
-				49B838CB140E977F0063357A /* LogInViewController.xib in Resources */,
+				49B83D8F141007140063357A /* CarriersViewController.xib in Resources */,
+				49B83D90141007140063357A /* RegisterViewController.xib in Resources */,
+				49B83DDF1410176E0063357A /* 37x-Checkmark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,8 +461,11 @@
 				49CBC299140D3B7700D2DCC9 /* AditionalPrecompileds.m in Sources */,
 				49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */,
 				49B8388B140E64370063357A /* LocalOrder.m in Sources */,
-				49B8389E140E7E9B0063357A /* UserData.m in Sources */,
-				49B838CA140E977F0063357A /* LogInViewController.m in Sources */,
+				49B83BAF140FB0890063357A /* PListData.m in Sources */,
+				49B83BB0140FB0890063357A /* Preferences.m in Sources */,
+				49B83BCB140FBDB70063357A /* PreferencesManager.m in Sources */,
+				49B83D93141007280063357A /* CarriersViewController.m in Sources */,
+				49B83D9F14100A4A0063357A /* OrderShowCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
