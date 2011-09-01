@@ -71,6 +71,34 @@
 	return false;
 }
 
+//Sending registration request
+- (BOOL) RegisterUserRequest:(NSString*)email password:(NSString*)password firstName:(NSString*)fName secondName:(NSString*)sName phone:(NSString*)phone
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Register\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" Phone=\"%@\" City=\"\" ContractNumber=\"\" ContractCustomer=\"\" ContractCarrier=\"\" PreferredCarrier=\"\" />",
+							   password, email, fName, sName, phone];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+- (BOOL) LoginUserRequest:(NSString*)email password:(NSString*)password
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Login\" Email=\"%@\" Password=\"%@\" />",
+							   email, password];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
 
 - (void) Clear
 {

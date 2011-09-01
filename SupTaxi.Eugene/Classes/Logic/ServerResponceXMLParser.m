@@ -43,13 +43,7 @@ didStartElement:(NSString *)elementName
 {
 	SAFE_REASSIGN(_elementName, elementName);
 	
-	NSLog(@"\n elementName %@ \n", elementName);
-	
-	/*NSObject * newObject = [NSObject CreateNewObjectForXMLTag:elementName];
-	if (newObject) 
-	{
-		
-		*/
+	//NSLog(@"\n elementName %@ \n", elementName);
 	if ([elementName isEqualToString:@"Offer"])
 	{
 		
@@ -59,31 +53,37 @@ didStartElement:(NSString *)elementName
 		Offer * e = [[Offer alloc] initWithCarrierName:CarrierNameString arrivalTime:[ArrivalTimeString intValue] minPrice:[MinPriceString intValue]];
 		[_arr addObject:e];
 		[e release];
-		//_element = e;
 		
 	}else if ([elementName isEqualToString:@"Response"])
 	{
 		NSString * TypeString = [attributeDict objectForKey:@"Type"];
 		NSString * ResultString = [attributeDict objectForKey:@"Result"];
 		NSString * GuidString = [attributeDict objectForKey:@"Guid"];
-		Response * resp = [[Response alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
-		[_arr addObject:resp];
-		[resp release];
-		//_element = resp;
+		
+		if ([ResultString isEqualToString:@"Login"]) {
+			ResponseLogin * resp = [[ResponseLogin alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
+			[_arr addObject:resp];
+			[resp release];
+		}else{
+			Response * resp = [[Response alloc] initWithResponseType:TypeString result:ResultString andGuid:GuidString];
+			[_arr addObject:resp];
+			[resp release];
+		}		
 	}
 	
 	SAFE_REASSIGN(_elementCreatedByName, elementName);
-	//}
+
 }
 - (void) parser:(NSXMLParser *)parser 
  didEndElement:(NSString *)elementName 
   namespaceURI:(NSString *)namespaceURI 
  qualifiedName:(NSString *)qName
 {
+	
 	//TODO: check element
 	/*NSString * elementString = [_elementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
 	
-	if ([elementName isEqualToString:@"Request"]) 
+	if ([elementName isEqualToString:@"h1"]) 
 	{
 		NSLog(@"Element string : %@", elementString);
 	}*/

@@ -21,3 +21,12 @@
 - (id)initWithResponseType:(NSString *)responseType result:(NSString *)result andGuid:(NSString *)guid;
 
 @end
+
+@interface ResponseLogin : Response {
+	
+}
+
+@property (nonatomic, copy) NSString *_firstName;
+@property (nonatomic, copy) NSString *_secondName;
+
+@end

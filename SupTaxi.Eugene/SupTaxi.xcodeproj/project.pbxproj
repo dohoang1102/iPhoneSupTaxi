@@ -36,6 +36,15 @@
 		4908526C140C1375004F4963 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085264140C1375004F4963 /* Offer.m */; };
 		4908526E140C1375004F4963 /* ServerResponce.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085268140C1375004F4963 /* ServerResponce.m */; };
 		4908526F140C1375004F4963 /* ServerResponceXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4908526A140C1375004F4963 /* ServerResponceXMLParser.m */; };
+		4987A5C7140E320C009C0A12 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C2140E320C009C0A12 /* background.png */; };
+		4987A5C8140E320C009C0A12 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C3140E320C009C0A12 /* checkbox_checked.png */; };
+		4987A5C9140E320C009C0A12 /* checkbox_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C4140E320C009C0A12 /* checkbox_unchecked.png */; };
+		4987A5CA140E320C009C0A12 /* field_1Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C5140E320C009C0A12 /* field_1Line.png */; };
+		4987A5CB140E320C009C0A12 /* field_3Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C6140E320C009C0A12 /* field_3Line.png */; };
+		49B8388B140E64370063357A /* LocalOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B8388A140E64370063357A /* LocalOrder.m */; };
+		49B8389E140E7E9B0063357A /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B8389D140E7E9B0063357A /* UserData.m */; };
+		49B838CA140E977F0063357A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B838C8140E977F0063357A /* LogInViewController.m */; };
+		49B838CB140E977F0063357A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B838C9140E977F0063357A /* LogInViewController.xib */; };
 		49CBC272140D25CC00D2DCC9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC271140D25CC00D2DCC9 /* Response.m */; };
 		49CBC285140D32AC00D2DCC9 /* AppProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC282140D32AC00D2DCC9 /* AppProgress.m */; };
 		49CBC286140D32AC00D2DCC9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC284140D32AC00D2DCC9 /* MBProgressHUD.m */; };
@@ -45,8 +54,6 @@
 		49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_3.png */; };
 		49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */; };
 		49CBC43D140D602B00D2DCC9 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */; };
-		49CBC441140D605700D2DCC9 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43F140D605700D2DCC9 /* AuthViewController.m */; };
-		49CBC442140D605700D2DCC9 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC440140D605700D2DCC9 /* AuthViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +96,18 @@
 		49085268140C1375004F4963 /* ServerResponce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponce.m; sourceTree = "<group>"; };
 		49085269140C1375004F4963 /* ServerResponceXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResponceXMLParser.h; sourceTree = "<group>"; };
 		4908526A140C1375004F4963 /* ServerResponceXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponceXMLParser.m; sourceTree = "<group>"; };
+		4987A5C2140E320C009C0A12 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		4987A5C3140E320C009C0A12 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
+		4987A5C4140E320C009C0A12 /* checkbox_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_unchecked.png; sourceTree = "<group>"; };
+		4987A5C5140E320C009C0A12 /* field_1Line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = field_1Line.png; sourceTree = "<group>"; };
+		4987A5C6140E320C009C0A12 /* field_3Line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = field_3Line.png; sourceTree = "<group>"; };
+		49B83889140E64370063357A /* LocalOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalOrder.h; sourceTree = "<group>"; };
+		49B8388A140E64370063357A /* LocalOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalOrder.m; sourceTree = "<group>"; };
+		49B8389C140E7E9B0063357A /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
+		49B8389D140E7E9B0063357A /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
+		49B838C7140E977F0063357A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		49B838C8140E977F0063357A /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		49B838C9140E977F0063357A /* LogInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInViewController.xib; path = ../Classes/ViewControllers/LogInViewController.xib; sourceTree = "<group>"; };
 		49CBC270140D25CC00D2DCC9 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		49CBC271140D25CC00D2DCC9 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
 		49CBC281140D32AC00D2DCC9 /* AppProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppProgress.h; sourceTree = "<group>"; };
@@ -103,9 +122,6 @@
 		49CBC439140D602B00D2DCC9 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RegisterViewController.xib; path = ../Classes/ViewControllers/RegisterViewController.xib; sourceTree = "<group>"; };
-		49CBC43E140D605700D2DCC9 /* AuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthViewController.h; sourceTree = "<group>"; };
-		49CBC43F140D605700D2DCC9 /* AuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthViewController.m; sourceTree = "<group>"; };
-		49CBC440140D605700D2DCC9 /* AuthViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AuthViewController.xib; path = ../Classes/ViewControllers/AuthViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SupTaxi-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SupTaxi-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +144,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				49B8387E140E60BD0063357A /* LocalDataStorage */,
 				49085260140C1375004F4963 /* Logic */,
 				49085243140C0878004F4963 /* BarCustomization */,
 				4908524B140C0878004F4963 /* ViewControllers */,
@@ -193,6 +210,7 @@
 		4908505A140BB080004F4963 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4987A5C1140E320C009C0A12 /* Reg */,
 				49CBC421140D5DAC00D2DCC9 /* car_type_1.png */,
 				49CBC422140D5DAC00D2DCC9 /* car_type_2.png */,
 				49CBC423140D5DAC00D2DCC9 /* car_type_3.png */,
@@ -217,7 +235,7 @@
 			children = (
 				49085241140C0847004F4963 /* OrderViewController.xib */,
 				49CBC43B140D602B00D2DCC9 /* RegisterViewController.xib */,
-				49CBC440140D605700D2DCC9 /* AuthViewController.xib */,
+				49B838C9140E977F0063357A /* LogInViewController.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -242,8 +260,8 @@
 				4908524D140C0878004F4963 /* OrderViewController.m */,
 				49CBC439140D602B00D2DCC9 /* RegisterViewController.h */,
 				49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */,
-				49CBC43E140D605700D2DCC9 /* AuthViewController.h */,
-				49CBC43F140D605700D2DCC9 /* AuthViewController.m */,
+				49B838C7140E977F0063357A /* LogInViewController.h */,
+				49B838C8140E977F0063357A /* LogInViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -272,6 +290,29 @@
 				49CBC271140D25CC00D2DCC9 /* Response.m */,
 			);
 			name = Objects;
+			sourceTree = "<group>";
+		};
+		4987A5C1140E320C009C0A12 /* Reg */ = {
+			isa = PBXGroup;
+			children = (
+				4987A5C2140E320C009C0A12 /* background.png */,
+				4987A5C3140E320C009C0A12 /* checkbox_checked.png */,
+				4987A5C4140E320C009C0A12 /* checkbox_unchecked.png */,
+				4987A5C5140E320C009C0A12 /* field_1Line.png */,
+				4987A5C6140E320C009C0A12 /* field_3Line.png */,
+			);
+			path = Reg;
+			sourceTree = "<group>";
+		};
+		49B8387E140E60BD0063357A /* LocalDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				49B83889140E64370063357A /* LocalOrder.h */,
+				49B8388A140E64370063357A /* LocalOrder.m */,
+				49B8389C140E7E9B0063357A /* UserData.h */,
+				49B8389D140E7E9B0063357A /* UserData.m */,
+			);
+			path = LocalDataStorage;
 			sourceTree = "<group>";
 		};
 		49CBC280140D32AC00D2DCC9 /* Progress */ = {
@@ -352,7 +393,12 @@
 				49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */,
 				49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */,
 				49CBC43D140D602B00D2DCC9 /* RegisterViewController.xib in Resources */,
-				49CBC442140D605700D2DCC9 /* AuthViewController.xib in Resources */,
+				4987A5C7140E320C009C0A12 /* background.png in Resources */,
+				4987A5C8140E320C009C0A12 /* checkbox_checked.png in Resources */,
+				4987A5C9140E320C009C0A12 /* checkbox_unchecked.png in Resources */,
+				4987A5CA140E320C009C0A12 /* field_1Line.png in Resources */,
+				4987A5CB140E320C009C0A12 /* field_3Line.png in Resources */,
+				49B838CB140E977F0063357A /* LogInViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +424,9 @@
 				49CBC286140D32AC00D2DCC9 /* MBProgressHUD.m in Sources */,
 				49CBC299140D3B7700D2DCC9 /* AditionalPrecompileds.m in Sources */,
 				49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */,
-				49CBC441140D605700D2DCC9 /* AuthViewController.m in Sources */,
+				49B8388B140E64370063357A /* LocalOrder.m in Sources */,
+				49B8389E140E7E9B0063357A /* UserData.m in Sources */,
+				49B838CA140E977F0063357A /* LogInViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

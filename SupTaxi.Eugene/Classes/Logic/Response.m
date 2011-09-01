@@ -13,6 +13,7 @@
 
 @synthesize _responseType;
 @synthesize _result;
+@synthesize _guid;
 
 - (id)initWithResponseType:(NSString *)responseType andResult:(NSString *)result{
     self = [super init];
@@ -40,6 +41,20 @@
     self._responseType = nil;
 	self._result = nil;
 	self._guid = nil;
+    [super dealloc];
+}
+
+@end
+
+@implementation ResponseLogin
+
+@synthesize _firstName;
+@synthesize _secondName;
+
+- (void)dealloc
+{
+    self._firstName = nil;
+	self._secondName = nil;
     [super dealloc];
 }
 

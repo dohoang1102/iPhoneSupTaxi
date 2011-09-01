@@ -7,6 +7,8 @@
 //
 
 #import "OrderViewController.h"
+#import "RegisterViewController.h"
+
 #import "BarButtonItemGreenColor.h"
 #import "ServerResponce.h"
 #import "AppProgress.h"
@@ -84,6 +86,16 @@
 
 - (void) ShowOrderResult:(id)obj
 {
+	if (!_orderResponse)
+	{
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+														 message:@"Ошибка отправки заказа, повторите, пожалуйста, еще раз!" 
+														delegate:nil 
+											   cancelButtonTitle:@"OK" 
+											   otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
 	NSLog(@"%@", _orderResponse._result);
 }
 
@@ -95,10 +107,10 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите дату и время" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
-    [actionSheet setFrame:CGRectMake(0, 117, 320, 383)];
+    [actionSheet setFrame:CGRectMake(0, 0, 320, 480)];
     [actionSheet setTag:kDateActionsheet];
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 320, 300)];
+    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 320, 400)];
     [datePicker setMinuteInterval:10];
     [datePicker setMinimumDate:[NSDate date]];
     [datePicker setTag:kDatePickerTag];
@@ -116,10 +128,10 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите тип автомобиля" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
-    [actionSheet setFrame:CGRectMake(0, 117, 320, 383)];
+    [actionSheet setFrame:CGRectMake(0, 0, 320, 480)]; //CGRectMake(0, 117, 320, 383)];
     [actionSheet setTag:kCarTypeActionsheet];
     
-    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 320, 300)];
+    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 320, 400)];
 	pickerView.showsSelectionIndicator = YES;
     pickerView.delegate = self;
     pickerView.dataSource = self;
@@ -165,12 +177,10 @@
 	// кнопка очистить
     UIBarButtonItem *clearBtn = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Очистить" andTarget:self andSelector:@selector(clearForm:)];
     self.navigationItem.leftBarButtonItem = clearBtn;
-    [clearBtn release];
-    
+	
     UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Заказать" andTarget:self andSelector:@selector(orderTaxi:)];
     self.navigationItem.rightBarButtonItem = orderButton;
-    [orderButton release];
-	
+    
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
 	self.navigationItem.titleView = img;
 	[img release];
@@ -183,6 +193,12 @@
 
 - (IBAction)orderTaxi:(id)sender
 {
+	RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+    [self.navigationController pushViewController:registerViewController animated:YES];
+    [registerViewController release];
+	
+	return;
+	
     NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:@"4" forKey:USER_GUID_KEY];
@@ -228,8 +244,8 @@
 {
     NSArray *subviews = [actionSheet subviews];
     
-    [[subviews objectAtIndex:kSelectButtonIndex] setFrame:CGRectMake(20, 266, 280, 46)];
-    [[subviews objectAtIndex:kCancelButtonIndex] setFrame:CGRectMake(20, 317, 280, 46)];
+    [[subviews objectAtIndex:kSelectButtonIndex] setFrame:CGRectMake(20, 366, 280, 46)];
+    [[subviews objectAtIndex:kCancelButtonIndex] setFrame:CGRectMake(20, 417, 280, 46)];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
