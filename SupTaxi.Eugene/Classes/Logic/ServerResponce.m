@@ -20,6 +20,11 @@
 
 @implementation ServerResponce
 
++ (NSString *) orderRequestString
+{
+	return @"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"%@\" Schedule=\"%@\" Lat=\"%f\" Lon=\"%f\" FromLat=\"%f\" FromLon=\"%f\" ToLat=\"%f\" ToLon=\"%f\" />";
+}
+
 - (NSArray *) GetDataItems
 {
 	return ((NSArray*)_dataItems);
@@ -44,11 +49,31 @@
 }
 
 //Sending an order to server (not Regular)
-- (BOOL) SendOrderRequestNotRegular:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+						   latitude: (float) latitude longitude: (float) longitude fromLat: (float) fromLat fromLon: (float) fromLon 
+							  toLat: (float) toLat toLon: (float) toLon
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"false\" Schedule=\"\" />", guid, from, to, orderDate, vehicleType];
+	NSString *requestString = [NSString stringWithFormat:[ServerResponce orderRequestString],
+							   guid, from, to, orderDate, vehicleType, @"false", @"", latitude, longitude, fromLat, fromLon, toLat, toLon];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Sending an order to server (Regular)
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+						   isRegular: (BOOL) isRegular schedule: (NSString *) schedule latitude: (float) latitude longitude: (float) longitude 
+							fromLat: (float) fromLat fromLon: (float) fromLon toLat: (float) toLat toLon: (float) toLon
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:[ServerResponce orderRequestString],
+							   guid, from, to, orderDate, vehicleType,((isRegular == NO) ? @"false" : @"true"), schedule, latitude, longitude, fromLat, fromLon, toLat, toLon];
     
 	if (urlString) 
 	{
@@ -63,6 +88,21 @@
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
 	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order.Offers\" Guid=\"%@\" />", orderGuid];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Send offer accept request
+- (BOOL) SendOrderAcceptWithOfferRequest:(NSString*)guid orderId:(NSString*)orderId carrierId:(NSString*)carrierId
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order.Accept\" Guid=\"%@\" OrderId=\"%@\" CarrierId=\"%@\" />", 
+							   guid, orderId, carrierId];
     
 	if (urlString) 
 	{
@@ -86,6 +126,7 @@
 	return false;
 }
 
+//Sending login request
 - (BOOL) LoginUserRequest:(NSString*)email password:(NSString*)password
 {
 	[self Clear];
@@ -99,6 +140,23 @@
 	}
 	return false;
 }
+
+//Get History
+- (BOOL) GetOrdersHistoryRequest:(NSString*)userGuid pageNumber:(int)pageNumber numberOfRows:(int)numberOfRows
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"History\" Guid=\"%@\" PageNumber=\"%i\" NumberOfRows=\"%i\" />",
+							   userGuid, pageNumber, numberOfRows];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+
 
 - (void) Clear
 {

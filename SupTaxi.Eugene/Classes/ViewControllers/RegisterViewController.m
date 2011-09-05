@@ -43,6 +43,8 @@
 
 @synthesize _registerResponse;
 @synthesize _loginResponse;
+@synthesize selectorOnDone;
+@synthesize delegate;
 
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -188,9 +190,12 @@
 		[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
 		[prefManager updateUserGuid:_loginResponse._guid];
 		
-		[self showAlertMessage:@"Вы успешно авторизованы!"];
+		//[self showAlertMessage:@"Вы успешно авторизованы!"];
 		//TODO: Get back to Order and send it
 		[self.navigationController popViewControllerAnimated:YES];
+		if (self.delegate){
+			[self.delegate performSelector:selectorOnDone];
+		}
 	}
 }
 
@@ -340,7 +345,7 @@
 	[_loginResponse release];
 	[_registerResponse release];
 	
-    [super dealloc];
+	[super dealloc];
 }
 
 

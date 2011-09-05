@@ -70,13 +70,14 @@
 
 -(id)init{
 	if ((self = [super init])) {
-		_offers = [NSMutableArray array];
+		_offers = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
 
 - (void)addAnOffer:(Offer *)offer
 {
+	if (self._offers == nil) {	_offers = [[NSMutableArray alloc] init]; }
 	[self._offers addObject:offer];
 }
 
@@ -85,6 +86,31 @@
 	self._from = nil;
 	self._to = nil;
 	[_offers release];
+    [super dealloc];
+}
+
+@end
+
+@implementation ResponseHistory
+
+@synthesize _orders;
+
+-(id)init{
+	if ((self = [super init])) {
+		_orders = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+- (void)addAnOrder:(Order *)order
+{
+	if (self._orders == nil) {	_orders = [[NSMutableArray alloc] init]; }
+	[self._orders addObject:order];
+}
+
+- (void)dealloc
+{
+	[_orders release];
     [super dealloc];
 }
 

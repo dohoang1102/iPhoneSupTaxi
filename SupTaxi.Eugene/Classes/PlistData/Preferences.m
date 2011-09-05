@@ -1,6 +1,6 @@
 //
 //  Preferences.m
-//  ReverseLobotomy
+//  SupTaxi
 //
 //  Created by Eugene Zavalko on 01.09.11.
 //  Copyright 2011 EaZySoft. All rights reserved.
@@ -18,6 +18,15 @@
 @synthesize userFirstName;
 @synthesize userSecondName;
 
+@synthesize notFirstRun;
+@synthesize userHasContract;
+@synthesize userHasPrefered;
+@synthesize userHasRegularOrder;
+
++(NSString*)notFirstRunAttrName{
+	return @"notFirstRun";
+}
+
 +(NSString*)userGuidAttrName{
 	return @"userGuid";
 }
@@ -34,12 +43,20 @@
 	return @"userSecondName";
 }
 
++(NSString*)userHasContractAttrName{
+	return @"userHasContract";
+}
++(NSString*)userHasPreferedAttrName{
+	return @"userHasPrefered";
+}
++(NSString*)userHasRegularOrderAttrName{
+	return @"userHasRegularOrder";
+}
+
 #pragma mark Init/Dealloc
 
 -(id)init{
-	if ((self = [super init])) {
-		//self.tableCells = [NSMutableArray array];
-	}
+	if ((self = [super init])) {}
 	return self;
 }
 
@@ -54,19 +71,31 @@
 }
 
 -(void)decodeDictionary:(NSDictionary*)dictionary{	
+	self.notFirstRun = [[dictionary valueForKey: [Preferences notFirstRunAttrName]] boolValue];
+	
 	self.userGuid = [dictionary objectForKey: [Preferences userGuidAttrName]];
 	self.userEmail = [dictionary objectForKey: [Preferences userEmailAttrName]];
 	self.userPassword = [dictionary objectForKey: [Preferences userPasswordAttrName]];
 	self.userFirstName = [dictionary objectForKey: [Preferences userFirstNameAttrName]];
 	self.userSecondName = [dictionary objectForKey: [Preferences userSecondNameAttrName]];
+	
+	self.userHasContract = [[dictionary valueForKey: [Preferences userHasContractAttrName]] boolValue];
+	self.userHasPrefered = [[dictionary valueForKey: [Preferences userHasPreferedAttrName]] boolValue];
+	self.userHasRegularOrder = [[dictionary valueForKey: [Preferences userHasRegularOrderAttrName]] boolValue];
 }
 
 -(void)encodeDictionary:(NSMutableDictionary*)dictionary{	
+	[dictionary setValue:[NSString stringWithFormat:@"%i", self.notFirstRun]  forKey:[Preferences notFirstRunAttrName]];
+	
 	[dictionary setObject:self.userGuid forKey:[Preferences userGuidAttrName]];
 	[dictionary setObject:self.userEmail forKey:[Preferences userEmailAttrName]];
 	[dictionary setObject:self.userPassword forKey:[Preferences userPasswordAttrName]];
 	[dictionary setObject:self.userFirstName forKey:[Preferences userFirstNameAttrName]];
 	[dictionary setObject:self.userSecondName forKey:[Preferences userSecondNameAttrName]];
+	
+	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasContract] forKey:[Preferences userHasContractAttrName]];
+	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasPrefered] forKey:[Preferences userHasPreferedAttrName]];
+	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasRegularOrder] forKey:[Preferences userHasRegularOrderAttrName]];
 }
 
 

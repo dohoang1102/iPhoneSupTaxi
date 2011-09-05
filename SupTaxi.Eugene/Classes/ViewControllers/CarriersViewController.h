@@ -7,17 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ResponseOffers;
+#import "Response.h";
+#import "PreferencesManager.h"
 
 @interface CarriersViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     ResponseOffers *_resultResponse;
+	Response	   *_orderResponse;
+	PreferencesManager * prefManager;
 }
 
 @property (nonatomic, retain) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic, retain) IBOutlet UIView *headerView;
 @property (nonatomic, retain) IBOutlet UIView *footerView;
 @property (nonatomic, retain) IBOutlet UIView *innerFooterView;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 @property (nonatomic, retain) ResponseOffers *_resultResponse;
+@property (nonatomic, retain) Response * _orderResponse;
+
+- (void) setResponce:(ResponseOffers*) obj;
 
 @end

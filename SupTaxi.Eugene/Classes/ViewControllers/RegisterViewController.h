@@ -26,6 +26,9 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *btnAccept;
 
+@property (nonatomic, assign) SEL selectorOnDone;
+@property (nonatomic, assign) id delegate;
+
 @property (nonatomic, retain) Response		* _registerResponse;
 @property (nonatomic, retain) ResponseLogin	* _loginResponse;
 
@@ -33,5 +36,6 @@
 - (IBAction) selectCheckBox:(id)sender;
 - (IBAction) registerAction:(id)sender;
 - (IBAction) registerActionDecline:(id)sender;
+
 
 @end

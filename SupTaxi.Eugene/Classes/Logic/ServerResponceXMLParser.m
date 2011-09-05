@@ -9,20 +9,8 @@
 #import "ServerResponceXMLParser.h"
 #import "AditionalPrecompileds.h"
 
-@interface ServerResponceXMLParser(Private)
-
-//- (void)ParseOfferResponseElementName:(NSString *)name withStringValue:(NSString*)value;
-
-@end
-
-
 @implementation ServerResponceXMLParser
-/*
-- (void)ParseOfferResponseElementName:(NSString *)name withStringValue:(NSString*)value
-{
-	
-}
-*/
+
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
 	if (_elementString) 
@@ -44,17 +32,38 @@ didStartElement:(NSString *)elementName
 	SAFE_REASSIGN(_elementName, elementName);
 	
 	//NSLog(@"\n elementName %@ \n", elementName);
+	
 	if ([elementName isEqualToString:@"Offer"])
 	{
-		
-		NSString * CarrierNameString = [attributeDict objectForKey:@"CarrierName"];
-		NSString * ArrivalTimeString = [attributeDict objectForKey:@"ArrivalTime"];
-		NSString * MinPriceString = [attributeDict objectForKey:@"MinPrice"];
-		Offer * offer = [[Offer alloc] initWithCarrierName:CarrierNameString arrivalTime:[ArrivalTimeString intValue] minPrice:[MinPriceString intValue]];
+		Offer * offer = [[Offer alloc] initWithCarrierName:[attributeDict objectForKey:@"CarrierName"]
+											   arrivalTime:[[attributeDict objectForKey:@"ArrivalTime"] intValue] 
+												  minPrice:[[attributeDict objectForKey:@"MinPrice"] intValue] 
+												 carrierId:[[attributeDict objectForKey:@"CarrierId"] intValue] 
+											carrierLogoStr:[attributeDict objectForKey:@"CarrierLogo"]]; 
 		ResponseOffers * response = (ResponseOffers *) [_arr objectAtIndex:0];
+		offer.orderId = [response._guid intValue];
 		[response addAnOffer:offer];
 		[_arr insertObject:response atIndex:0];
 		[offer release];
+		[response release];
+		
+	}else if ([elementName isEqualToString:@"Order"])
+	{
+		Order * order = [[Order alloc] initOrderWithDateTime:[attributeDict objectForKey:@"DateTime"] 
+												   fromPlace:[attributeDict objectForKey:@"From"] 
+													 toPlace:[attributeDict objectForKey:@"To"] 
+													 comment:[attributeDict objectForKey:@"Comment"]
+													  status:[[attributeDict objectForKey:@"Status"] boolValue]
+														 lat:[[attributeDict valueForKey:@"Lat"] floatValue]
+														 lon:[[attributeDict valueForKey:@"Lon"] floatValue] 
+													 fromLat:[[attributeDict valueForKey:@"FromLat"] floatValue]
+													   toLat:[[attributeDict valueForKey:@"ToLat"] floatValue]
+													 fromLon:[[attributeDict valueForKey:@"FromLon"] floatValue]
+													   toLon:[[attributeDict valueForKey:@"ToLon"] floatValue]];
+		ResponseHistory * response = (ResponseHistory *) [_arr objectAtIndex:0];
+		[response addAnOrder:order];
+		[_arr insertObject:response atIndex:0];
+		[order release];
 		[response release];
 		
 	}else if ([elementName isEqualToString:@"Response"])
@@ -76,9 +85,14 @@ didStartElement:(NSString *)elementName
 			resp._status = [[attributeDict objectForKey:@"Status"] boolValue];
 			resp._from = [attributeDict objectForKey:@"From"];
 			resp._to = [attributeDict objectForKey:@"To"];
+			
 			[_arr addObject:resp];
 			[resp release];
-		}else{
+		}else if ([TypeString isEqualToString:@"History"]) {
+			ResponseHistory * resp = [[ResponseHistory alloc] init];
+			[_arr addObject:resp];
+			[resp release];
+		}else {
 			Response * resp = [[Response alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
 			[_arr addObject:resp];
 			[resp release];

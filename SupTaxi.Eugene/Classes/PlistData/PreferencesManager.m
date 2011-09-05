@@ -8,6 +8,12 @@
 
 #import "PreferencesManager.h"
 
+@interface PreferencesManager(Private)
+
+- (void) initFields;
+
+@end
+
 
 @implementation PreferencesManager
 
@@ -26,6 +32,9 @@
 -(id)init{
 	if ((self = [super init])) {
 		self.prefs = [[Preferences alloc] initWithPath:[self prefsFilePath]];
+		if (self.prefs.notFirstRun == NO) {
+			[self initFields];
+		}
 	}
 	return self;
 }
@@ -38,34 +47,40 @@
     [super dealloc];
 }
 
+#pragma mark initFieldsOnFirstLoad
+
+-(void)initFields
+{
+	[[self prefs] setUserGuid:@""];
+	[[self prefs] setUserEmail:@""];
+	[[self prefs] setUserPassword:@""];
+	[[self prefs] setUserFirstName:@""];
+	[[self prefs] setUserSecondName:@""];
+	[[self prefs] setUserHasContract:NO];
+	[[self prefs] setUserHasPrefered:NO];
+	[[self prefs] setUserHasRegularOrder:NO];
+	[[self prefs] save];
+}
+
+
 #pragma mark Events
 
 
 -(void)updateUserGuid:(NSString*)userGuid
 {
 	[[self prefs] setUserGuid:userGuid];
-	if (self.prefs.userEmail == nil)[[self prefs] setUserEmail:@""];
-	if (self.prefs.userPassword == nil)[[self prefs] setUserPassword:@""];
-	if (self.prefs.userFirstName == nil) [[self prefs] setUserFirstName:@""];
-	if (self.prefs.userSecondName == nil) [[self prefs] setUserSecondName:@""];
 	[[self prefs] save];
 }
 
 -(void)updateUserCredentialsWithEmail:(NSString*)userEmail andPassword:(NSString*)userPassword
 {
-	if (self.prefs.userGuid == nil)	[[self prefs] setUserGuid:@""];
 	[[self prefs] setUserEmail:userEmail];
 	[[self prefs] setUserPassword:userPassword];
-	if (self.prefs.userFirstName == nil) [[self prefs] setUserFirstName:@""];
-	if (self.prefs.userSecondName == nil) [[self prefs] setUserSecondName:@""];
 	[[self prefs] save];
 }
 
 -(void)updateUserDataWithName:(NSString*)userFirstName andSecondName:(NSString*)userSecondName
 {
-	if (self.prefs.userGuid == nil)	[[self prefs] setUserGuid:@""];
-	if (self.prefs.userEmail == nil)[[self prefs] setUserEmail:@""];
-	if (self.prefs.userPassword == nil)[[self prefs] setUserPassword:@""];
 	[[self prefs] setUserFirstName:userFirstName];
 	[[self prefs] setUserSecondName:userSecondName];
 	[[self prefs] save];

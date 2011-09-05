@@ -5,7 +5,6 @@
 //  Created by Igor Novik on 8/24/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-/// asliudgals
 
 #import "GrayColorNavigationBar.h"
 

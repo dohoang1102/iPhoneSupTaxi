@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Offer.h"
+#import "Order.h"
 
 @interface Response : NSObject {
 
@@ -42,5 +43,14 @@
 @property (nonatomic, retain) NSMutableArray * _offers; 
 
 - (void)addAnOffer:(Offer *)offer;
+
+@end
+
+@interface ResponseHistory : NSObject {
+	
+}
+@property (nonatomic, retain) NSMutableArray * _orders; 
+
+- (void)addAnOrder:(Order *)order;
 
 @end

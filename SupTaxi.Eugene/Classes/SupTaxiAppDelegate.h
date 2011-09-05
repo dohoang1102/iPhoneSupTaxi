@@ -16,33 +16,28 @@
     UIWindow *window;
 	UITabBarController *tabsController;
     PreferencesManager *prefManager;
-	NSString * currentOrderGuid;
+	NSMutableDictionary * orderQueue; // key = orderId, value = leftTime;
 	
 @private
-    NSManagedObjectContext *managedObjectContext_;
-    NSManagedObjectModel *managedObjectModel_;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator_;
 	ResponseOffers * _offerResponse;
+	UIBackgroundTaskIdentifier bgTask;
+	BOOL _backgroundWork;
+	NSTimer * timer;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabsController;
 
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
 @property (nonatomic, readonly) PreferencesManager *prefManager;
-@property (nonatomic, copy) NSString * currentOrderGuid;
+@property (nonatomic, retain) NSMutableDictionary * orderQueue;
 
 @property (nonatomic, retain) Response * _offerResponse;
+
+@property (nonatomic, retain) NSTimer * timer;
 
 + (SupTaxiAppDelegate *)sharedAppDelegate;
 
 - (void) checkOrderOffers;
-
-- (NSURL *)applicationDocumentsDirectory;
-- (void)saveContext;
 
 @end
 

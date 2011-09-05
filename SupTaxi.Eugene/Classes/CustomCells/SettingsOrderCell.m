@@ -6,32 +6,24 @@
 //  Copyright 2011 EaZySoft. All rights reserved.
 //
 
-#import "OrderShowCell.h"
+#import "SettingsOrderCell.h"
 #import "UICustomSwitch.h"
 
-@implementation OrderShowCell
+@implementation SettingsOrderCell
 
-@synthesize timeLabel;
-@synthesize priceLabel;
-@synthesize carrierLogo;
+@synthesize titleLabel;
+@synthesize valueLabel;
 @synthesize switcher;
 
 - (UILabel *)newLabel
 {
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     newLabel.textAlignment = UITextAlignmentLeft;
-    newLabel.font = [UIFont fontWithName:@"Arial" size:12.0];
+    newLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0];
     newLabel.backgroundColor = [UIColor whiteColor];
     newLabel.opaque = YES;
     
     return newLabel;
-}
-
-- (UIImageView *)newImage
-{
-    UIImageView *newImage = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
-    
-    return newImage;
 }
 
 - (UICustomSwitch *)newSwitcher
@@ -52,17 +44,14 @@
         CGFloat boundsX = contexctRect.origin.x;
         CGRect frame;
         
-        frame = CGRectMake(boundsX+5, 7.0, 40.0, 20.0);
-        self.carrierLogo.frame = frame;
+        frame = CGRectMake(boundsX+5, 5.0, 125.0, 20.0);
+        self.titleLabel.frame = frame;
         
-        frame = CGRectMake(carrierLogo.frame.origin.x + carrierLogo.frame.size.width + 10.0, 7.0, 75.0, 20.0);
-        self.timeLabel.frame = frame;
-        
-        frame = CGRectMake(timeLabel.frame.origin.x + timeLabel.frame.size.width + 10.0, 7.0, 70.0, 20.0);
-        self.priceLabel.frame = frame;
+        frame = CGRectMake(titleLabel.frame.origin.x + titleLabel.frame.size.width + 10.0, 5.0, 70.0, 20.0);
+        self.valueLabel.frame = frame;
         
         [self.switcher scaleSwitch:CGSizeMake(0.75, 0.75)];
-        frame = CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 10.0, 7.0, switcher.frame.size.width, switcher.frame.size.height);
+        frame = CGRectMake(valueLabel.frame.origin.x + valueLabel.frame.size.width + 10.0, 5.0, switcher.frame.size.width, switcher.frame.size.height);
         self.switcher.frame = frame;		
         
     }
@@ -73,22 +62,18 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *contentView = self.contentView;
-        // логотип
-        self.carrierLogo = [self newImage];
-        [contentView addSubview:carrierLogo];
-        [self.carrierLogo release];
-        // время
-        self.timeLabel = [self newLabel];
-        [contentView addSubview:timeLabel];
-        [self.timeLabel release];
-        // цена
-        self.priceLabel = [self newLabel];
-        [contentView addSubview:priceLabel];
-        [self.priceLabel release];
-        // переключатель
+        
+        self.titleLabel = [self newLabel];
+        [contentView addSubview:titleLabel];
+        [self.titleLabel release];
+        
+        self.valueLabel = [self newLabel];
+        [contentView addSubview:valueLabel];
+        [self.valueLabel release];
+        
         self.switcher = [self newSwitcher];
         [contentView addSubview:switcher];
-        [self.switcher release];
+        //[self.switcher release];
         
     }
     return self;
@@ -99,13 +84,13 @@
     if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
         UIView *contentView = self.contentView;
         
-        self.priceLabel = [self newLabel];
-        [contentView addSubview:priceLabel];
-        [self.priceLabel release];
+        self.titleLabel = [self newLabel];
+        [contentView addSubview:titleLabel];
+        [self.titleLabel release];
         
-        self.timeLabel = [self newLabel];
-        [contentView addSubview:timeLabel];
-        [self.timeLabel release];
+        self.valueLabel = [self newLabel];
+        [contentView addSubview:valueLabel];
+        [self.valueLabel release];
     }
     return self;
 }
@@ -119,10 +104,6 @@
 
 - (void)dealloc
 {
-//    [priceLabel release];
-//    [timeLabel release];
-//    [carrierLogo release];
-//    [switcher release];
     [super dealloc];
 }
 

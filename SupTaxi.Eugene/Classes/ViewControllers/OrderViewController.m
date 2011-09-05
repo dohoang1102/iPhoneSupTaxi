@@ -14,6 +14,9 @@
 #import "AppProgress.h"
 #import	"SupTaxiAppDelegate.h"
 
+#import "Offer.h"
+#import "CarriersViewController.h"
+
 @interface OrderViewController(Private)
 
 - (void) SendOrderThreadMethod:(id)obj;
@@ -21,6 +24,8 @@
 - (void) showAlertMessage:(NSString *)alertMessage;
 - (void) textFieldUnFocus;
 - (BOOL) textFieldValidate;
+- (void) sendOrder;
+-(void) clearFields;
 
 @end
 
@@ -34,6 +39,16 @@
 #define TO_KEY @"TOFIELD"
 #define DATE_KEY @"DATAFIELD"
 #define VTYPE_KEY @"VTYPEFIELD"
+
+#define ISREG_KEY @"ISREG_KEY"
+#define SCHE_KEY @"SCHE_KEY"
+
+#define LAT_KEY @"LAT_KEY"
+#define LON_KEY @"LON_KEY"
+#define FLON_KEY @"FLON_KEY"
+#define FLAT_KEY @"FLAT_KEY"
+#define TLON_KEY @"TLON_KEY"
+#define TLAT_KEY @"TLAT_KEY"
 
 @synthesize carTypes = carTypes_;
 
@@ -66,14 +81,32 @@
 		NSString * date = [d objectForKey:DATE_KEY];
 		NSUInteger vType = [[d objectForKey:VTYPE_KEY] intValue];
 		
-		if ([responce SendOrderRequestNotRegular:guid 
-											from:from 
-											  to:to 
-											date:date 
-									 vehicleType:vType ])
+		BOOL isRegular = [[d objectForKey:ISREG_KEY] boolValue];
+		NSString * schedule = [d objectForKey:SCHE_KEY];
+		
+		float lat = [[d objectForKey:LAT_KEY] floatValue];
+		float lon = [[d objectForKey:LON_KEY] floatValue];
+		float fLat = [[d objectForKey:FLAT_KEY] floatValue];
+		float tLat = [[d objectForKey:TLAT_KEY] floatValue];
+		float fLon = [[d objectForKey:FLON_KEY] floatValue];
+		float tLon = [[d objectForKey:TLON_KEY] floatValue];
+		
+		if ([responce SendOrderRequest:guid 
+								  from:from 
+									to:to 
+								  date:date 
+						   vehicleType:vType 
+							 isRegular:isRegular 
+							  schedule:schedule
+							  latitude:lat 
+							 longitude:lon 
+							   fromLat:fLat 
+							   fromLon:fLon 
+								 toLat:tLat 
+								 toLon:tLon])
 		{
 			NSArray * resultData = [responce GetDataItems];
-			if (resultData) {
+			if (resultData && [resultData count]>0) {
 				self._orderResponse = [resultData objectAtIndex:0]; 
 			}
 			
@@ -96,6 +129,9 @@
 		[self showAlertMessage:@"Ошибка отправки заказа, повторите, пожалуйста, позже!"];
 	if (_orderResponse._result == YES) {
 		[self showAlertMessage:@"Ваш заказ принят на обработку, ожидайте ответ оператора!"];
+		[self clearFields];
+		
+		[[SupTaxiAppDelegate sharedAppDelegate] checkOrderOffers];
 	}
 }
 
@@ -194,6 +230,40 @@
 
 - (IBAction)clearForm:(id)sender
 {
+	/*
+	ResponseOffers *rOffers = [[ResponseOffers alloc] initWithResponseType:@"Order.Offers" andResult:YES];
+	for (int i = 0; i < 7; i++) {
+		Offer * offer = [[Offer alloc] initWithCarrierName:@"Рога и копыта" 
+											   arrivalTime:20 + i 
+												  minPrice:20 * i - 10 
+												 carrierId:12 * i 
+											carrierLogoStr:@"iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAIAAAABc2X6AAAAAXNSR0IArs4c"
+						 "6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFJSURB"
+						 "VHhe7ZrRDcMgDERZojt33izQFoHaogBSTpER9pPylcYF48M+zqTXkSbPMz26"
+						 "z1oTYVbfCc+8/Xwk/LWBiTAEDg+ALaylgYkwBBEmwgUDAngMTIQhgDSQBtIN"
+						 "5YJp/RibkFGumlz9/j888ajlaLW8vh9WWhzunxO3WxciPDjxbxfJ0YSJMBF2"
+						 "A+biSDzigWrZxFxgrQYmwhAIAAgACAAIAOt2AUmrom9eYsuvEI8WqAJ4DEyE"
+						 "IQLXYWdng7k7eQ+HcjiflnDYiViHxFMDCaTRtJxlNagl1LILaRriNMRP2f5G"
+						 "UHBaQgAY34mmLFGWKEs5Q9yYcoUrrGRpsjRZOrBMyw0AbgD0RJ+Ny5IzBWfi"
+						 "Tu0exnG43tPCYToPvpRqOg++4nnOUPEiDLWEWjqjlkAaSANpVEvrXYBMi0yL"
+						 "TItMu+4+v3Fv6Q16L0ywgZxa6QAAAABJRU5ErkJggg=="];
+		offer.orderId = 25;
+		[rOffers addAnOffer:offer];
+		[offer release];
+	}
+	
+	
+	CarriersViewController *cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
+	[cViewController setResponce: rOffers];
+	[self.navigationController pushViewController:cViewController animated:YES];
+	[cViewController release];
+	[rOffers release];*/
+	
+	[self clearFields];
+}
+
+-(void) clearFields
+{
 	[self.fromPoint setText:@""];
 	[self.toPoint setText:@""];
 	[self.txtDateTime setText:@""];
@@ -247,14 +317,21 @@
 {
 	if ([self textFieldValidate] == NO) return;
 	
-	if (prefManager.prefs.userGuid == nil) {
+	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
 		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+		registerViewController.delegate = self;
+		registerViewController.selectorOnDone = @selector(sendOrder); 
 		[self.navigationController pushViewController:registerViewController animated:YES];
 		[registerViewController release];
 		return;
 	}
-		
-    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
+	[self sendOrder];
+    
+}
+
+- (void) sendOrder
+{
+	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	[d setValue:fromPoint_.text forKey:FROM_KEY];

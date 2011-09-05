@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "UICustomSwitch.h"
 
-@interface OrderShowCell : UITableViewCell
+@interface SettingsOrderCell : UITableViewCell
 
-@property (nonatomic, retain) UILabel *priceLabel;
-@property (nonatomic, retain) UILabel *timeLabel;
-@property (nonatomic, retain) UIImageView *carrierLogo;
+@property (nonatomic, retain) UILabel *titleLabel;
+@property (nonatomic, retain) UILabel *valueLabel;
 @property (nonatomic, retain) UICustomSwitch *switcher;
 
 @end

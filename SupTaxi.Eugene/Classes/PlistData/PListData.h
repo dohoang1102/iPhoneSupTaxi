@@ -1,6 +1,6 @@
 //
 //  PListData.h
-//  ReverseLobotomy
+//  SupTaxi
 //
 //  Created by Eugene Zavalko on 01.09.11.
 //  Copyright 2011 EaZySoft. All rights reserved.
