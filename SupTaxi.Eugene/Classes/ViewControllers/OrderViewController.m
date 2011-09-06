@@ -22,7 +22,6 @@
 - (void) SendOrderThreadMethod:(id)obj;
 - (void) ShowOrderResult:(id)obj;
 - (void) showAlertMessage:(NSString *)alertMessage;
-- (void) textFieldUnFocus;
 - (BOOL) textFieldValidate;
 - (void) sendOrder;
 -(void) clearFields;
@@ -51,15 +50,11 @@
 #define TLAT_KEY @"TLAT_KEY"
 
 @synthesize carTypes = carTypes_;
+@synthesize mapViewController;
+@synthesize mapViewRouteSearchBar;
 
-@synthesize fromPoint = fromPoint_;
-@synthesize toPoint = toPoint_;
 @synthesize dateTime = dateTime_;
 @synthesize carType = carType_;
-
-@synthesize txtDateTime;
-@synthesize lblCarType;
-@synthesize imgCarType;
 
 @synthesize _orderResponse;
 
@@ -141,8 +136,7 @@
 #define kDateActionsheet 101
 - (IBAction)chooseDateTime:(id)sender
 {
-	[self textFieldUnFocus];
-	
+
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите дату и время" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
     [actionSheet setFrame:CGRectMake(0, 0, 320, 480)];
@@ -164,8 +158,6 @@
 #define kCarTypeActionsheet 201
 - (IBAction)chooseCarType:(id)sender
 {
-	[self textFieldUnFocus];
-	
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Выберите тип автомобиля" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Выбрать", nil];
     [actionSheet showInView:[self.view superview]];
     [actionSheet setFrame:CGRectMake(0, 0, 320, 480)]; //CGRectMake(0, 117, 320, 383)];
@@ -188,7 +180,8 @@
 		  forComponent:(NSInteger)component reusingView:(UIView *)view
 {
 	NSString *imageName = [[NSString alloc] initWithFormat:@"car_type_%i.png", [[carTypes_.allValues objectAtIndex: row] intValue]];
-	UIImageView *temp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];        
+	UIImageView *temp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];  
+	[imageName release];
 	temp.frame = CGRectMake(0, 0, 61, 25);
 	UILabel *channelLabel = [[UILabel alloc] initWithFrame:CGRectMake(63, 0, 100, 25)];
 	channelLabel.text = [carTypes_.allKeys objectAtIndex:row];
@@ -199,7 +192,30 @@
 	[tmpView insertSubview:temp atIndex:0];
 	[tmpView insertSubview:channelLabel atIndex:1];
 	[temp release];
-	return tmpView;
+	[channelLabel release];
+	return [tmpView autorelease];
+}
+
+-(void)initPreferences{
+	//Creating and adding MapViewController
+	MapViewController *newMapViewController = [[MapViewController alloc] init];
+	[[newMapViewController view] setFrame:[[self view] bounds]];
+	[[self view] addSubview:[newMapViewController view]];
+	self.mapViewController = newMapViewController;
+	[newMapViewController release];
+	
+	MapViewRouteSearchBar *searchBar = [[MapViewRouteSearchBar alloc] init];
+	[newMapViewController setMapViewSearchBar:searchBar];
+	[searchBar setParentController:self];
+	self.mapViewRouteSearchBar = searchBar;
+	[searchBar release];
+	
+	[self.mapViewRouteSearchBar initWithSelfLocation];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+	[super viewWillAppear:animated];
+	[self.mapViewRouteSearchBar setDaysVisible:prefManager.prefs.userHasRegularOrder];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -226,6 +242,8 @@
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
 	self.navigationItem.titleView = img;
 	[img release];
+	
+	[self initPreferences];
 }
 
 - (IBAction)clearForm:(id)sender
@@ -264,17 +282,10 @@
 
 -(void) clearFields
 {
-	[self.fromPoint setText:@""];
-	[self.toPoint setText:@""];
-	[self.txtDateTime setText:@""];
-	[self.imgCarType setImage:[UIImage imageNamed:@"car_type_1.png"]];
-	NSString * carTypeKey = [[NSString alloc] initWithString:[carTypes_.allKeys objectAtIndex:1]];
-	[self.lblCarType setText:carTypeKey];
-}
-
--(void)textFieldUnFocus {
-	[self.fromPoint resignFirstResponder];
-	[self.toPoint resignFirstResponder];
+	[self.mapViewRouteSearchBar clearData];
+	[self.mapViewRouteSearchBar.carImageView setImage:[UIImage imageNamed:@"car_type_1.png"]];
+	NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:1]];
+	[self.mapViewRouteSearchBar.carTypeLabel setText:carTypeKey];
 }
 
 -(BOOL)textFieldValidate {
@@ -284,9 +295,9 @@
 	int i = 0;
 	
 	fieldArray = [[NSArray arrayWithObjects: 
-				   [NSString stringWithFormat:@"%@",self.fromPoint.text],
-				   [NSString stringWithFormat:@"%@",self.toPoint.text],
-				   [NSString stringWithFormat:@"%@",self.txtDateTime.text],nil] retain];
+				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.fromField.text],
+				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.toField.text],
+				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.timeField.text],nil] retain];
 	
 	@try {
 		for (NSString *fieldText in fieldArray){
@@ -300,6 +311,15 @@
 		
 		// check that all the field were passed (i == array.count) if so execute
 		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
+			
+			//if all the data entered, let's check coordinates
+			if (![self.mapViewRouteSearchBar validate]) {
+				UIAlertView *coordAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Не определено текущее месторасположение" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[coordAlert show];
+				[coordAlert release];
+				return NO;
+			}
+			
 			return YES;        
 		}
 	}
@@ -334,20 +354,20 @@
 	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
-	[d setValue:fromPoint_.text forKey:FROM_KEY];
-	[d setValue:toPoint_.text forKey:TO_KEY];
-	[d setValue:txtDateTime.text forKey:DATE_KEY];
+	[d setValue:self.mapViewRouteSearchBar.fromField.text forKey:FROM_KEY];
+	[d setValue:self.mapViewRouteSearchBar.toField.text forKey:TO_KEY];
+	[d setValue:self.mapViewRouteSearchBar.timeField.text forKey:DATE_KEY];
 	
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.latitude] forKey:LAT_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.longitude] forKey:LON_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkFrom.coordinate.latitude] forKey:FLAT_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkFrom.coordinate.longitude]forKey:FLON_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkTo.coordinate.latitude] forKey:TLAT_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkTo.coordinate.longitude] forKey:TLON_KEY];
+
 	[NSThread detachNewThreadSelector:@selector(SendOrderThreadMethod:)
 							 toTarget:self 
 						   withObject:d];
-}
-
-#pragma mark - UITextFieldDelegate methods
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self textFieldUnFocus];
-    return YES;
 }
 
 #pragma mark - UIPickerViewDelegate methods
@@ -389,9 +409,9 @@
             [dateFomatter setDateFormat:@"YYYY-MM-dd HH:mm"];
             UIDatePicker *picker = (UIDatePicker *)[actionSheet viewWithTag:kDatePickerTag];
             NSDate *selectDate = [picker date];
-            dateTime_ = [[NSString alloc] initWithFormat:@"%@", [dateFomatter stringFromDate:selectDate]];
+            dateTime_ = [NSString stringWithFormat:@"%@", [dateFomatter stringFromDate:selectDate]];
             NSLog(@"%@",dateTime_);
-			[self.txtDateTime setText:dateTime_];
+			[self.mapViewRouteSearchBar.timeField setText:dateTime_];
             [dateFomatter release];
         } 
         else if (actionSheet.tag == kCarTypeActionsheet){
@@ -400,13 +420,12 @@
             NSString *key = [[picker delegate] pickerView:picker titleForRow:rowIndex forComponent:0];
             carType_ = [[NSString alloc] initWithString:[carTypes_ objectForKey:key]];
 			NSLog(@"%@",carType_);
-			NSString *imageName = [[NSString alloc] initWithFormat:@"car_type_%@.png", carType_];
+			NSString *imageName = [NSString stringWithFormat:@"car_type_%@.png", carType_];
 			UIImage *img = [UIImage imageNamed:imageName];
-			[self.imgCarType setImage:img];
-			[imageName release];
-			NSString * carTypeKey = [[NSString alloc] initWithString:[carTypes_.allKeys objectAtIndex:rowIndex]];
+			[self.mapViewRouteSearchBar.carImageView setImage:img];
+			NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:rowIndex]];
 			NSLog(@"%@",carTypeKey);
-			[self.lblCarType setText:carTypeKey];
+			[self.mapViewRouteSearchBar.carTypeLabel setText:carTypeKey];
 			
         }
     }
@@ -447,12 +466,9 @@
 - (void)dealloc {
 	[carTypes_ release];
     
-	[txtDateTime release];
-	[lblCarType release];
-	[imgCarType release];
-	
-    [fromPoint_ release];
-    [toPoint_ release];
+	[mapViewController release];
+	[mapViewRouteSearchBar release];
+
     [dateTime_ release];
     [carType_ release];
 	

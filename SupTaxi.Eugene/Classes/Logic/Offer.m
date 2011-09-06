@@ -1,6 +1,6 @@
 //
-//  Channel.m
-//  tvjam
+//  Offer.m
+//  SupTaxi
 //
 //  Created by Eugene Zavalko on 29.08.11.
 //  Copyright 2011 EaZySoft. All rights reserved.

@@ -115,3 +115,38 @@
 }
 
 @end
+
+@implementation ResponseAddress
+
+@synthesize _addressId;
+@synthesize _addressList;
+
+-(id)init{
+	if ((self = [super init])) {
+		_addressList = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result andAddressId:(NSInteger)addressId{
+    if ((self = [super initWithResponseType:responseType andResult:result])) {
+		_addressList = [[NSMutableArray alloc] init];
+		[self set_addressId:addressId];
+    }
+    
+    return self;
+}
+
+- (void)addAnAddress:(Address *)address
+{
+	if (self._addressList == nil) {	_addressList = [[NSMutableArray alloc] init]; }
+	[self._addressList addObject:address];
+}
+
+- (void)dealloc
+{
+	[_addressList release];
+    [super dealloc];
+}
+
+@end

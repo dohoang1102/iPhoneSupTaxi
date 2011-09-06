@@ -33,10 +33,23 @@ didStartElement:(NSString *)elementName
 	
 	//NSLog(@"\n elementName %@ \n", elementName);
 	
-	if ([elementName isEqualToString:@"Offer"])
+	if ([elementName isEqualToString:@"Address"])
+	{
+		Address * address = [[Address alloc] inithWithId:[[attributeDict objectForKey:@"Id"] intValue]  
+												  name:[attributeDict objectForKey:@"Name"] 
+											   address:[attributeDict objectForKey:@"Address"] 
+												  type:[[attributeDict objectForKey:@"Subtype"] intValue] 
+												   lon:[[attributeDict objectForKey:@"Lon"] doubleValue] 
+												   lat:[[attributeDict objectForKey:@"Lat"] doubleValue]]; 
+		ResponseAddress * response = (ResponseAddress *) [_arr objectAtIndex:0];
+		[response addAnAddress:address];
+		[_arr insertObject:response atIndex:0];
+		[address release];
+		
+	}else if ([elementName isEqualToString:@"Offer"])
 	{
 		Offer * offer = [[Offer alloc] initWithCarrierName:[attributeDict objectForKey:@"CarrierName"]
-											   arrivalTime:[[attributeDict objectForKey:@"ArrivalTime"] intValue] 
+											   arrivalTime:[[attributeDict objectForKey:@"ArrivalTime"] intValue] //
 												  minPrice:[[attributeDict objectForKey:@"MinPrice"] intValue] 
 												 carrierId:[[attributeDict objectForKey:@"CarrierId"] intValue] 
 											carrierLogoStr:[attributeDict objectForKey:@"CarrierLogo"]]; 
@@ -45,7 +58,6 @@ didStartElement:(NSString *)elementName
 		[response addAnOffer:offer];
 		[_arr insertObject:response atIndex:0];
 		[offer release];
-		[response release];
 		
 	}else if ([elementName isEqualToString:@"Order"])
 	{
@@ -64,7 +76,6 @@ didStartElement:(NSString *)elementName
 		[response addAnOrder:order];
 		[_arr insertObject:response atIndex:0];
 		[order release];
-		[response release];
 		
 	}else if ([elementName isEqualToString:@"Response"])
 	{
@@ -86,6 +97,16 @@ didStartElement:(NSString *)elementName
 			resp._from = [attributeDict objectForKey:@"From"];
 			resp._to = [attributeDict objectForKey:@"To"];
 			
+			[_arr addObject:resp];
+			[resp release];
+		}else if ([TypeString isEqualToString:@"Addresses.Add"]) {
+			ResponseAddress * resp = [[ResponseAddress alloc] initWithResponseType:TypeString 
+																			result:Result 
+																	  andAddressId:[[attributeDict objectForKey:@"AddressId"] intValue]];	
+			[_arr addObject:resp];
+			[resp release];
+		}else if ([TypeString isEqualToString:@"Addresses.List"]) {
+			ResponseAddress * resp = [[ResponseAddress alloc] init];	
 			[_arr addObject:resp];
 			[resp release];
 		}else if ([TypeString isEqualToString:@"History"]) {

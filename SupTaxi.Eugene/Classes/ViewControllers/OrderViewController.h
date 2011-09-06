@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Response.h"
 #import "PreferencesManager.h"
+#import "MapViewController.h"
+#import "MapViewRouteSearchBar.h"
 
 #define kEconomicalCarType 1;
 #define kBusinessCarType 2;
@@ -23,11 +25,8 @@
 }
 
 @property (nonatomic, retain) NSDictionary *carTypes;
-@property (nonatomic, retain) IBOutlet UITextField *fromPoint;
-@property (nonatomic, retain) IBOutlet UITextField *toPoint;
-@property (nonatomic, retain) IBOutlet UITextField *txtDateTime;
-@property (nonatomic, retain) IBOutlet UILabel *lblCarType;
-@property (nonatomic, retain) IBOutlet UIImageView *imgCarType;
+@property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain) MapViewRouteSearchBar *mapViewRouteSearchBar;
 
 @property (nonatomic, copy) NSString *dateTime;
 @property (nonatomic, copy) NSString *carType;

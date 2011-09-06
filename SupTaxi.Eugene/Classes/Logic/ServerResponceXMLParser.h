@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Response.h"
-#import "Offer.h"
 
 @interface ServerResponceXMLParser : NSObject <NSXMLParserDelegate>
 {

@@ -156,7 +156,45 @@
 	return false;
 }
 
+// Get List of addresses
+- (BOOL) GetAddressListRequest:(NSString*)userGuid{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.List\" Guid=\"%@\" />", userGuid];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
 
+//Add new address
+- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Add\" Guid=\"%@\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
+							   userGuid, name, address, lat, lon];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Remove address
+- (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Del\" Guid=\"%@\" AddressId=\"%i\" />", userGuid, addressId];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
 
 - (void) Clear
 {

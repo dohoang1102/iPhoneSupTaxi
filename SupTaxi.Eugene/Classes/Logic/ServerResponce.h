@@ -33,6 +33,10 @@
 
 - (BOOL) GetOrdersHistoryRequest:(NSString*)userGuid pageNumber:(int)pageNumber numberOfRows:(int)numberOfRows;
 
+- (BOOL) GetAddressListRequest:(NSString*)userGuid;
+- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
+- (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId;
+
 + (NSString *)GetRootURL;
 
 

@@ -1,0 +1,51 @@
+//
+//  MapViewRouteSearchBar.h
+//  SupTaxi
+//
+//  Created by DarkAn on 9/4/11.
+//  Copyright 2011 DNK. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "MapViewBaseBar.h"
+#import "AddressViewControllerDelegate.h"
+
+@interface MapViewRouteSearchBar : MapViewBaseBar <UITextFieldDelegate, AddressViewControllerDelegate> {
+    BOOL hidden;
+	
+	GoogleResultPlacemark *placeMarkFrom; 
+	GoogleResultPlacemark *placeMarkTo;
+}
+
+
+@property (nonatomic, retain) IBOutlet UITextField *fromField;
+@property (nonatomic, retain) IBOutlet UITextField *toField;
+@property (nonatomic, retain) IBOutlet UIButton *fromAddressButton;
+
+@property (nonatomic, retain) IBOutlet UITextField *timeField;
+
+@property (nonatomic, retain) IBOutlet UIView *daysView;
+@property (nonatomic, retain) IBOutlet UITextField *daysField;
+
+@property (nonatomic, retain) IBOutlet UIView *carView;
+@property (nonatomic, retain) IBOutlet UIImageView *carImageView;
+@property (nonatomic, retain) IBOutlet UILabel *carTypeLabel;
+
+@property (nonatomic, retain) GoogleResultPlacemark *placeMarkFrom;
+@property (nonatomic, retain) GoogleResultPlacemark *placeMarkTo;
+@property (nonatomic, retain) GoogleResultPlacemark *selfLocationPlacemark;
+
+
+@property (nonatomic, retain) id parentController;
+
+@property (nonatomic, retain) UITextField *currentTextField;
+
+@property (nonatomic, assign) BOOL daysVisible;
+
+-(IBAction)onGetFromAddressBook:(id)sender;
+-(IBAction)onReverseDirection:(id)sender;
+-(IBAction)onChangeCar:(id)sender;
+-(IBAction)onChangeDate:(id)sender;
+
+
+@end

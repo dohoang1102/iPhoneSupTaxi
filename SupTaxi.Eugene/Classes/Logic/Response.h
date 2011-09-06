@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Offer.h"
 #import "Order.h"
+#import "Address.h"
 
 @interface Response : NSObject {
 
@@ -52,5 +53,17 @@
 @property (nonatomic, retain) NSMutableArray * _orders; 
 
 - (void)addAnOrder:(Order *)order;
+
+@end
+
+@interface ResponseAddress : Response {
+	
+}
+
+@property (nonatomic, assign) NSInteger _addressId;
+@property (nonatomic, retain) NSMutableArray * _addressList; 
+
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result andAddressId:(NSInteger)addressId;
+- (void)addAnAddress:(Address *)address;
 
 @end

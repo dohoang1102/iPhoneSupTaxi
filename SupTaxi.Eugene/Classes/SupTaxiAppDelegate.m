@@ -167,7 +167,7 @@
 	[timeFormat release];
 	[date release];
 	
-    [self saveContext];
+    //[self saveContext];
 }
 
 - (void) checkOrderOffers
@@ -189,6 +189,8 @@
 	NSLog(@"\n"
 		  "theTime: |%@| \n"
 		  , theTime);
+	[timeFormat release];
+	[date release];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -211,7 +213,7 @@
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [self saveContext];
+   
 }
 
 #pragma mark -

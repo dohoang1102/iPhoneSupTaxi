@@ -1,0 +1,27 @@
+//
+//  Address.h
+//  SupTaxi
+//
+//  Created by Eugene Zavalko on 06.09.11.
+//  Copyright 2011 EaZySoft. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "GoogleResultPlacemark.h"
+
+@interface Address : NSObject {
+
+}
+
+@property (nonatomic, assign) NSInteger  addressId;
+@property (nonatomic, retain) NSString * addressName;
+@property (nonatomic, retain) NSString * address;
+@property (nonatomic, retain) NSNumber * longtitude;
+@property (nonatomic, retain) NSNumber * latitude;
+@property (nonatomic, assign) NSInteger addressType; //0 - general 1- station 2 - aero
+
+-(id)inithWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString type:(NSInteger)type lon:(double)lon lat:(double)lat;
+-(id)initWithGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark;
+-(GoogleResultPlacemark *)googleResultPlacemark;
+
+@end

@@ -70,6 +70,30 @@
 		49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC422140D5DAC00D2DCC9 /* car_type_2.png */; };
 		49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_3.png */; };
 		49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */; };
+		58FF5FD2141608290088166E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBA141608290088166E /* JSONKit.m */; };
+		58FF5FD3141608290088166E /* GoogleResultPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBD141608290088166E /* GoogleResultPlacemark.m */; };
+		58FF5FD4141608290088166E /* GoogleServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBF141608290088166E /* GoogleServiceManager.m */; };
+		58FF5FD5141608290088166E /* MapViewAddressSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FC2141608290088166E /* MapViewAddressSearchBar.m */; };
+		58FF5FD6141608290088166E /* MapViewAddressSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FC3141608290088166E /* MapViewAddressSearchBar.xib */; };
+		58FF5FD7141608290088166E /* MapViewBaseBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FC5141608290088166E /* MapViewBaseBar.m */; };
+		58FF5FD8141608290088166E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FC7141608290088166E /* MapViewController.m */; };
+		58FF5FD9141608290088166E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FC8141608290088166E /* MapViewController.xib */; };
+		58FF5FDA141608290088166E /* MapViewRouteSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FCA141608290088166E /* MapViewRouteSearchBar.m */; };
+		58FF5FDB141608290088166E /* MapViewRouteSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FCB141608290088166E /* MapViewRouteSearchBar.xib */; };
+		58FF5FDC141608290088166E /* MapViewSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FCD141608290088166E /* MapViewSearchBar.m */; };
+		58FF5FDD141608290088166E /* MapViewSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FCE141608290088166E /* MapViewSearchBar.xib */; };
+		58FF5FDE141608290088166E /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FD1141608290088166E /* NSString+URLEncode.m */; };
+		58FF5FEA141608B40088166E /* AddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE1141608B40088166E /* AddAddressViewController.m */; };
+		58FF5FEB141608B40088166E /* AddAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE2141608B40088166E /* AddAddressViewController.xib */; };
+		58FF5FEC141608B40088166E /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE4141608B40088166E /* AddressViewController.m */; };
+		58FF5FED141608B40088166E /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE5141608B40088166E /* AddressViewController.xib */; };
+		58FF5FEE141608B40088166E /* JournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE8141608B40088166E /* JournalViewController.m */; };
+		58FF5FEF141608B40088166E /* JournalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE9141608B40088166E /* JournalViewController.xib */; };
+		58FF5FF514160F310088166E /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FF414160F310088166E /* Address.m */; };
+		58FF5FF814160FCB0088166E /* LocalOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FF714160FCA0088166E /* LocalOrder.m */; };
+		58FF5FFB141610970088166E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FF5FF9141610960088166E /* AddressBook.framework */; };
+		58FF5FFC141610970088166E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FF5FFA141610960088166E /* CoreLocation.framework */; };
+		58FF5FFF141621690088166E /* GoogleServiceDirectionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FFE141621690088166E /* GoogleServiceDirectionsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +188,49 @@
 		49CBC423140D5DAC00D2DCC9 /* car_type_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_3.png; sourceTree = "<group>"; };
 		49CBC439140D602B00D2DCC9 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		58FF5FB9141608290088166E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		58FF5FBA141608290088166E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		58FF5FBC141608290088166E /* GoogleResultPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleResultPlacemark.h; sourceTree = "<group>"; };
+		58FF5FBD141608290088166E /* GoogleResultPlacemark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleResultPlacemark.m; sourceTree = "<group>"; };
+		58FF5FBE141608290088166E /* GoogleServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleServiceManager.h; sourceTree = "<group>"; };
+		58FF5FBF141608290088166E /* GoogleServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleServiceManager.m; sourceTree = "<group>"; };
+		58FF5FC0141608290088166E /* GoogleServiceManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleServiceManagerDelegate.h; sourceTree = "<group>"; };
+		58FF5FC1141608290088166E /* MapViewAddressSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewAddressSearchBar.h; sourceTree = "<group>"; };
+		58FF5FC2141608290088166E /* MapViewAddressSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewAddressSearchBar.m; sourceTree = "<group>"; };
+		58FF5FC3141608290088166E /* MapViewAddressSearchBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewAddressSearchBar.xib; sourceTree = "<group>"; };
+		58FF5FC4141608290088166E /* MapViewBaseBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewBaseBar.h; sourceTree = "<group>"; };
+		58FF5FC5141608290088166E /* MapViewBaseBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewBaseBar.m; sourceTree = "<group>"; };
+		58FF5FC6141608290088166E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		58FF5FC7141608290088166E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		58FF5FC8141608290088166E /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		58FF5FC9141608290088166E /* MapViewRouteSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewRouteSearchBar.h; sourceTree = "<group>"; };
+		58FF5FCA141608290088166E /* MapViewRouteSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewRouteSearchBar.m; sourceTree = "<group>"; };
+		58FF5FCB141608290088166E /* MapViewRouteSearchBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewRouteSearchBar.xib; sourceTree = "<group>"; };
+		58FF5FCC141608290088166E /* MapViewSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewSearchBar.h; sourceTree = "<group>"; };
+		58FF5FCD141608290088166E /* MapViewSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewSearchBar.m; sourceTree = "<group>"; };
+		58FF5FCE141608290088166E /* MapViewSearchBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewSearchBar.xib; sourceTree = "<group>"; };
+		58FF5FCF141608290088166E /* MapViewSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewSearchBarDelegate.h; sourceTree = "<group>"; };
+		58FF5FD0141608290088166E /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
+		58FF5FD1141608290088166E /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
+		58FF5FE0141608B40088166E /* AddAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAddressViewController.h; sourceTree = "<group>"; };
+		58FF5FE1141608B40088166E /* AddAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAddressViewController.m; sourceTree = "<group>"; };
+		58FF5FE2141608B40088166E /* AddAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddAddressViewController.xib; path = ../Classes/ViewControllers/AddAddressViewController.xib; sourceTree = "<group>"; };
+		58FF5FE3141608B40088166E /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
+		58FF5FE4141608B40088166E /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
+		58FF5FE5141608B40088166E /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddressViewController.xib; path = ../Classes/ViewControllers/AddressViewController.xib; sourceTree = "<group>"; };
+		58FF5FE6141608B40088166E /* AddressViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewControllerDelegate.h; sourceTree = "<group>"; };
+		58FF5FE7141608B40088166E /* JournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalViewController.h; sourceTree = "<group>"; };
+		58FF5FE8141608B40088166E /* JournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalViewController.m; sourceTree = "<group>"; };
+		58FF5FE9141608B40088166E /* JournalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JournalViewController.xib; path = ../Classes/ViewControllers/JournalViewController.xib; sourceTree = "<group>"; };
+		58FF5FF314160F310088166E /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Address.h; path = ../MapControl/Address.h; sourceTree = "<group>"; };
+		58FF5FF414160F310088166E /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Address.m; path = ../MapControl/Address.m; sourceTree = "<group>"; };
+		58FF5FF614160FCA0088166E /* LocalOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOrder.h; path = ../MapControl/LocalOrder.h; sourceTree = "<group>"; };
+		58FF5FF714160FCA0088166E /* LocalOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOrder.m; path = ../MapControl/LocalOrder.m; sourceTree = "<group>"; };
+		58FF5FF9141610960088166E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		58FF5FFA141610960088166E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		58FF5FFD141621690088166E /* GoogleServiceDirectionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleServiceDirectionsManager.h; sourceTree = "<group>"; };
+		58FF5FFE141621690088166E /* GoogleServiceDirectionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleServiceDirectionsManager.m; sourceTree = "<group>"; };
+		58FF60001416217E0088166E /* GoogleServiceDirectionsManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleServiceDirectionsManagerDelegate.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SupTaxi-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SupTaxi-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +239,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58FF5FFB141610970088166E /* AddressBook.framework in Frameworks */,
+				58FF5FFC141610970088166E /* CoreLocation.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -186,6 +255,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				58FF5FB7141608290088166E /* 3rdParty */,
+				58FF5FBB141608290088166E /* MapControl */,
 				4988F1A51414CF2300FFD55D /* PlistData */,
 				49085260140C1375004F4963 /* Logic */,
 				49085243140C0878004F4963 /* BarCustomization */,
@@ -240,6 +311,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58FF5FF9141610960088166E /* AddressBook.framework */,
+				58FF5FFA141610960088166E /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -279,6 +352,9 @@
 		49085240140C0847004F4963 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				58FF5FE9141608B40088166E /* JournalViewController.xib */,
+				58FF5FE5141608B40088166E /* AddressViewController.xib */,
+				58FF5FE2141608B40088166E /* AddAddressViewController.xib */,
 				4988F1111413D4C000FFD55D /* ContractViewController.xib */,
 				4988EEF9141373AE00FFD55D /* HistoryViewController.xib */,
 				4988EEFB141373AE00FFD55D /* SettingsViewController.xib */,
@@ -305,6 +381,13 @@
 		4908524B140C0878004F4963 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				58FF5FE0141608B40088166E /* AddAddressViewController.h */,
+				58FF5FE1141608B40088166E /* AddAddressViewController.m */,
+				58FF5FE3141608B40088166E /* AddressViewController.h */,
+				58FF5FE4141608B40088166E /* AddressViewController.m */,
+				58FF5FE6141608B40088166E /* AddressViewControllerDelegate.h */,
+				58FF5FE7141608B40088166E /* JournalViewController.h */,
+				58FF5FE8141608B40088166E /* JournalViewController.m */,
 				49B83D91141007280063357A /* CarriersViewController.h */,
 				49B83D92141007280063357A /* CarriersViewController.m */,
 				4908524C140C0878004F4963 /* OrderViewController.h */,
@@ -343,6 +426,10 @@
 		4908528A140C192A004F4963 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				58FF5FF614160FCA0088166E /* LocalOrder.h */,
+				58FF5FF714160FCA0088166E /* LocalOrder.m */,
+				58FF5FF314160F310088166E /* Address.h */,
+				58FF5FF414160F310088166E /* Address.m */,
 				49085263140C1375004F4963 /* Offer.h */,
 				49085264140C1375004F4963 /* Offer.m */,
 				49CBC270140D25CC00D2DCC9 /* Response.h */,
@@ -400,6 +487,79 @@
 				49CBC284140D32AC00D2DCC9 /* MBProgressHUD.m */,
 			);
 			path = Progress;
+			sourceTree = "<group>";
+		};
+		58FF5FB7141608290088166E /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FB8141608290088166E /* JSONKit */,
+			);
+			path = 3rdParty;
+			sourceTree = "<group>";
+		};
+		58FF5FB8141608290088166E /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FB9141608290088166E /* JSONKit.h */,
+				58FF5FBA141608290088166E /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		58FF5FBB141608290088166E /* MapControl */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FF214160AE70088166E /* Classes */,
+				58FF5FF114160ADF0088166E /* TopBars */,
+				58FF5FF014160AD40088166E /* Extensions */,
+				58FF5FC6141608290088166E /* MapViewController.h */,
+				58FF5FC7141608290088166E /* MapViewController.m */,
+				58FF5FC8141608290088166E /* MapViewController.xib */,
+			);
+			path = MapControl;
+			sourceTree = "<group>";
+		};
+		58FF5FF014160AD40088166E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FD0141608290088166E /* NSString+URLEncode.h */,
+				58FF5FD1141608290088166E /* NSString+URLEncode.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		58FF5FF114160ADF0088166E /* TopBars */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FC4141608290088166E /* MapViewBaseBar.h */,
+				58FF5FC5141608290088166E /* MapViewBaseBar.m */,
+				58FF5FCF141608290088166E /* MapViewSearchBarDelegate.h */,
+				58FF5FC1141608290088166E /* MapViewAddressSearchBar.h */,
+				58FF5FC2141608290088166E /* MapViewAddressSearchBar.m */,
+				58FF5FC3141608290088166E /* MapViewAddressSearchBar.xib */,
+				58FF5FC9141608290088166E /* MapViewRouteSearchBar.h */,
+				58FF5FCA141608290088166E /* MapViewRouteSearchBar.m */,
+				58FF5FCB141608290088166E /* MapViewRouteSearchBar.xib */,
+				58FF5FCC141608290088166E /* MapViewSearchBar.h */,
+				58FF5FCD141608290088166E /* MapViewSearchBar.m */,
+				58FF5FCE141608290088166E /* MapViewSearchBar.xib */,
+			);
+			name = TopBars;
+			sourceTree = "<group>";
+		};
+		58FF5FF214160AE70088166E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				58FF5FBC141608290088166E /* GoogleResultPlacemark.h */,
+				58FF5FBD141608290088166E /* GoogleResultPlacemark.m */,
+				58FF5FBE141608290088166E /* GoogleServiceManager.h */,
+				58FF5FBF141608290088166E /* GoogleServiceManager.m */,
+				58FF5FC0141608290088166E /* GoogleServiceManagerDelegate.h */,
+				58FF5FFD141621690088166E /* GoogleServiceDirectionsManager.h */,
+				58FF5FFE141621690088166E /* GoogleServiceDirectionsManager.m */,
+				58FF60001416217E0088166E /* GoogleServiceDirectionsManagerDelegate.h */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -482,6 +642,13 @@
 				4988EEFC141373AE00FFD55D /* HistoryViewController.xib in Resources */,
 				4988EEFE141373AE00FFD55D /* SettingsViewController.xib in Resources */,
 				4988F1121413D4C000FFD55D /* ContractViewController.xib in Resources */,
+				58FF5FD6141608290088166E /* MapViewAddressSearchBar.xib in Resources */,
+				58FF5FD9141608290088166E /* MapViewController.xib in Resources */,
+				58FF5FDB141608290088166E /* MapViewRouteSearchBar.xib in Resources */,
+				58FF5FDD141608290088166E /* MapViewSearchBar.xib in Resources */,
+				58FF5FEB141608B40088166E /* AddAddressViewController.xib in Resources */,
+				58FF5FED141608B40088166E /* AddressViewController.xib in Resources */,
+				58FF5FEF141608B40088166E /* JournalViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +686,21 @@
 				4988F1B11414CF2300FFD55D /* PreferencesManager.m in Sources */,
 				4988F25C1414EC9300FFD55D /* Order.m in Sources */,
 				4988F314141524B200FFD55D /* NSDataAdditions.m in Sources */,
+				58FF5FD2141608290088166E /* JSONKit.m in Sources */,
+				58FF5FD3141608290088166E /* GoogleResultPlacemark.m in Sources */,
+				58FF5FD4141608290088166E /* GoogleServiceManager.m in Sources */,
+				58FF5FD5141608290088166E /* MapViewAddressSearchBar.m in Sources */,
+				58FF5FD7141608290088166E /* MapViewBaseBar.m in Sources */,
+				58FF5FD8141608290088166E /* MapViewController.m in Sources */,
+				58FF5FDA141608290088166E /* MapViewRouteSearchBar.m in Sources */,
+				58FF5FDC141608290088166E /* MapViewSearchBar.m in Sources */,
+				58FF5FDE141608290088166E /* NSString+URLEncode.m in Sources */,
+				58FF5FEA141608B40088166E /* AddAddressViewController.m in Sources */,
+				58FF5FEC141608B40088166E /* AddressViewController.m in Sources */,
+				58FF5FEE141608B40088166E /* JournalViewController.m in Sources */,
+				58FF5FF514160F310088166E /* Address.m in Sources */,
+				58FF5FF814160FCB0088166E /* LocalOrder.m in Sources */,
+				58FF5FFF141621690088166E /* GoogleServiceDirectionsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
