@@ -30,6 +30,23 @@
 	return ((NSArray*)_dataItems);
 }
 
+- (NSUInteger) GetNavigatePage
+{
+	return _navigatePage;
+}
+- (NSUInteger) GetNavigatePages
+{
+	return _navigatePages;
+}
+- (NSUInteger) GetNavigateOnPage
+{
+	return _navigateOnPage;
+}
+- (NSUInteger) GetNavigateCount
+{
+	return _navigateCount;
+}
+
 - (BOOL) ProcessURLString:(NSString*)urlString withData:(NSString*)requestData
 {
 	_dataItems = [[NSMutableArray alloc] init];
@@ -40,7 +57,10 @@
 		if (rslt) 
 		{
 			//NSLog(@"Response: %@", _dataItems);
-			//_navigateCount = [parser GetCount];
+			_navigatePage = [parser GetPage];
+			_navigatePages = [parser GetPages];
+			_navigateOnPage = [parser GetOnPage];
+			_navigateCount = [parser GetCount];
 		}
 		[parser release];
 		return rslt;
@@ -195,6 +215,21 @@
 	}
 	return false;
 }
+
+//Add new address
+- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Upd\" Guid=\"%@\" AddressId=\"%i\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
+							   userGuid, addressId, name, address, lat, lon];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
 
 - (void) Clear
 {

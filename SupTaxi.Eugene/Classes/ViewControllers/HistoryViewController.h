@@ -7,10 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PreferencesManager.h"
+#import "Response.h"
 
+@class HistoryDetailViewController;
 
-@interface HistoryViewController : UIViewController {
-
+@interface HistoryViewController : UITableViewController {
+@private
+	NSMutableArray * _hItems;
+	NSUInteger _pagesLoadedCount;
+	NSUInteger _totalPagesCount;
+	NSUInteger _totalItemsCount;
+	
+	ResponseHistory * _historyResponse;
+	PreferencesManager * prefManager;
+	
+	HistoryDetailViewController * detailView;
 }
+
+@property (nonatomic, retain) ResponseHistory * _historyResponse;
 
 @end

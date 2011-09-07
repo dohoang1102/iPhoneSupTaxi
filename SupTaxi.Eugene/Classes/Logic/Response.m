@@ -51,6 +51,16 @@
 @synthesize _secondName;
 @synthesize _wrongPassword;
 
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName andWrongPass:(BOOL) wrongPass{
+    self = [super initWithResponseType:responseType result:result andGuid:guid];
+    if (self != nil) {
+		[self set_firstName:fName];
+		[self set_secondName:sName];
+		[self set_wrongPassword:wrongPass];
+	}
+    
+    return self;
+}
 - (void)dealloc
 {
     self._firstName = nil;
@@ -67,10 +77,13 @@
 @synthesize _from;
 @synthesize _to;
 
-
--(id)init{
-	if ((self = [super init])) {
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid from:(NSString *)from to:(NSString *)to andStatus:(BOOL) status{
+	self = [super initWithResponseType:responseType result:result andGuid:guid];
+    if (self != nil) {
 		_offers = [[NSMutableArray alloc] init];
+		[self set_status:status];
+		[self set_from:from];
+		[self set_to:to];
 	}
 	return self;
 }

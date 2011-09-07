@@ -20,6 +20,8 @@
 - (IBAction)changeWishes:(id)sender;
 - (IBAction)changeRegularOrder:(id)sender;
 - (UIView*)headerViewWithText:(NSString*)text;
+- (void) saveSettings:(id)sender;
+- (void) showAlertMessage:(NSString *)alertMessage;
 
 @end
 
@@ -103,6 +105,11 @@
     [self.navigationItem setHidesBackButton:YES];
 }
 
+- (void) saveSettings:(id)sender
+{
+	[prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
+	[prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
+}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -269,6 +276,12 @@
 {
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;
 	BOOL result = [senderSwitch isOn];
+	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
+		[self showAlertMessage:@"Вы не можете добавить информацию о контракте пока Вы не сохранили настройки и не авторизовались в систему!"];
+		[senderSwitch setOn:NO];
+		return;
+	}
+	
 	self.userHasContract = result;
 	if (result) {
 		ContractViewController *contractViewController = [[ContractViewController alloc] initWithNibName:@"ContractViewController" bundle:nil];
@@ -310,5 +323,15 @@
 	return [headerView autorelease];
 }
 
+- (void) showAlertMessage:(NSString *)alertMessage
+{
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+}
 					 
 @end

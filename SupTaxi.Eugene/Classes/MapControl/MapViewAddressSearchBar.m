@@ -18,6 +18,13 @@
 
 @synthesize placeMark;
 
+-(void)setPlaceMark:(GoogleResultPlacemark *)newPlaceMark{
+	[newPlaceMark retain];
+	[placeMark release];
+	placeMark = newPlaceMark;
+	[self onShowRoute];
+}
+
 #pragma mark Init/Dealloc
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +71,7 @@
 #pragma mark Helping Methods
 
 -(void)resignEditFields{
+	[nameField resignFirstResponder];
 	[addressField resignFirstResponder];
 }
 
@@ -80,27 +88,33 @@
 
 -(BOOL)validate{
 	NSString *message = nil;
-	if (![[self.nameField text] isEqualToString:@""] && ![[self.addressField text] isEqualToString:@""]) {
-		return YES;
-	} else
+	if ([[self.nameField text] isEqualToString:@""] || [[self.addressField text] isEqualToString:@""])
 		message = @"Пожалуйста заполните все поля";
 	
-	if (!message && [self placeMark]) {
-		return YES;
-	} else
+	if (!message && (![self placeMark] || ![[self.addressField text] isEqualToString:[placeMark shortAddress]]))
 		message = @"Адрес не может быть добавлен пока не определены координаты";
 	
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[alertView show];
-	[alertView release];
+	if (message) {
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alertView show];
+		[alertView release];
+		return NO;
+	}
 	
-	return NO;
+	return YES;
 }
 
 #pragma mark UITextFieldDelegate
 
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+	if (textField == self.nameField) return;
+	self.placeMark = nil;
+	[self onShowRoute];
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
 	[self resignEditFields];
+	if (textField == self.nameField) return YES;
 	
 	[self startAddressSearch:[textField text]];
 	

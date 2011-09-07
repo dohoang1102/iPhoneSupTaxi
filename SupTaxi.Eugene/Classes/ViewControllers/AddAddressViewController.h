@@ -10,7 +10,7 @@
 #import "MapViewController.h"
 #import "MapViewAddressSearchBar.h"
 #import "Address.h"
-
+#import "AddressViewController.h"
 #import	"Response.h"
 #import "PreferencesManager.h"
 
@@ -25,5 +25,7 @@
 @property (nonatomic, retain) Address *address;
 
 @property (nonatomic, retain) ResponseAddress * _addressResponse;
+
+@property (nonatomic, assign) AddressViewController * delegate;
 
 @end

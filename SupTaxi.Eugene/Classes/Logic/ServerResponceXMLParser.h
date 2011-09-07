@@ -12,6 +12,9 @@
 @interface ServerResponceXMLParser : NSObject <NSXMLParserDelegate>
 {
 @private	
+	NSUInteger _page;
+	NSUInteger _pages;
+	NSUInteger _onPage;
 	NSUInteger _count;
 	NSInteger _status;
 	
@@ -24,6 +27,9 @@
 	NSString * _urlString;
 }
 
+- (NSUInteger) GetPage;
+- (NSUInteger) GetPages;
+- (NSUInteger) GetOnPage;
 - (NSUInteger) GetCount;
 - (NSUInteger) GetStatus;
 

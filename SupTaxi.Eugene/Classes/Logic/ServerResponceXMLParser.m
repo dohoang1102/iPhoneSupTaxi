@@ -84,19 +84,21 @@ didStartElement:(NSString *)elementName
 		NSString * GuidString = [attributeDict objectForKey:@"Guid"];
 		
 		if ([TypeString isEqualToString:@"Login"]) {
-			ResponseLogin * resp = [[ResponseLogin alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
-			resp._wrongPassword = [[attributeDict objectForKey:@"WrongPass"] boolValue];
-			resp._firstName = [attributeDict objectForKey:@"FirstName"];
-			resp._secondName = [attributeDict objectForKey:@"SecondName"];
-			
+			ResponseLogin * resp = [[ResponseLogin alloc] initWithResponseType:TypeString 
+																		result:Result 
+																		  guid:GuidString 
+																		 fName:[attributeDict objectForKey:@"FirstName"] 
+																		 sName:[attributeDict objectForKey:@"SecondName"] 
+																  andWrongPass:[[attributeDict objectForKey:@"WrongPassword"] boolValue]];
 			[_arr addObject:resp];
 			[resp release];
 		}else if ([TypeString isEqualToString:@"Order.Offers"]) {
-			ResponseOffers * resp = [[ResponseOffers alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
-			resp._status = [[attributeDict objectForKey:@"Status"] boolValue];
-			resp._from = [attributeDict objectForKey:@"From"];
-			resp._to = [attributeDict objectForKey:@"To"];
-			
+			ResponseOffers * resp = [[ResponseOffers alloc] initWithResponseType:TypeString 
+																		  result:Result 
+																			guid:GuidString 
+																			from:[attributeDict objectForKey:@"From"] 
+																			  to:[attributeDict objectForKey:@"To"] 
+																	   andStatus:[[attributeDict objectForKey:@"Status"] boolValue]];												
 			[_arr addObject:resp];
 			[resp release];
 		}else if ([TypeString isEqualToString:@"Addresses.Add"]) {
@@ -159,6 +161,9 @@ didStartElement:(NSString *)elementName
 
 - (BOOL) ParseURLString:(NSString*)urlString withDataString:(NSString*)requestString toArray:(NSMutableArray*)arr
 {
+	_page = 0;
+	_pages = 0;
+	_onPage = 0;
 	_count = 0;
 	_status = 0;
 	_elementName = nil;
@@ -228,6 +233,18 @@ didStartElement:(NSString *)elementName
 	return NO;
 }
 
+- (NSUInteger) GetPage
+{
+	return _page;
+}
+- (NSUInteger) GetPages
+{
+	return _pages;
+}
+- (NSUInteger) GetOnPage
+{
+	return _onPage;
+}
 - (NSUInteger) GetCount
 {
 	return _count;
@@ -242,6 +259,9 @@ didStartElement:(NSString *)elementName
 	self = [super init];
 	if (self)
 	{
+		_page = 0;
+		_pages = 0;
+		_onPage = 0;
 		_count = 0;
 		_status = 0;
 		_elementName = nil;

@@ -35,6 +35,11 @@
 		4908526C140C1375004F4963 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085264140C1375004F4963 /* Offer.m */; };
 		4908526E140C1375004F4963 /* ServerResponce.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085268140C1375004F4963 /* ServerResponce.m */; };
 		4908526F140C1375004F4963 /* ServerResponceXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4908526A140C1375004F4963 /* ServerResponceXMLParser.m */; };
+		4941A6CB1417EFB9000BC3D5 /* HistoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941A6CA1417EFB9000BC3D5 /* HistoryDetailViewController.m */; };
+		4941A6DD1417F372000BC3D5 /* HistoryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941A6DC1417F372000BC3D5 /* HistoryItemCell.m */; };
+		4941A7BD1418219D000BC3D5 /* AddAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4941A7BA1418219D000BC3D5 /* AddAddressViewController.xib */; };
+		4941A7BE1418219D000BC3D5 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4941A7BB1418219D000BC3D5 /* AddressViewController.xib */; };
+		4941A7BF1418219D000BC3D5 /* HistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4941A7BC1418219D000BC3D5 /* HistoryViewController.xib */; };
 		49493E0F1411261C008E5AAB /* UICustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 49493E0E1411261C008E5AAB /* UICustomSwitch.m */; };
 		49493E3614112AFF008E5AAB /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 49493E3314112AFF008E5AAB /* switchBlueBg.png */; };
 		49493E3714112AFF008E5AAB /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = 49493E3414112AFF008E5AAB /* switchOffPlain.png */; };
@@ -46,7 +51,7 @@
 		4987A5CB140E320C009C0A12 /* field_3Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 4987A5C6140E320C009C0A12 /* field_3Line.png */; };
 		4988EEE6141372C100FFD55D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4988EEE4141372C100FFD55D /* SettingsViewController.m */; };
 		4988EEF71413733300FFD55D /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4988EEF51413733300FFD55D /* HistoryViewController.m */; };
-		4988EEFC141373AE00FFD55D /* HistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4988EEF9141373AE00FFD55D /* HistoryViewController.xib */; };
+		4988EEFC141373AE00FFD55D /* HistoryDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4988EEF9141373AE00FFD55D /* HistoryDetailViewController.xib */; };
 		4988EEFE141373AE00FFD55D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4988EEFB141373AE00FFD55D /* SettingsViewController.xib */; };
 		4988EF0D1413869D00FFD55D /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4988EF0A1413869D00FFD55D /* SettingsCell.m */; };
 		4988EF0E1413869D00FFD55D /* SettingsOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4988EF0C1413869D00FFD55D /* SettingsOrderCell.m */; };
@@ -84,13 +89,8 @@
 		58FF5FDD141608290088166E /* MapViewSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FCE141608290088166E /* MapViewSearchBar.xib */; };
 		58FF5FDE141608290088166E /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FD1141608290088166E /* NSString+URLEncode.m */; };
 		58FF5FEA141608B40088166E /* AddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE1141608B40088166E /* AddAddressViewController.m */; };
-		58FF5FEB141608B40088166E /* AddAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE2141608B40088166E /* AddAddressViewController.xib */; };
 		58FF5FEC141608B40088166E /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE4141608B40088166E /* AddressViewController.m */; };
-		58FF5FED141608B40088166E /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE5141608B40088166E /* AddressViewController.xib */; };
-		58FF5FEE141608B40088166E /* JournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FE8141608B40088166E /* JournalViewController.m */; };
-		58FF5FEF141608B40088166E /* JournalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FF5FE9141608B40088166E /* JournalViewController.xib */; };
 		58FF5FF514160F310088166E /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FF414160F310088166E /* Address.m */; };
-		58FF5FF814160FCB0088166E /* LocalOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FF714160FCA0088166E /* LocalOrder.m */; };
 		58FF5FFB141610970088166E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FF5FF9141610960088166E /* AddressBook.framework */; };
 		58FF5FFC141610970088166E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FF5FFA141610960088166E /* CoreLocation.framework */; };
 		58FF5FFF141621690088166E /* GoogleServiceDirectionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FFE141621690088166E /* GoogleServiceDirectionsManager.m */; };
@@ -135,6 +135,13 @@
 		49085268140C1375004F4963 /* ServerResponce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponce.m; sourceTree = "<group>"; };
 		49085269140C1375004F4963 /* ServerResponceXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResponceXMLParser.h; sourceTree = "<group>"; };
 		4908526A140C1375004F4963 /* ServerResponceXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponceXMLParser.m; sourceTree = "<group>"; };
+		4941A6C91417EFB9000BC3D5 /* HistoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailViewController.h; sourceTree = "<group>"; };
+		4941A6CA1417EFB9000BC3D5 /* HistoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailViewController.m; sourceTree = "<group>"; };
+		4941A6DB1417F372000BC3D5 /* HistoryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryItemCell.h; sourceTree = "<group>"; };
+		4941A6DC1417F372000BC3D5 /* HistoryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryItemCell.m; sourceTree = "<group>"; };
+		4941A7BA1418219D000BC3D5 /* AddAddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAddressViewController.xib; sourceTree = "<group>"; };
+		4941A7BB1418219D000BC3D5 /* AddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressViewController.xib; sourceTree = "<group>"; };
+		4941A7BC1418219D000BC3D5 /* HistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryViewController.xib; sourceTree = "<group>"; };
 		49493E0D1411261C008E5AAB /* UICustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomSwitch.h; sourceTree = "<group>"; };
 		49493E0E1411261C008E5AAB /* UICustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomSwitch.m; sourceTree = "<group>"; };
 		49493E3314112AFF008E5AAB /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchBlueBg.png; sourceTree = "<group>"; };
@@ -149,7 +156,7 @@
 		4988EEE4141372C100FFD55D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4988EEF41413733300FFD55D /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4988EEF51413733300FFD55D /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
-		4988EEF9141373AE00FFD55D /* HistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryViewController.xib; sourceTree = "<group>"; };
+		4988EEF9141373AE00FFD55D /* HistoryDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryDetailViewController.xib; sourceTree = "<group>"; };
 		4988EEFB141373AE00FFD55D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		4988EF091413869D00FFD55D /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
 		4988EF0A1413869D00FFD55D /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
@@ -214,18 +221,11 @@
 		58FF5FD1141608290088166E /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
 		58FF5FE0141608B40088166E /* AddAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAddressViewController.h; sourceTree = "<group>"; };
 		58FF5FE1141608B40088166E /* AddAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAddressViewController.m; sourceTree = "<group>"; };
-		58FF5FE2141608B40088166E /* AddAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddAddressViewController.xib; path = ../Classes/ViewControllers/AddAddressViewController.xib; sourceTree = "<group>"; };
 		58FF5FE3141608B40088166E /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		58FF5FE4141608B40088166E /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
-		58FF5FE5141608B40088166E /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddressViewController.xib; path = ../Classes/ViewControllers/AddressViewController.xib; sourceTree = "<group>"; };
 		58FF5FE6141608B40088166E /* AddressViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewControllerDelegate.h; sourceTree = "<group>"; };
-		58FF5FE7141608B40088166E /* JournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalViewController.h; sourceTree = "<group>"; };
-		58FF5FE8141608B40088166E /* JournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalViewController.m; sourceTree = "<group>"; };
-		58FF5FE9141608B40088166E /* JournalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JournalViewController.xib; path = ../Classes/ViewControllers/JournalViewController.xib; sourceTree = "<group>"; };
 		58FF5FF314160F310088166E /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Address.h; path = ../MapControl/Address.h; sourceTree = "<group>"; };
 		58FF5FF414160F310088166E /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Address.m; path = ../MapControl/Address.m; sourceTree = "<group>"; };
-		58FF5FF614160FCA0088166E /* LocalOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOrder.h; path = ../MapControl/LocalOrder.h; sourceTree = "<group>"; };
-		58FF5FF714160FCA0088166E /* LocalOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOrder.m; path = ../MapControl/LocalOrder.m; sourceTree = "<group>"; };
 		58FF5FF9141610960088166E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		58FF5FFA141610960088166E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		58FF5FFD141621690088166E /* GoogleServiceDirectionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleServiceDirectionsManager.h; sourceTree = "<group>"; };
@@ -352,11 +352,11 @@
 		49085240140C0847004F4963 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				58FF5FE9141608B40088166E /* JournalViewController.xib */,
-				58FF5FE5141608B40088166E /* AddressViewController.xib */,
-				58FF5FE2141608B40088166E /* AddAddressViewController.xib */,
+				4941A7BA1418219D000BC3D5 /* AddAddressViewController.xib */,
+				4941A7BB1418219D000BC3D5 /* AddressViewController.xib */,
+				4941A7BC1418219D000BC3D5 /* HistoryViewController.xib */,
 				4988F1111413D4C000FFD55D /* ContractViewController.xib */,
-				4988EEF9141373AE00FFD55D /* HistoryViewController.xib */,
+				4988EEF9141373AE00FFD55D /* HistoryDetailViewController.xib */,
 				4988EEFB141373AE00FFD55D /* SettingsViewController.xib */,
 				49B83D8D141007140063357A /* CarriersViewController.xib */,
 				49B83D8E141007140063357A /* RegisterViewController.xib */,
@@ -386,8 +386,6 @@
 				58FF5FE3141608B40088166E /* AddressViewController.h */,
 				58FF5FE4141608B40088166E /* AddressViewController.m */,
 				58FF5FE6141608B40088166E /* AddressViewControllerDelegate.h */,
-				58FF5FE7141608B40088166E /* JournalViewController.h */,
-				58FF5FE8141608B40088166E /* JournalViewController.m */,
 				49B83D91141007280063357A /* CarriersViewController.h */,
 				49B83D92141007280063357A /* CarriersViewController.m */,
 				4908524C140C0878004F4963 /* OrderViewController.h */,
@@ -400,6 +398,8 @@
 				4988EEF51413733300FFD55D /* HistoryViewController.m */,
 				4988F10E1413D4B500FFD55D /* ContractViewController.h */,
 				4988F10F1413D4B500FFD55D /* ContractViewController.m */,
+				4941A6C91417EFB9000BC3D5 /* HistoryDetailViewController.h */,
+				4941A6CA1417EFB9000BC3D5 /* HistoryDetailViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -426,8 +426,6 @@
 		4908528A140C192A004F4963 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				58FF5FF614160FCA0088166E /* LocalOrder.h */,
-				58FF5FF714160FCA0088166E /* LocalOrder.m */,
 				58FF5FF314160F310088166E /* Address.h */,
 				58FF5FF414160F310088166E /* Address.m */,
 				49085263140C1375004F4963 /* Offer.h */,
@@ -474,6 +472,8 @@
 				4988EF0C1413869D00FFD55D /* SettingsOrderCell.m */,
 				49B83D9D14100A4A0063357A /* OrderShowCell.h */,
 				49B83D9E14100A4A0063357A /* OrderShowCell.m */,
+				4941A6DB1417F372000BC3D5 /* HistoryItemCell.h */,
+				4941A6DC1417F372000BC3D5 /* HistoryItemCell.m */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -639,16 +639,16 @@
 				49493E3614112AFF008E5AAB /* switchBlueBg.png in Resources */,
 				49493E3714112AFF008E5AAB /* switchOffPlain.png in Resources */,
 				49493E3814112AFF008E5AAB /* switchThumb.png in Resources */,
-				4988EEFC141373AE00FFD55D /* HistoryViewController.xib in Resources */,
+				4988EEFC141373AE00FFD55D /* HistoryDetailViewController.xib in Resources */,
 				4988EEFE141373AE00FFD55D /* SettingsViewController.xib in Resources */,
 				4988F1121413D4C000FFD55D /* ContractViewController.xib in Resources */,
 				58FF5FD6141608290088166E /* MapViewAddressSearchBar.xib in Resources */,
 				58FF5FD9141608290088166E /* MapViewController.xib in Resources */,
 				58FF5FDB141608290088166E /* MapViewRouteSearchBar.xib in Resources */,
 				58FF5FDD141608290088166E /* MapViewSearchBar.xib in Resources */,
-				58FF5FEB141608B40088166E /* AddAddressViewController.xib in Resources */,
-				58FF5FED141608B40088166E /* AddressViewController.xib in Resources */,
-				58FF5FEF141608B40088166E /* JournalViewController.xib in Resources */,
+				4941A7BD1418219D000BC3D5 /* AddAddressViewController.xib in Resources */,
+				4941A7BE1418219D000BC3D5 /* AddressViewController.xib in Resources */,
+				4941A7BF1418219D000BC3D5 /* HistoryViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,10 +697,10 @@
 				58FF5FDE141608290088166E /* NSString+URLEncode.m in Sources */,
 				58FF5FEA141608B40088166E /* AddAddressViewController.m in Sources */,
 				58FF5FEC141608B40088166E /* AddressViewController.m in Sources */,
-				58FF5FEE141608B40088166E /* JournalViewController.m in Sources */,
 				58FF5FF514160F310088166E /* Address.m in Sources */,
-				58FF5FF814160FCB0088166E /* LocalOrder.m in Sources */,
 				58FF5FFF141621690088166E /* GoogleServiceDirectionsManager.m in Sources */,
+				4941A6CB1417EFB9000BC3D5 /* HistoryDetailViewController.m in Sources */,
+				4941A6DD1417F372000BC3D5 /* HistoryItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

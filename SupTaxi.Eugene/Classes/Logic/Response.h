@@ -32,6 +32,8 @@
 @property (nonatomic, copy) NSString *_secondName;
 @property (nonatomic, assign) BOOL _wrongPassword;
 
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName andWrongPass:(BOOL) wrongPass;
+
 @end
 
 @interface ResponseOffers : Response {
@@ -42,6 +44,8 @@
 @property (nonatomic, copy) NSString *_to;
 @property (nonatomic, assign) BOOL _status;
 @property (nonatomic, retain) NSMutableArray * _offers; 
+
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid from:(NSString *)from to:(NSString *)to andStatus:(BOOL) status;
 
 - (void)addAnOffer:(Offer *)offer;
 

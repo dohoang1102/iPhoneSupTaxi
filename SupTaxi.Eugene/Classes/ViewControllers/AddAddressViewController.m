@@ -27,6 +27,9 @@
 - (void) DelAddressesThreadMethod:(id)obj;
 - (void) DelAddressesResult:(id)obj;
 
+- (void) UpdAddressesThreadMethod:(id)obj;
+- (void) UpdAddressesResult:(id)obj;
+
 - (void) showAlertMessage:(NSString *)alertMessage;
 
 @end
@@ -45,7 +48,7 @@
 
 @synthesize mapController;
 @synthesize addressSearchBar;
-
+@synthesize delegate;
 @synthesize address;
 @synthesize _addressResponse;
 
@@ -96,6 +99,7 @@
 	if (!_addressResponse || _addressResponse._result == NO)
 		[self showAlertMessage:@"Ошибка добавления адреса, попробуйте, пожалуйста, еще раз!"];
 	if (_addressResponse._result == YES) {
+		[delegate setNeedReloadData:YES];
 		[self onBack:nil];
 	}
 }
@@ -140,6 +144,61 @@
 	if (!_addressResponse || _addressResponse._result == NO)
 		[self showAlertMessage:@"Не удалось удалить адрес, попробуйте, пожалуйста, еще раз!"];
 	if (_addressResponse._result == YES) {
+		[delegate setNeedReloadData:YES];
+		[self onBack:nil];
+	}
+}
+
+- (void) UpdAddressesThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Обновление адреса"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * guid = [d objectForKey:USER_GUID_KEY];
+		NSInteger addressId = [[d objectForKey:AID_KEY] intValue];
+		NSString * name = [d objectForKey:ANAME_KEY];
+		NSString * addr = [d objectForKey:ADDR_KEY];
+		double lat = [[d objectForKey:LAT_KEY] doubleValue];
+		double lon = [[d objectForKey:LON_KEY] doubleValue];
+		
+		if ([responce UpdAddressRequest:guid 
+							  addressId:addressId
+								   name:name 
+								address:addr 
+									lat:lat 
+									lon:lon])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._addressResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(UpdAddressesResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) UpdAddressesResult:(id)obj
+{
+	if (!_addressResponse || _addressResponse._result == NO)
+		[self showAlertMessage:@"Ошибка обновления адреса, попробуйте, пожалуйста, еще раз!"];
+	if (_addressResponse._result == YES) {
+		[delegate setNeedReloadData:YES];
 		[self onBack:nil];
 	}
 }
@@ -157,6 +216,7 @@
 
 - (void)dealloc
 {
+	[addressSearchBar setDelegate:nil];
 	[address release];
 	
 	[mapController release];
@@ -211,8 +271,12 @@
 	if (self.address) {
 		[[[self addressSearchBar] nameField] setText:[self.address addressName]];
 		[[[self addressSearchBar] addressField] setText:[[self address] address]];
-		[[self addressSearchBar] setPlaceMark:[[self address] googleResultPlacemark]];
-		[[self addressSearchBar] startAddressSearch:[[self address] address]];
+		
+		if ([self.address.latitude doubleValue] == 0 || [self.address.longitude doubleValue] == 0) {
+			[[self addressSearchBar] startAddressSearch:[[self address] address]];
+		}else {
+			[[self addressSearchBar] setPlaceMark:[[self address] googleResultPlacemark]];
+		}
 	}
 }
 
@@ -258,12 +322,26 @@
 		[NSThread detachNewThreadSelector:@selector(AddAddressesThreadMethod:)
 								 toTarget:self 
 							   withObject:d];
+		return;
 	}
-	/*
+	//address edited
+	
+	//self.addressSearchBar.placeMark
 	[addr initWithGoogleResultPlacemark:[self.addressSearchBar placeMark]];
 	[addr setAddressName:[[self.addressSearchBar nameField] text]];
-	//
-	*/
+	//update address
+	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:6];
+	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
+	[d setValue:[NSString stringWithFormat:@"%i", addr.addressId] forKey:AID_KEY];
+	[d setValue:addr.addressName forKey:ANAME_KEY];
+	[d setValue:addr.address forKey:ADDR_KEY];		
+	[d setValue:[NSString stringWithFormat:@"%f", [addr.latitude doubleValue]] forKey:LAT_KEY];
+	[d setValue:[NSString stringWithFormat:@"%f", [addr.longitude doubleValue]] forKey:LON_KEY];
+	
+	[NSThread detachNewThreadSelector:@selector(UpdAddressesThreadMethod:)
+							 toTarget:self 
+						   withObject:d];
+	
 }
 
 -(void)deleteAddress{
@@ -286,7 +364,9 @@
 		case 1:
 			[self addAddress];
 			break;
+		case 2:
 			
+			break;
 		default:
 			break;
 	}
@@ -308,6 +388,7 @@
 														cancelButtonTitle:@"сохранить" 
 												   destructiveButtonTitle:@"удалить" 
 														otherButtonTitles:nil];
+		[actionSheet addButtonWithTitle:@"Отмена"];
 		[actionSheet showFromTabBar:[[self tabBarController] tabBar]];
 		[actionSheet release];
 	} else

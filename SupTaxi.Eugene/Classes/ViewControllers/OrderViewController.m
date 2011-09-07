@@ -351,7 +351,7 @@
 
 - (void) sendOrder
 {
-	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
+	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:11];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	[d setValue:self.mapViewRouteSearchBar.fromField.text forKey:FROM_KEY];

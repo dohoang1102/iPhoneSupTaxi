@@ -28,4 +28,6 @@ enum AddressType { my_addresses, train_stations, airoports }; // 0, 1, 2
 
 @property (nonatomic, retain) ResponseAddress * _addressListResponse;
 
+@property (nonatomic, assign) BOOL needReloadData;
+
 @end

@@ -27,6 +27,7 @@
 - (void) reloadTable;
 - (NSMutableArray*) getAddressesByType: (NSInteger)type;
 - (void)loadAddresses;
+- (BOOL) checkIfAuthenticated;
 
 @end
 
@@ -37,6 +38,7 @@
 @synthesize addressType;
 @synthesize selectionDelegate;
 @synthesize _addressListResponse;
+@synthesize needReloadData;
 
 - (void) GetAddressesThreadMethod:(id)obj
 {
@@ -181,12 +183,17 @@
 }
 
 -(void)reloadTable{
-	[addressTable reloadData];
+	if (self.needReloadData) {
+		[self loadAddresses];
+		[self setNeedReloadData:NO];
+	}else {
+		[addressTable reloadData];
+	}
 }
 
 -(void)viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
-	
+	[self checkIfAuthenticated];	
 	//Deselect the row after returning to this view and reloading table
 	[[self addressTable] selectRowAtIndexPath:nil animated:YES scrollPosition:UITableViewScrollPositionNone];
 	[self performSelector:@selector(reloadTable) withObject:nil afterDelay:0.5];
@@ -200,19 +207,25 @@
 	
 	[self initPreferences];
 	
+	if ([self checkIfAuthenticated]) {
+		[self loadAddresses];
+	}
+}
+
+- (BOOL) checkIfAuthenticated
+{
 	//Check if user authenticated
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
 		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
 		registerViewController.delegate = self;
-		registerViewController.selectorOnDone = @selector(loadAddresses); 
+		registerViewController.selectorOnDone = @selector(loadHistory); 
 		[self.navigationController pushViewController:registerViewController animated:YES];
 		[registerViewController release];
-		return;
+		return NO;
 	}
-	
-	//Load addressses
-	[self loadAddresses];
+	return YES;
 }
+
 
 - (void)loadAddresses
 {	
@@ -243,6 +256,7 @@
 
 -(void)editAddress:(Address *)address{
 	AddAddressViewController *newController = [[AddAddressViewController alloc] init];
+	[newController setDelegate:self];
 	[newController setAddress:address];
 	[[self navigationController] pushViewController:newController animated:YES];
 	[newController release];

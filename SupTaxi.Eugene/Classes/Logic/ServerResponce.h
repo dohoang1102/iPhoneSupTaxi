@@ -14,10 +14,17 @@
 @private
 	NSMutableArray * _dataItems;
 	
-	
+	NSUInteger _navigatePage;
+	NSUInteger _navigatePages;
+	NSUInteger _navigateOnPage;
+	NSUInteger _navigateCount;
 }
 
 - (NSArray *) GetDataItems;
+- (NSUInteger) GetNavigatePage;
+- (NSUInteger) GetNavigatePages;
+- (NSUInteger) GetNavigateOnPage;
+- (NSUInteger) GetNavigateCount;
 
 - (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
 				 latitude: (float) latitude longitude: (float) longitude fromLat: (float) fromLat fromLon: (float) fromLon 
@@ -34,8 +41,10 @@
 - (BOOL) GetOrdersHistoryRequest:(NSString*)userGuid pageNumber:(int)pageNumber numberOfRows:(int)numberOfRows;
 
 - (BOOL) GetAddressListRequest:(NSString*)userGuid;
+
 - (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
 - (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId;
+- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
 
 + (NSString *)GetRootURL;
 

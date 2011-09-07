@@ -207,11 +207,9 @@
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
-	// кнопка заказать
     UIBarButtonItem *registerButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Готово" andTarget:self andSelector:@selector(registerAction:)];
     self.navigationItem.rightBarButtonItem = registerButton;
     
-	// кнопка отмена
     UIBarButtonItem *registerDeclineButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(registerActionDecline:)];
     self.navigationItem.leftBarButtonItem = registerDeclineButton;
     
@@ -226,7 +224,6 @@
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -245,6 +242,9 @@
 
 - (IBAction)registerActionDecline:(id)sender
 {
+	if (self.delegate){
+		return;
+	}
 	[self.navigationController popViewControllerAnimated:YES];
 }
 

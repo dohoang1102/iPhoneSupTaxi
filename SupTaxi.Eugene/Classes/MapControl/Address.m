@@ -14,24 +14,22 @@
 @synthesize addressId;
 @synthesize addressName;
 @synthesize address;
-@synthesize longtitude;
+@synthesize longitude;
 @synthesize latitude;
 @synthesize addressType;
 
--(id)initWithGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark{
-	self = [super init];
-    if (self != nil) {
+-(void)initWithGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark{
+	if (![[placeMark shortAddress] isEqualToString:@""]) {
 		[self setAddress:[[placeMark shortAddress] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	}
 		[self setLatitude:[NSNumber numberWithDouble:placeMark.coordinate.latitude]];
-		[self setLongtitude:[NSNumber numberWithDouble:placeMark.coordinate.longitude]];
+		[self setLongitude:[NSNumber numberWithDouble:placeMark.coordinate.longitude]];
 		if ([[self addressName] isEqualToString:@""])
 			[self setAddressName:[placeMark name]];
-	}
-	return self;
 }
 
 -(GoogleResultPlacemark *)googleResultPlacemark{
-	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([[self latitude] doubleValue], [[self longtitude] doubleValue]);
+	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([[self latitude] doubleValue], [[self longitude] doubleValue]);
 	GoogleResultPlacemark *placeMark = [[GoogleResultPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
 	[placeMark setShortAddress:[self address]];
 	[placeMark setName:[self addressName]];
@@ -47,7 +45,7 @@
 		[self setAddressName:name];
 		[self setAddressType:type];
 		[self setLatitude:[NSNumber numberWithDouble:lat]];
-		[self setLongtitude:[NSNumber numberWithDouble:lon]];
+		[self setLongitude:[NSNumber numberWithDouble:lon]];
 	}
 	return self;
 }
@@ -57,7 +55,7 @@
     [addressName release];
 	[address release];
 	[latitude release];
-	[longtitude release];
+	[longitude release];
     [super dealloc];
 }
 
