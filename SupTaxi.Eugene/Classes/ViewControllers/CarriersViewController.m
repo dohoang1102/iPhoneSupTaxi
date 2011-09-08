@@ -88,6 +88,7 @@
 		[self showAlertMessage:@"Ошибка подтверждения заказа, повторите, пожалуйста, еще раз!"];
 	[tableView_ reloadData];
 	if (_orderResponse._result == YES) {
+		[self.navigationController popViewControllerAnimated:YES];
 		[self showAlertMessage:@"Ваш заказ принят, ожидайте машину!"];
 	}
 }

@@ -16,12 +16,16 @@
 #define kBusinessCarType 2;
 #define kCargoCarType 3;
 
+@class CarriersViewController;
 
 @interface OrderViewController : UIViewController<UIActionSheetDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
 
 @private
+	ResponseOffers * _offerResponse;
 	Response *			_orderResponse;
 	PreferencesManager * prefManager;
+	NSTimer * timer;
+	NSString * currentOrderId;
 }
 
 @property (nonatomic, retain) NSDictionary *carTypes;
@@ -32,6 +36,13 @@
 @property (nonatomic, copy) NSString *carType;
 
 @property (nonatomic, retain) Response * _orderResponse;
+@property (nonatomic, retain) Response * _offerResponse;
+
+@property (nonatomic, retain) NSTimer * timer;
+
+@property (nonatomic, retain) NSString * currentOrderId;
+
+@property (nonatomic, retain) CarriersViewController *cViewController;
 
 - (IBAction)chooseDateTime:(id)sender;
 - (IBAction)chooseCarType:(id)sender;

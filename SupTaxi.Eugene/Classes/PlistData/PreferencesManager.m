@@ -59,6 +59,11 @@
 	[[self prefs] setUserHasContract:NO];
 	[[self prefs] setUserHasPrefered:NO];
 	[[self prefs] setUserHasRegularOrder:NO];
+	
+	[[self prefs] setUserContractNumber:@""];
+	[[self prefs] setUserContractCustomer:@""];
+	[[self prefs] setUserContractCarrier:@""];
+	
 	[[self prefs] save];
 }
 
@@ -84,6 +89,30 @@
 	[[self prefs] setUserFirstName:userFirstName];
 	[[self prefs] setUserSecondName:userSecondName];
 	[[self prefs] save];
+}
+
+- (void) updateUserHasContract:(BOOL)hasContract
+{
+	[[self prefs] setUserHasContract:hasContract];
+	[[self prefs] save];
+}
+
+- (void) updateUserHasPrefered:(BOOL)hasPrefered
+{
+	[[self prefs] setUserHasPrefered:hasPrefered];
+	[[self prefs] save];
+}
+
+- (void) updateUserHasRegularOrder:(BOOL)hasRegularOrder
+{
+	[[self prefs] setUserHasRegularOrder:hasRegularOrder];
+	[[self prefs] save];
+}
+
+
+- (void) updateUserContractWithNumber:(NSString*)contractNumber contractCustomer:(NSString*)customer andContractCarrier:(NSString*)currier
+{
+
 }
 
 

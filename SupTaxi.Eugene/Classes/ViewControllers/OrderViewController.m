@@ -19,12 +19,17 @@
 
 @interface OrderViewController(Private)
 
+- (void) CheckOrderOffersThreadMethod:(id)obj;
+- (void) ShowOrderOffers:(id)obj;
+
 - (void) SendOrderThreadMethod:(id)obj;
 - (void) ShowOrderResult:(id)obj;
 - (void) showAlertMessage:(NSString *)alertMessage;
 - (BOOL) textFieldValidate;
 - (void) sendOrder;
--(void) clearFields;
+- (void) clearFields;
+
+- (void) timerTargetMethod: (NSTimer *) theTimer;
 
 @end
 
@@ -57,6 +62,53 @@
 @synthesize carType = carType_;
 
 @synthesize _orderResponse;
+@synthesize _offerResponse;
+
+@synthesize timer;
+@synthesize currentOrderId;
+
+
+@synthesize cViewController;
+
++ (SupTaxiAppDelegate *)sharedAppDelegate
+{
+    return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
+}
+
+- (void) CheckOrderOffersThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSString * guid = (NSString*)obj;
+		
+		if ([responce GetOffersForOrderRequest:guid])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._offerResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(ShowOrderOffers:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	[pool release];
+}
+
+- (void) ShowOrderOffers:(id)obj
+{
+	[cViewController release];
+	cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
+	[cViewController setResponce: _offerResponse];
+	[self.navigationController pushViewController:cViewController animated:YES];
+}
+
 
 - (void) SendOrderThreadMethod:(id)obj
 {
@@ -126,8 +178,20 @@
 		[self showAlertMessage:@"Ваш заказ принят на обработку, ожидайте ответ оператора!"];
 		[self clearFields];
 		
-		[[SupTaxiAppDelegate sharedAppDelegate] checkOrderOffers];
+		[self setCurrentOrderId:_orderResponse._guid];
+		
+		timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(timerTargetMethod:) userInfo:nil repeats: NO];
+		NSLog(@"Timer started");
+		
+		//[[SupTaxiAppDelegate sharedAppDelegate] checkOrderOffers];
 	}
+}
+
+-(void) timerTargetMethod: (NSTimer *) theTimer {
+	NSLog(@"Me is here at 10 sec delay");
+	[NSThread detachNewThreadSelector:@selector(CheckOrderOffersThreadMethod:)
+							 toTarget:self 
+						   withObject:currentOrderId];
 }
 
 #pragma mark - Action methods viewController
@@ -357,7 +421,8 @@
 	[d setValue:self.mapViewRouteSearchBar.fromField.text forKey:FROM_KEY];
 	[d setValue:self.mapViewRouteSearchBar.toField.text forKey:TO_KEY];
 	[d setValue:self.mapViewRouteSearchBar.timeField.text forKey:DATE_KEY];
-	
+	[d setValue:self.mapViewRouteSearchBar.daysField.text forKey:SCHE_KEY];
+
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.latitude] forKey:LAT_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.longitude] forKey:LON_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkFrom.coordinate.latitude] forKey:FLAT_KEY];
@@ -466,9 +531,11 @@
 - (void)dealloc {
 	[carTypes_ release];
     
+	[timer release];
+	[currentOrderId release];
 	[mapViewController release];
 	[mapViewRouteSearchBar release];
-
+	[cViewController release];
     [dateTime_ release];
     [carType_ release];
 	

@@ -54,10 +54,10 @@
         /*frame = CGRectMake(boundsX+5, 25.0, boundsW-10, 20.0);
         self.lblTo.frame = frame;*/
 		
-        frame = CGRectMake(boundsX+5, 50, boundsW/2-5, 15.0);
+        frame = CGRectMake(boundsX+5, 50, boundsW/2-30, 15.0);
         self.lblDate.frame = frame;
         
-        frame = CGRectMake(boundsW/2-5, 50, boundsW/2-5, 15.0);
+        frame = CGRectMake(boundsW/2-35, 50, boundsW/2+30, 15.0);
         self.lblStatus.frame = frame;       
     }
 }

@@ -23,6 +23,10 @@
 @synthesize userHasPrefered;
 @synthesize userHasRegularOrder;
 
+@synthesize userContractNumber;
+@synthesize userContractCustomer;
+@synthesize userContractCarrier;
+
 +(NSString*)notFirstRunAttrName{
 	return @"notFirstRun";
 }
@@ -53,6 +57,17 @@
 	return @"userHasRegularOrder";
 }
 
++(NSString*)userContractNumberAttrName{
+	return @"userContractNumber";
+}
++(NSString*)userContractCustomerAttrName{
+	return @"userContractCustomer";
+}
++(NSString*)userContractCarrierAttrName{
+	return @"userContractCarrier";
+}
+
+
 #pragma mark Init/Dealloc
 
 -(id)init{
@@ -66,6 +81,10 @@
 	[userPassword release];
 	[userFirstName release];
 	[userSecondName release];
+	
+	[userContractNumber release];
+	[userContractCustomer release];
+	[userContractCarrier release];
 	
 	[super dealloc];
 }
@@ -82,6 +101,11 @@
 	self.userHasContract = [[dictionary valueForKey: [Preferences userHasContractAttrName]] boolValue];
 	self.userHasPrefered = [[dictionary valueForKey: [Preferences userHasPreferedAttrName]] boolValue];
 	self.userHasRegularOrder = [[dictionary valueForKey: [Preferences userHasRegularOrderAttrName]] boolValue];
+	
+	self.userContractNumber = [dictionary objectForKey: [Preferences userContractNumberAttrName]];
+	self.userContractCustomer = [dictionary objectForKey: [Preferences userContractCustomerAttrName]];
+	self.userContractCarrier = [dictionary objectForKey: [Preferences userContractCarrierAttrName]];
+	
 }
 
 -(void)encodeDictionary:(NSMutableDictionary*)dictionary{	
@@ -96,6 +120,10 @@
 	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasContract] forKey:[Preferences userHasContractAttrName]];
 	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasPrefered] forKey:[Preferences userHasPreferedAttrName]];
 	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasRegularOrder] forKey:[Preferences userHasRegularOrderAttrName]];
+	
+	[dictionary setObject:self.userContractNumber forKey:[Preferences userContractNumberAttrName]];
+	[dictionary setObject:self.userContractCustomer forKey:[Preferences userContractCustomerAttrName]];
+	[dictionary setObject:self.userContractCarrier forKey:[Preferences userContractCarrierAttrName]];
 }
 
 

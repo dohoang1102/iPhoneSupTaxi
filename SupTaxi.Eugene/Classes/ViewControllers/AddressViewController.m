@@ -218,7 +218,7 @@
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
 		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
 		registerViewController.delegate = self;
-		registerViewController.selectorOnDone = @selector(loadHistory); 
+		registerViewController.selectorOnDone = @selector(loadAddresses); 
 		[self.navigationController pushViewController:registerViewController animated:YES];
 		[registerViewController release];
 		return NO;

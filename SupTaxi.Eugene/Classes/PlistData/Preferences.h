@@ -22,6 +22,10 @@
 	BOOL userHasContract;
 	BOOL userHasPrefered;
 	BOOL userHasRegularOrder;
+	
+	NSString *userContractNumber;
+	NSString *userContractCustomer;
+	NSString *userContractCarrier;
 }
 
 @property(nonatomic, assign) BOOL notFirstRun;
@@ -35,5 +39,9 @@
 @property(nonatomic) BOOL userHasContract;
 @property(nonatomic) BOOL userHasPrefered;
 @property(nonatomic) BOOL userHasRegularOrder;
+
+@property(nonatomic, copy) NSString *userContractNumber;
+@property(nonatomic, copy) NSString *userContractCustomer;
+@property(nonatomic, copy) NSString *userContractCarrier;
 
 @end

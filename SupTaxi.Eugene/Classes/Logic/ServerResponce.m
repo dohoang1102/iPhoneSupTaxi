@@ -20,6 +20,11 @@
 
 @implementation ServerResponce
 
++ (NSString *) xmlVersionString
+{
+	return @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+}
+
 + (NSString *) orderRequestString
 {
 	return @"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"%@\" Schedule=\"%@\" Lat=\"%f\" Lon=\"%f\" FromLat=\"%f\" FromLon=\"%f\" ToLat=\"%f\" ToLon=\"%f\" />";
@@ -75,8 +80,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:[ServerResponce orderRequestString],
-							   guid, from, to, orderDate, vehicleType, @"false", @"", latitude, longitude, fromLat, fromLon, toLat, toLon];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:[ServerResponce orderRequestString],
+							   guid, from, to, orderDate, vehicleType, @"false", @"", latitude, longitude, fromLat, fromLon, toLat, toLon]];
     
 	if (urlString) 
 	{
@@ -92,8 +97,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:[ServerResponce orderRequestString],
-							   guid, from, to, orderDate, vehicleType,((isRegular == NO) ? @"false" : @"true"), schedule, latitude, longitude, fromLat, fromLon, toLat, toLon];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:[ServerResponce orderRequestString],
+							   guid, from, to, orderDate, vehicleType,((isRegular == NO) ? @"false" : @"true"), schedule, latitude, longitude, fromLat, fromLon, toLat, toLon]];
     
 	if (urlString) 
 	{
@@ -107,7 +112,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order.Offers\" Guid=\"%@\" />", orderGuid];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],
+							   [NSString stringWithFormat:@"<Request Type=\"Order.Offers\" Guid=\"%@\" />", orderGuid]];
     
 	if (urlString) 
 	{
@@ -121,8 +127,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Order.Accept\" Guid=\"%@\" OrderId=\"%@\" CarrierId=\"%@\" />", 
-							   guid, orderId, carrierId];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Order.Accept\" Guid=\"%@\" OrderId=\"%@\" CarrierId=\"%@\" />", 
+							   guid, orderId, carrierId]];
     
 	if (urlString) 
 	{
@@ -136,8 +142,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Register\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" Phone=\"%@\" City=\"\" ContractNumber=\"\" ContractCustomer=\"\" ContractCarrier=\"\" PreferredCarrier=\"\" />",
-							   password, email, fName, sName, phone];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Register\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" Phone=\"%@\" City=\"\" ContractNumber=\"\" ContractCustomer=\"\" ContractCarrier=\"\" PreferredCarrier=\"\" />",
+							   password, email, fName, sName, phone]];
     
 	if (urlString) 
 	{
@@ -151,8 +157,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Login\" Email=\"%@\" Password=\"%@\" />",
-							   email, password];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Login\" Email=\"%@\" Password=\"%@\" />",
+							   email, password]];
     
 	if (urlString) 
 	{
@@ -166,8 +172,8 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"History\" Guid=\"%@\" PageNumber=\"%i\" NumberOfRows=\"%i\" />",
-							   userGuid, pageNumber, numberOfRows];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"History\" Guid=\"%@\" PageNumber=\"%i\" NumberOfRows=\"%i\" />",
+							   userGuid, pageNumber, numberOfRows]];
     
 	if (urlString) 
 	{
@@ -180,7 +186,7 @@
 - (BOOL) GetAddressListRequest:(NSString*)userGuid{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.List\" Guid=\"%@\" />", userGuid];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.List\" Guid=\"%@\" />", userGuid] ];
     
 	if (urlString) 
 	{
@@ -193,8 +199,8 @@
 - (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Add\" Guid=\"%@\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
-							   userGuid, name, address, lat, lon];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Add\" Guid=\"%@\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
+							   userGuid, name, address, lat, lon]];
     
 	if (urlString) 
 	{
@@ -207,7 +213,7 @@
 - (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Del\" Guid=\"%@\" AddressId=\"%i\" />", userGuid, addressId];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Del\" Guid=\"%@\" AddressId=\"%i\" />", userGuid, addressId] ];
     
 	if (urlString) 
 	{
@@ -220,8 +226,8 @@
 - (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"<Request Type=\"Addresses.Upd\" Guid=\"%@\" AddressId=\"%i\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
-							   userGuid, addressId, name, address, lat, lon];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Upd\" Guid=\"%@\" AddressId=\"%i\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
+							   userGuid, addressId, name, address, lat, lon]];
     
 	if (urlString) 
 	{

@@ -31,7 +31,7 @@ didStartElement:(NSString *)elementName
 {
 	SAFE_REASSIGN(_elementName, elementName);
 	
-	//NSLog(@"\n elementName %@ \n", elementName);
+	NSLog(@"\n elementName %@ \n", elementName);
 	
 	if ([elementName isEqualToString:@"Address"])
 	{
@@ -65,7 +65,7 @@ didStartElement:(NSString *)elementName
 												   fromPlace:[attributeDict objectForKey:@"From"] 
 													 toPlace:[attributeDict objectForKey:@"To"] 
 													 comment:[attributeDict objectForKey:@"Comment"]
-													  status:[[attributeDict objectForKey:@"Status"] boolValue]
+													  status:[attributeDict objectForKey:@"Status"]
 														 lat:[[attributeDict valueForKey:@"Lat"] floatValue]
 														 lon:[[attributeDict valueForKey:@"Lon"] floatValue] 
 													 fromLat:[[attributeDict valueForKey:@"FromLat"] floatValue]
@@ -138,6 +138,14 @@ didStartElement:(NSString *)elementName
 	{
 		NSLog(@"Error message : %@", elementString);
 	}
+	if ([elementName isEqualToString:@"h1"]) 
+	{
+		NSLog(@"HTML H1 message : %@", elementString);
+	}
+	if ([elementName isEqualToString:@"p"]) 
+	{
+		NSLog(@"HTML P message : %@", elementString);
+	}
 	if (_element)
 	{
 		
@@ -181,6 +189,8 @@ didStartElement:(NSString *)elementName
 			//										  encoding:NSUTF8StringEncoding 
 			//											 error:nil];
 			
+			//requestString = [requestString string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			
 			NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length:[requestString length]];
 			
 			// адрес сервера куда отправляется запрос
@@ -190,7 +200,8 @@ didStartElement:(NSString *)elementName
 			
 			NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URLString]];
 			[request setHTTPMethod:@"POST"];// метод отправки запроса
-			[request setHTTPBody:requestData];
+			[request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+			[request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
 			
 			NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
 			

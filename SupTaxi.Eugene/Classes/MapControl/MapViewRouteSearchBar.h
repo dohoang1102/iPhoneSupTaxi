@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "MapViewBaseBar.h"
 #import "AddressViewControllerDelegate.h"
+#import "PreferencesManager.h"
 
 @interface MapViewRouteSearchBar : MapViewBaseBar <UITextFieldDelegate, AddressViewControllerDelegate> {
     BOOL hidden;
+	
+	PreferencesManager *prefManager;
 	
 	GoogleResultPlacemark *placeMarkFrom; 
 	GoogleResultPlacemark *placeMarkTo;
@@ -47,5 +50,7 @@
 -(IBAction)onChangeCar:(id)sender;
 -(IBAction)onChangeDate:(id)sender;
 
+- (BOOL) checkIfAuthenticated;
+- (void) loadAddressList:(id)sender;
 
 @end

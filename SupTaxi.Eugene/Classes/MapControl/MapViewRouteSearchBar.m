@@ -9,6 +9,8 @@
 #import "MapViewRouteSearchBar.h"
 #import "AddressViewController.h"
 #import "Address.h"
+#import "SupTaxiAppDelegate.h";
+#import	"RegisterViewController.h"
 
 @implementation MapViewRouteSearchBar
 
@@ -82,6 +84,7 @@
 
 - (void)dealloc
 {
+	[prefManager release];
 	[placeMarkFrom release];
 	[placeMarkTo release];
 	[selfLocationPlacemark release];
@@ -114,6 +117,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -272,10 +277,31 @@
 }
 
 -(IBAction)onGetFromAddressBook:(id)sender{
+	/*if (![self checkIfAuthenticated]) {
+		return;
+	}*/
+	[self loadAddressList:sender];
+}
+
+- (void) loadAddressList:(id)sender
+{
 	self.currentTextField = sender == fromAddressButton ? fromField : toField;
 	AddressViewController *newVc = [[AddressViewController alloc] init];
 	[newVc setSelectionDelegate:self];
 	[[self.parentController navigationController] pushViewController:newVc animated:YES];
+}
+
+- (BOOL) checkIfAuthenticated
+{
+	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
+		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+		registerViewController.delegate = self;
+		registerViewController.selectorOnDone = @selector(loadAddressList:);
+		[[self.parentController navigationController] pushViewController:registerViewController animated:YES];
+		[registerViewController release];
+		return NO;
+	}
+	return YES;
 }
 
 -(IBAction)onReverseDirection:(id)sender{

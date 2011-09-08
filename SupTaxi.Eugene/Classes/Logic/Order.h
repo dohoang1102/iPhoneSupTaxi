@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *from;
 @property (nonatomic, copy) NSString *to;
 @property (nonatomic, copy) NSString *comment;
-@property (nonatomic, assign) BOOL status;
+@property (nonatomic, copy) NSString *status;
 @property (nonatomic, assign) float lat;
 @property (nonatomic, assign) float lon;
 @property (nonatomic, assign) float fromLat;
@@ -26,6 +26,6 @@
 @property (nonatomic, assign) float toLon;
 
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
-					 status:(BOOL)status lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon;
+					 status:(NSString *)status lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon;
 
 @end

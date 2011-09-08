@@ -24,7 +24,7 @@
 @synthesize toLon = _toLon;
 
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
-						status:(BOOL)status lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon
+						status:(NSString*)status lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon
 {
     self = [super init];
     if (self != nil) {
@@ -45,7 +45,8 @@
 }
 
 - (void)dealloc
-{
+{	
+	[_status release];
     [_dateTime release];
 	[_from release];
 	[_to release];

@@ -8,13 +8,13 @@
 
 #import "HistoryDetailViewController.h"
 #import "BarButtonItemGreenColor.h"
+#import	"Constants.h"
 
 @interface HistoryDetailViewController(Private)
 
 -(void)onBack:(id)sender;
 
 @end
-
 
 @implementation HistoryDetailViewController
 
@@ -58,7 +58,7 @@
 	[self.lblTime setText:orderToView.dateTime];
 	[self.lblFrom setText:orderToView.from];
 	[self.lblTo setText:orderToView.to];
-	[self.lblStatus setText:(orderToView.status)? @"Выполнен": @"В ожидании"];
+	[self.lblStatus setText:[Constants historyStatusById:orderToView.status]];
 	[self.lblComment setText:orderToView.comment];
 }
 

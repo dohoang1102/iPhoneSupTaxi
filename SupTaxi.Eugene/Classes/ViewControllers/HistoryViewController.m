@@ -15,6 +15,7 @@
 #import "HistoryDetailViewController.h"
 #import "HistoryItemCell.h"
 #import "RegisterViewController.h"
+#import "Constants.h"
 
 #define ITEMS_PER_PAGE (10)
 
@@ -237,7 +238,7 @@
     [cell.lblFromTo setText:[NSString stringWithFormat:@"%@ - %@", order.from, order.to]];
 	
 	[cell.lblDate setText:order.dateTime];
-	[cell.lblStatus setText: (order.status)? @"Выполнен": @"В ожидании"];
+	[cell.lblStatus setText:[Constants historyStatusById:order.status]];
     return cell;
 }
 

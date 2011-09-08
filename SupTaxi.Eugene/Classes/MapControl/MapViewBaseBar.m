@@ -10,7 +10,7 @@
 
 
 //#define ADD_BEFORE_ADDRESS @"Москва ";
-#define ADD_BEFORE_ADDRESS @"Украина Черкассы ";
+#define ADD_BEFORE_ADDRESS @"Россия Москва ";
 
 @implementation MapViewBaseBar
 
