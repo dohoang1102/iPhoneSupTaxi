@@ -29,10 +29,13 @@
 }
 
 -(GoogleResultPlacemark *)googleResultPlacemark{
+	if ([self.latitude doubleValue] == 0 || [self.longitude doubleValue] == 0)
+		return nil;
 	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([[self latitude] doubleValue], [[self longitude] doubleValue]);
 	GoogleResultPlacemark *placeMark = [[GoogleResultPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
 	[placeMark setShortAddress:[self address]];
 	[placeMark setName:[self addressName]];
+	[placeMark setCoordinatesInitialized:YES];
 	return [placeMark autorelease];
 }
 

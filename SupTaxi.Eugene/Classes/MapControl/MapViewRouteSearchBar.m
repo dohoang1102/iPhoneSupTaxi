@@ -29,6 +29,7 @@
 @synthesize selfLocationPlacemark;
 
 @synthesize currentTextField;
+@synthesize currentFieldName;
 
 @synthesize parentController;
 
@@ -84,7 +85,6 @@
 
 - (void)dealloc
 {
-	[prefManager release];
 	[placeMarkFrom release];
 	[placeMarkTo release];
 	[selfLocationPlacemark release];
@@ -100,6 +100,7 @@
 	[daysView release];
 	
 	[currentTextField release];
+	[currentFieldName release];
 	
     [super dealloc];
 }
@@ -135,6 +136,11 @@
 	[self.fromField setText:@""];
 	[self.toField setText:@""];
 	[self.timeField setText:@""];
+    [self.daysField setText:@""];
+	self.placeMarkFrom = nil;
+	self.placeMarkTo = nil;
+	[self initWithSelfLocation];
+	[self onShowRoute];
 }
 
 -(BOOL)validate{
@@ -161,6 +167,8 @@
 }
 
 -(void)setFoundPlaceMark:(GoogleResultPlacemark *)placeMark{
+	if (self.currentFieldName)
+		[placeMark setName:self.currentFieldName];
 	if (self.requestedCurrentLocation) {
 		if ([selfLocationPlacemark selfLocation]){			
 			self.selfLocationPlacemark = [placeMark clone];
@@ -184,10 +192,13 @@
 		[toField setText:[placeMark name]];
 	}
 	self.currentTextField = nil;
+	self.currentFieldName = nil;
 }
 
 -(void)initWithSelfLocation{
-	self.selfLocationPlacemark = [GoogleResultPlacemark googleResultPlaceMarkForSelfLocation];
+	if (!self.selfLocationPlacemark) {
+		self.selfLocationPlacemark = [GoogleResultPlacemark googleResultPlaceMarkForSelfLocation];
+	}
 	self.placeMarkFrom = [GoogleResultPlacemark googleResultPlaceMarkForSelfLocation];
 	[self.fromField setText:[self.placeMarkFrom name]];
 	[self.delegate setSelfLocationSearchEnabled:YES];
@@ -227,20 +238,35 @@
 
 #pragma mark - UITextFieldDelegate methods
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-	[textField resignFirstResponder];
-	
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+	if (textField == fromField) {
+		if ([self.placeMarkFrom selfLocation]) {
+			[textField setText:@""];
+			self.placeMarkFrom = nil;
+		}
+	} else if (textField == toField) {
+		if ([self.placeMarkTo selfLocation]) {
+			[textField setText:@""];
+			self.placeMarkTo = nil;
+		}
+	}
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
 	GoogleResultPlacemark *placeMark = textField == self.fromField ? placeMarkFrom : placeMarkTo;
 	
 	if (placeMark && [[placeMark name] isEqualToString:[textField text]]) {
-		return YES;
+		return;
 	}
 	
 	self.requestedCurrentLocation = NO;
     self.currentTextField = textField;
 	[self startAddressSearch:[textField text]];
-	
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	[textField resignFirstResponder];
     return YES;
 }
 
@@ -248,15 +274,23 @@
 
 -(void)onAddressSelected:(id)address{
 	Address *addr = (Address *)address;
+	GoogleResultPlacemark *placeMark = [addr googleResultPlacemark];
 	if (self.currentTextField == fromField) {
 		[fromField setText:[addr addressName]];
-		placeMarkFrom = [addr googleResultPlacemark];
+		self.placeMarkFrom = placeMark;
+
 	} else {
 		[toField setText:[addr addressName]];
-		placeMarkTo = [addr googleResultPlacemark];
+		self.placeMarkTo = placeMark;
 	}
-	self.currentTextField = nil;
-	[self onShowRoute];
+	if ([placeMark coordinatesInitialized]) {
+		self.currentTextField = nil;
+		[self onShowRoute];
+	} else {
+		self.currentFieldName = addr.addressName;
+		[self startAddressSearch:[addr address]];
+	}
+	
 }
 
 #pragma mark Events
@@ -308,8 +342,8 @@
 	[self resignEditFields];
 	
 	GoogleResultPlacemark *tmpPlaceMark = placeMarkFrom;
-	placeMarkFrom = placeMarkTo;
-	placeMarkTo = tmpPlaceMark;
+	self.placeMarkFrom = placeMarkTo;
+	self.placeMarkTo = tmpPlaceMark;
 	[placeMarkFrom setStartPoint:YES];
 	[placeMarkTo setStartPoint:NO];
 	

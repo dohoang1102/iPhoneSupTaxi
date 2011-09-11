@@ -17,6 +17,7 @@
 @synthesize userPassword;
 @synthesize userFirstName;
 @synthesize userSecondName;
+@synthesize userCity;
 
 @synthesize notFirstRun;
 @synthesize userHasContract;
@@ -45,6 +46,9 @@
 }
 +(NSString*)userSecondNameAttrName{
 	return @"userSecondName";
+}
++(NSString*)userCityAttrName{
+	return @"userCity";
 }
 
 +(NSString*)userHasContractAttrName{
@@ -81,6 +85,7 @@
 	[userPassword release];
 	[userFirstName release];
 	[userSecondName release];
+    [userCity release];
 	
 	[userContractNumber release];
 	[userContractCustomer release];
@@ -97,6 +102,7 @@
 	self.userPassword = [dictionary objectForKey: [Preferences userPasswordAttrName]];
 	self.userFirstName = [dictionary objectForKey: [Preferences userFirstNameAttrName]];
 	self.userSecondName = [dictionary objectForKey: [Preferences userSecondNameAttrName]];
+    self.userCity = [dictionary objectForKey: [Preferences userCityAttrName]];
 	
 	self.userHasContract = [[dictionary valueForKey: [Preferences userHasContractAttrName]] boolValue];
 	self.userHasPrefered = [[dictionary valueForKey: [Preferences userHasPreferedAttrName]] boolValue];
@@ -116,6 +122,7 @@
 	[dictionary setObject:self.userPassword forKey:[Preferences userPasswordAttrName]];
 	[dictionary setObject:self.userFirstName forKey:[Preferences userFirstNameAttrName]];
 	[dictionary setObject:self.userSecondName forKey:[Preferences userSecondNameAttrName]];
+    [dictionary setObject:self.userCity forKey:[Preferences userCityAttrName]];
 	
 	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasContract] forKey:[Preferences userHasContractAttrName]];
 	[dictionary setValue:[NSString stringWithFormat:@"%i",self.userHasPrefered] forKey:[Preferences userHasPreferedAttrName]];

@@ -223,12 +223,6 @@
     return 1;
 }
 
-- (UIImage *)getImageWithCarrierName:(NSString *)carrierName
-{
-    UIImage *image = [UIImage imageNamed:@"car_type_1.png"];
-    return image;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OrderShowCell *cell = (OrderShowCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
@@ -238,7 +232,7 @@
     
     Offer *offer = [_resultResponse._offers objectAtIndex:indexPath.row];
     
-    cell.carrierLogo.image = [self getImageWithCarrierName:offer.carrierName];
+    cell.carrierLogo.image = offer.carrierLogo;
     cell.timeLabel.text = [NSString stringWithFormat:@"~ %d минут*", offer.arrivalTime]; 
     cell.priceLabel.text = [NSString stringWithFormat:@"%d руб**", offer.minPrice]; 
 	[cell.switcher setOn:NO];

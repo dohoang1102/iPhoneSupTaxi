@@ -13,15 +13,34 @@
 #import "SettingsOrderCell.h"
 #import "SupTaxiAppDelegate.h"
 #import "ContractViewController.h"
+#import "PreferredViewController.h"
+#import "AppProgress.h"
+#import "ServerResponce.h"
+
+#define USER_EMAIL_KEY @"UEMAIL"
+#define USER_PASSWORD_KEY @"UPASS"
+#define USER_NAME_KEY @"UNAME"
+#define USER_LNAME_KEY @"ULNAME"
+#define USER_PHONE_KEY @"UPHONE"
 
 @interface SettingsViewController(Private)
 
-- (IBAction)changeContractInfo:(id)sender;
-- (IBAction)changeWishes:(id)sender;
-- (IBAction)changeRegularOrder:(id)sender;
-- (UIView*)headerViewWithText:(NSString*)text;
+- (void) RegisterThreadMethod:(id)obj;
+- (void) AuthenticateThreadMethod:(id)obj;
+- (void) RegisterResult:(id)obj;
+- (void) AuthenticateResult:(id)obj;
+
+- (void) textFieldUnFocus;
+- (BOOL) textFieldValidate;
+
+- (IBAction) changeContractInfo:(id)sender;
+- (IBAction) changeWishes:(id)sender;
+- (IBAction) changeRegularOrder:(id)sender;
+- (UIView*) headerViewWithText:(NSString*)text;
 - (void) saveSettings:(id)sender;
 - (void) showAlertMessage:(NSString *)alertMessage;
+- (void) updateHasContract;
+- (void) initPreferences;
 
 @end
 
@@ -37,6 +56,9 @@
 @synthesize userHasContract;
 @synthesize userHasWish;
 @synthesize userHasRegularOrder;
+
+@synthesize _registerResponse;
+@synthesize _loginResponse;
 
 @synthesize tableView = tableView_;
 
@@ -69,16 +91,168 @@
 	}
 }
 
+- (void) RegisterThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Регистрация"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * email = [d objectForKey:USER_EMAIL_KEY];
+		NSString * pass = [d objectForKey:USER_PASSWORD_KEY];
+		NSString * name = [d objectForKey:USER_NAME_KEY];
+		NSString * lName = [d objectForKey:USER_LNAME_KEY];
+		NSString * phone = [d objectForKey:USER_PHONE_KEY];
+		
+		if ([responce RegisterUserRequest:email
+								 password:pass
+								firstName:name 
+							   secondName:lName 
+									phone:phone ])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._registerResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(RegisterResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) AuthenticateThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Авторизация"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * email = [d objectForKey:USER_EMAIL_KEY];
+		NSString * pass = [d objectForKey:USER_PASSWORD_KEY];
+		
+		if ([responce LoginUserRequest:email password:pass ])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._loginResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(AuthenticateResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) RegisterResult:(id)obj
+{
+	if (!_registerResponse)
+	{
+		[self showAlertMessage:@"Ошибка запроса регистрации!"];
+		return;
+	}
+	
+	if (_registerResponse._result == NO) //ошибка регистрации:
+	{
+		[self showAlertMessage:@"Не удалось зарегистрироватся!"];
+		return;	
+	}
+	else if (_loginResponse._result == YES) //зарегистрировались успешно
+	{
+		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+		[d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
+		[d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
+		
+		[NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+								 toTarget:self 
+							   withObject:d];
+		
+		//[self showAlertMessage:@"Регистрация прошла успешно!"];
+	}
+	NSLog(@"%@", _registerResponse._result);
+}
+
+- (void) AuthenticateResult:(id)obj
+{
+	if (!_loginResponse)
+	{
+		[self showAlertMessage:@"Ошибка запроса авторизации!"];
+		return;
+	}
+	
+	if (_loginResponse._result == NO && _loginResponse._wrongPassword == NO) //неправильный ни email ни пароль:
+	{
+		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
+		[d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
+		[d setValue:self.userFirstName forKey:USER_NAME_KEY];
+		[d setValue:self.userSecondName forKey:USER_LNAME_KEY];
+		[d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
+		[d setValue:self.userPhone forKey:USER_PHONE_KEY];
+		
+		[NSThread detachNewThreadSelector:@selector(RegisterThreadMethod:)
+								 toTarget:self 
+							   withObject:d];	
+	}
+	else if (_loginResponse._result == NO && _loginResponse._wrongPassword == YES) //неправильный пароль
+	{
+		[self showAlertMessage:@"Проверь те правильность вашего пароля!"];
+	}
+	else if (_loginResponse._result == YES && _loginResponse._wrongPassword == NO) //правильный пароль и мыло
+	{
+		//TODO: Save userData
+		[prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
+		[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
+		[prefManager updateUserGuid:_loginResponse._guid];
+		
+        [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
+		
+        
+        [tableView_ reloadData];
+		//[self showAlertMessage:@"Вы успешно авторизованы!"];
+		//[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    [self initPreferences];
 	[tableView_ reloadData];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
+	[self initPreferences];
+}
+
+- (void) initPreferences
+{
+    prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
@@ -88,7 +262,7 @@
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
 	self.navigationItem.titleView = img;
 	[img release];
-
+    
     // делаем прозрачным бэкграунд таблицы
     NSArray *subviews = [self.view subviews];
     for (UIView *view in subviews) 
@@ -107,8 +281,55 @@
 
 - (void) saveSettings:(id)sender
 {
-	[prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
-	[prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
+    [self textFieldUnFocus];
+	if ([self textFieldValidate] == NO) return;
+	
+	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+	[d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
+	[d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
+	
+	[NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+							 toTarget:self 
+						   withObject:d];
+}
+
+-(void)textFieldUnFocus {
+	[self resignFirstResponder];
+}
+
+-(BOOL)textFieldValidate {
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поля, SupTaxi ID и Пароль обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	NSArray *fieldArray;
+	int i = 0;
+	
+	fieldArray = [[NSArray arrayWithObjects: 
+				   [NSString stringWithFormat:@"%@",self.supTaxiID],
+				   [NSString stringWithFormat:@"%@",self.userPassword],nil] retain];
+	
+	@try {
+		for (NSString *fieldText in fieldArray){
+			if([fieldText isEqualToString:@""]){
+				[alert show]; 
+				return NO;
+				break;
+			}
+			i++;
+		}
+		
+		// check that all the field were passed (i == array.count) if so execute
+		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
+			return YES;        
+		}
+	}
+	@catch (NSException * e) {
+		NSLog(@"%@", e);
+	}
+	@finally {
+		[alert release];
+		[fieldArray release];
+	}
+	return NO;
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -164,8 +385,8 @@
 		case 0:
 		{
 			return [self headerViewWithText: @"Личные данные"];
-			break;
-		}
+			break;		
+        }
 		case 3:
 		{
 			return [self headerViewWithText: @"Настройка заказа"];
@@ -238,6 +459,7 @@
 			case 2:
 				cell.titleLabel.text = @"Телефон";
 				[cell.textField setEnabled:NO];
+                [cell.textField setText:@"+380663991175"];
 				return cell;
 				break;
 		}
@@ -257,7 +479,7 @@
 				break;
 			case 4:
 				cell1.titleLabel.text = @"Предпочтения";
-				[cell1.switcher addTarget:self action:@selector(changeWishes:) forControlEvents:UIControlEventValueChanged];
+				[cell1.switcher addTarget:self action:@selector(changePreferred:) forControlEvents:UIControlEventValueChanged];
 				[cell1.switcher setOn:prefManager.prefs.userHasPrefered];
 				return cell1;
 				break;
@@ -285,25 +507,53 @@
 	self.userHasContract = result;
 	if (result) {
 		ContractViewController *contractViewController = [[ContractViewController alloc] initWithNibName:@"ContractViewController" bundle:nil];
+        contractViewController.delegate = self;
+		contractViewController.selectorOnDone = @selector(updateHasContract);
 		[self.navigationController pushViewController:contractViewController animated:YES];
 		[contractViewController release];
 	}
 	NSLog(@"Sender Switch : %d", (int)result);
 }
 
-- (IBAction)changeWishes:(id)sender
+- (void) updateHasContract {
+    [self.tableView reloadData];
+}
+
+- (IBAction)changePreferred:(id)sender
 {
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;
 	BOOL result = [senderSwitch isOn];
+	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
+		[self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не сохранили настройки и не авторизовались в систему!"];
+		[senderSwitch setOn:NO];
+		return;
+	}
+    if (!self.userHasContract) {
+        [self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не заполнили данные о контракте!"];
+        [senderSwitch setOn:NO];
+		return;
+
+    }
 	self.userHasWish = result;
+	
+	if (result) {
+		PreferredViewController *pViewController = [[PreferredViewController alloc] initWithNibName:@"PreferredViewController" bundle:nil];
+        [self.navigationController pushViewController:pViewController animated:YES];
+		[pViewController release];
+	}
+	
 	NSLog(@"Sender Switch : %d", (int)result);
 }
+
+
 
 - (IBAction)changeRegularOrder:(id)sender
 {
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;
 	BOOL result = [senderSwitch isOn];
+	
 	self.userHasRegularOrder = result;
+	
 	NSLog(@"Sender Switch : %d", (int)result);
 }
 

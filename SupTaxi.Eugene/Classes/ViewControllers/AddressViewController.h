@@ -13,7 +13,7 @@
 
 enum AddressType { my_addresses, train_stations, airoports }; // 0, 1, 2
 
-@interface AddressViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
+@interface AddressViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, AddressViewControllerDelegate> {
     ResponseAddress	   *_addressListResponse;
 	PreferencesManager * prefManager;
 }
@@ -23,6 +23,7 @@ enum AddressType { my_addresses, train_stations, airoports }; // 0, 1, 2
 
 @property (nonatomic, retain) IBOutlet UITableView *addressTable;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, retain) UIBarButtonItem *addAddressButton;
 
 @property (nonatomic, assign) enum AddressType addressType;
 

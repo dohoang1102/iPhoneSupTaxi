@@ -65,8 +65,8 @@
 		lng += dlng;
 		NSNumber *latitude = [[[NSNumber alloc] initWithFloat:lat * 1e-5] autorelease];
 		NSNumber *longitude = [[[NSNumber alloc] initWithFloat:lng * 1e-5] autorelease];
-		printf("[%f,", [latitude doubleValue]);
-		printf("%f]", [longitude doubleValue]);
+		//printf("[%f,", [latitude doubleValue]);
+		//printf("%f]", [longitude doubleValue]);
 		CLLocation *loc = [[[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]] autorelease];
 		[array addObject:loc];
 	}

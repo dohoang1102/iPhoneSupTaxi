@@ -21,7 +21,6 @@
 
 - (id)initWithCarrierName:(NSString *)carrierName arrivalTime:(int)arrivalTime minPrice:(int)minPrice 
 				carrierId:(int) carrierId carrierLogoStr:(NSString*) carrierLogoStr;
-- (UIImage *) getImageFromString: (NSString*) imageStr;
 
 @end
 

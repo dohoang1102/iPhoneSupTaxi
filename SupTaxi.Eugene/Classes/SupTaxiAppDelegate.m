@@ -28,6 +28,10 @@
 @synthesize _offerResponse;
 @synthesize timer;
 
+@synthesize orderDelegate;
+@synthesize historyDelegate;
+@synthesize addressDelegate;
+
 + (SupTaxiAppDelegate *)sharedAppDelegate
 {
     return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
@@ -229,6 +233,10 @@
 
 - (void)dealloc {
     
+    [orderDelegate release];
+    [historyDelegate release];
+    [addressDelegate release];
+    
 	[prefManager release];
     [orderQueue release];
 	
@@ -236,6 +244,26 @@
 	[tabsController release];
 	[timer release];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Update remoteViews
+
+- (void) updateOrderView
+{
+    
+    NSLog(@"updateOrderView");
+}
+- (void) updateHistoryView
+{
+    if (self.historyDelegate) {
+        
+    }
+    NSLog(@"updateHistoryView");
+}
+- (void) updateAddressView
+{
+	NSLog(@"updateAddressView");
 }
 
 

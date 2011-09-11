@@ -16,6 +16,7 @@
 #import "HistoryItemCell.h"
 #import "RegisterViewController.h"
 #import "Constants.h"
+#import "AditionalPrecompileds.h"
 
 #define ITEMS_PER_PAGE (10)
 
@@ -30,6 +31,7 @@
 - (BOOL) IsNextPageAvaiable;
 //- (void) LoadNextPage;
 - (BOOL) checkIfAuthenticated;
+- (void) showAlertMessage:(NSString *)alertMessage;
 
 @end
 
@@ -54,14 +56,20 @@
 								   pageNumber:[nextPage unsignedIntegerValue] 
 								 numberOfRows:ITEMS_PER_PAGE]) 
 		{
-			/*
+			
 			_totalPagesCount = [responce GetNavigatePages];
 			_pagesLoadedCount = [responce GetNavigatePage];
 			_totalItemsCount = [responce GetNavigateCount];
-			*/
+			
+			if (_hItems == nil) 
+			{
+				_hItems = [[NSMutableArray alloc] initWithCapacity:_totalItemsCount];
+			}
+			
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
 				self._historyResponse = [resultData objectAtIndex:0]; 
+				[_hItems addObjectsFromArray:self._historyResponse._orders]; 
 			}
 			
 			NSLog(@"Count %d", [_historyResponse._orders count]);
@@ -77,30 +85,37 @@
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	[pool release];
 }
-/*
+
+- (BOOL) IsNextPageAvaiable
+{
+	if (_totalItemsCount > 0) 
+	{
+		if (_hItems == nil) 
+		{
+			return YES;
+		}
+		return ([_hItems count] < _totalItemsCount);
+	}
+	return NO;
+}
+
 - (void) LoadNextPage
 {
 	const NSUInteger nextPageNumber = (_pagesLoadedCount + 1);
 	
 	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
 	[d setValue:[NSNumber numberWithUnsignedInteger:nextPageNumber] forKey:NEXT_PAGE_KEY];
-	[d setValue:[NSNumber numberWithUnsignedInteger:[]] forKey:CHANNEL_ID_KEY];
+	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	
-	NSLog(@"\nPlotsTableViewController DowloadStories page=%d for %@", nextPageNumber, _channel);
+	NSLog(@"\nPlotsTableViewController Dowload history objects page=%d", nextPageNumber);
 	
-	[NSThread detachNewThreadSelector:@selector(DowloadStoriesThreadMethod:)
+	[NSThread detachNewThreadSelector:@selector(DowloadHistoryThreadMethod:)
 							 toTarget:self 
 						   withObject:d];
 }
-*/
-
--(NSArray *)orders{
-	return _historyResponse._orders;
-	//return [[LocalOrderDCManager instance] lastQueryObjects];
-}
 
 - (void)dealloc
-{	
+{	[registerController release];
 	[detailView release];
 	[_historyResponse release];
     [super dealloc];
@@ -118,7 +133,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
-	[self checkIfAuthenticated];
+	//[self checkIfAuthenticated];
+    
+    if ([prefManager.prefs.userGuid isEqualToString:@""]) {
+        [self showAlertMessage:@"Для возможности просмотра истории Вам необходимо либо авторизоватся, либо зарегистрироватся через секцию Настройки!"];
+    }
+    
+    [self loadHistory];
 	//Reload the table view
 	[self.tableView reloadData];
 }
@@ -139,22 +160,27 @@
 {
     [super viewDidLoad];
 	[self initPreferences];
-	
-	if ([self checkIfAuthenticated]) {
-		[self loadHistory];
-	}
+    
+	/*if (![self checkIfAuthenticated]) {
+		return;
+	}*/
+	[self loadHistory];
 }
 
 - (BOOL) checkIfAuthenticated
 {
 	//Check if user authenticated
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
-		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
-		registerViewController.delegate = self;
-		registerViewController.selectorOnDone = @selector(loadHistory); 
-		[self.navigationController pushViewController:registerViewController animated:YES];
-		[registerViewController release];
+		if (registerController && self.navigationController.topViewController == registerController)
+			return NO;
+		else 
+		{[registerController release];
+		registerController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+		registerController.delegate = self;
+		registerController.selectorOnDone = @selector(loadHistory); 
+		[self.navigationController pushViewController:registerController animated:YES];
 		return NO;
+		}
 	}
 	return YES;
 }
@@ -187,25 +213,16 @@
 {
 	[self.tableView reloadData];
 }
-/*
-- (BOOL) IsNextPageAvaiable
-{
-	if (_totalItemsCount > 0) 
-	{
-		if (orders == nil) 
-		{
-			return YES;
-		}
-		return ([orders count] < _totalItemsCount);
-	}
-	return NO;
-}
-*/
+
 #pragma mark UITAbleViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    if ([_hItems IsValidIndex:[indexPath row]]) 
+	{
+		return 70.0f;
+	}
+	return 44.0f;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -214,42 +231,83 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-	if ([self orders]) 
-	{/*
+	if (_hItems) 
+	{
 		NSInteger count = ([self IsNextPageAvaiable]) ? 1 : 0;
-		if (_stories) 
+		if (_hItems) 
 		{
-			count += [_historyResponse._orders count];
+			count += [_hItems count];
 		}
 		return count;
-	  */
-		return [[self orders] count];
 	}
 	return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	HistoryItemCell *cell = (HistoryItemCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
+	const BOOL isHItemCell = [_hItems IsValidIndex:[indexPath row]];
+	NSString * CellIdentifier = isHItemCell ? @"HCell" : @"NextPageCell";
+	
+	HistoryItemCell *cell = (HistoryItemCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[HistoryItemCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CellId"] autorelease];        
+		if (isHItemCell) 
+		{
+			cell = [[[HistoryItemCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+		}
+		else
+		{
+			cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+		}
     }
     
-    Order *order = [[self orders] objectAtIndex:indexPath.row];
-    [cell.lblFromTo setText:[NSString stringWithFormat:@"%@ - %@", order.from, order.to]];
+	if (isHItemCell) 
+	{
+		Order *order = [_hItems objectAtIndex:indexPath.row];
+		[cell.lblFromTo setText:[NSString stringWithFormat:@"%@ - %@", order.from, order.to]];
+		
+		[cell.lblDate setText:order.dateTime];
+		[cell.lblStatus setText:[Constants historyStatusById:order.status]];
+	}
+    else
+	{
+		NSUInteger leftToLoad = (_totalItemsCount - [_hItems count]);
+		if (leftToLoad > ITEMS_PER_PAGE) 
+		{
+			leftToLoad = ITEMS_PER_PAGE;
+		}
+		//cell.textLabel.textColor = [UIColor whiteColor];
+		[cell.textLabel setText:[NSString stringWithFormat:@"Следущие %d", leftToLoad]];
+	}
 	
-	[cell.lblDate setText:order.dateTime];
-	[cell.lblStatus setText:[Constants historyStatusById:order.status]];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-	if(detailView == nil)
-		detailView = [[HistoryDetailViewController alloc] initWithNibName:@"HistoryDetailViewController" bundle:nil];
-	Order *order = [[self orders] objectAtIndex:indexPath.row];
-	[detailView SetOrder:order];
-	
-	[self.navigationController pushViewController:detailView animated:YES];
+	if ([_hItems IsValidIndex:[indexPath row]]) 
+	{
+		if(detailView == nil)
+			detailView = [[HistoryDetailViewController alloc] initWithNibName:@"HistoryDetailViewController" bundle:nil];
+		Order *order = [_hItems objectAtIndex:indexPath.row];
+		[detailView SetOrder:order];
+		
+		[self.navigationController pushViewController:detailView animated:YES];
+	}
+	else
+	{
+		[self LoadNextPage];
+	}
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void) showAlertMessage:(NSString *)alertMessage
+{
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
 
 @end

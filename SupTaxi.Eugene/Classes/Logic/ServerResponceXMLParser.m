@@ -59,6 +59,17 @@ didStartElement:(NSString *)elementName
 		[_arr insertObject:response atIndex:0];
 		[offer release];
 		
+	}else if ([elementName isEqualToString:@"Carrier"])
+	{
+		Carrier * carrier = [[Carrier alloc] initWithCarrierId:[[attributeDict objectForKey:@"Id"] intValue] 
+												 carrierName:[attributeDict objectForKey:@"Name"] 
+											  carrierLogoStr:[attributeDict objectForKey:@"Logo"]
+												 isPreferred:[[attributeDict objectForKey:@"IsPreferred"] boolValue]]; 
+		ResponsePreferred * response = (ResponsePreferred *) [_arr objectAtIndex:0];
+		[response addCarrier:carrier];
+		[_arr insertObject:response atIndex:0];
+		[carrier release];
+		
 	}else if ([elementName isEqualToString:@"Order"])
 	{
 		Order * order = [[Order alloc] initOrderWithDateTime:[attributeDict objectForKey:@"DateTime"] 
@@ -111,8 +122,22 @@ didStartElement:(NSString *)elementName
 			ResponseAddress * resp = [[ResponseAddress alloc] init];	
 			[_arr addObject:resp];
 			[resp release];
+		}else if ([TypeString isEqualToString:@"Carriers.List"]) {
+			ResponsePreferred * resp = [[ResponsePreferred alloc] init];	
+			[_arr addObject:resp];
+			[resp release];
 		}else if ([TypeString isEqualToString:@"History"]) {
 			ResponseHistory * resp = [[ResponseHistory alloc] init];
+			[resp set_page:[[attributeDict objectForKey:@"Page"] intValue]];
+			[resp set_pages:[[attributeDict objectForKey:@"Pages"] intValue]];
+			[resp set_onPage:[[attributeDict objectForKey:@"OnPage"] intValue]];
+			[resp set_count:[[attributeDict objectForKey:@"Count"] intValue]];
+			
+			_page = [[attributeDict objectForKey:@"Page"] intValue];
+			_pages = [[attributeDict objectForKey:@"Pages"] intValue];
+			_onPage = [[attributeDict objectForKey:@"OnPage"] intValue];
+			_count = [[attributeDict objectForKey:@"Count"] intValue]; 
+			
 			[_arr addObject:resp];
 			[resp release];
 		}else {

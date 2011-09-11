@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString *prefsFilePath;
 
 - (void) updateUserGuid:(NSString*)userGuid;
+- (void) updateUserCity:(NSString*)userCity;
 - (void) updateUserCredentialsWithEmail:(NSString*)userEmail andPassword:(NSString*)userPassword;
 - (void) updateUserDataWithName:(NSString*)userFirstName andSecondName:(NSString*)userSecondName;
 
@@ -25,6 +26,6 @@
 - (void) updateUserHasPrefered:(BOOL)hasPrefered;
 - (void) updateUserHasRegularOrder:(BOOL)hasRegularOrder;
 
-- (void) updateUserContractWithNumber:(NSString*)contractNumber contractCustomer:(NSString*)customer andContractCarrier:(NSString*)currier;
+- (void) updateUserContractWithNumber:(NSString*)contractNumber contractCustomer:(NSString*)customer andContractCarrier:(NSString*)carrier;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "Constants.h"
-
+#import "NSDataAdditions.h"
 
 @implementation Constants
 
@@ -22,5 +22,14 @@
 	
 	return [dict objectForKey: guid];
 }
+
++ (UIImage *) getImageFromString: (NSString*) imageStr
+{
+	if ((imageStr == nil) || [imageStr isEqualToString:@""])return nil;
+	NSData *dataObj = [NSData dataWithBase64EncodedString:imageStr];
+	UIImage *stringImage = [UIImage imageWithData:dataObj];
+	return stringImage;
+}
+
 
 @end

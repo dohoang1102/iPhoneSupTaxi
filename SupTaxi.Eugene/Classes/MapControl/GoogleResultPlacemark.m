@@ -13,10 +13,11 @@
 #define COUNTRY @"country"
 #define COUNTRY_CODE @""	//??
 #define CITY @"locality"
-#define POSTAL_CODE @"postal"	//??
+#define POSTAL_CODE @"postal_code"	
 #define SUB_ADMINISTRATIVE @"administrative_area_level_3"	
 #define SUB_CITY @"sublocality"
 #define SUB_STREET @"street_number"
+#define STREET_ADDRESS @"street_address"
 #define STREET @"route"
 
 @implementation GoogleResultPlacemark
@@ -95,6 +96,18 @@
 	[super dealloc];
 }
 
+-(void)extendHouseNumber:(NSString *)value{
+	if (!value || [value isEqualToString:@""])
+		return;
+	
+	if (houseNumber && ![houseNumber isEqualToString:@""]){
+		self.houseNumber = [self.houseNumber stringByAppendingString:@", "];
+		self.houseNumber = [self.houseNumber stringByAppendingString:value];
+	}
+	else
+		self.houseNumber = value;
+}
+
 -(id)initWithResponceDictionary:(NSDictionary *)responce{
 
 	NSDictionary * coordinates = [responce valueForKeyPath:@"geometry.location"];
@@ -108,24 +121,38 @@
 	for (NSDictionary *dict in addressComponents) {
 		NSArray *types = [dict valueForKey:@"types"];
 		NSString *value = [dict valueForKey:@"long_name"];
-		if ([types containsObject:STATE])
+		if ([types containsObject:STATE]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressStateKey];
-		else if ([types containsObject:COUNTRY])
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressStateKey, value);
+		} else if ([types containsObject:COUNTRY]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressCountryKey];
-		else if ([types containsObject:COUNTRY_CODE])
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressCountryKey, value);
+		} else if ([types containsObject:COUNTRY_CODE]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressCountryCodeKey];
-		else if ([types containsObject:CITY])
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressCountryCodeKey, value);
+		} else if ([types containsObject:CITY]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressCityKey];
-		else if ([types containsObject:POSTAL_CODE])
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressCityKey, value);
+		} else if ([types containsObject:POSTAL_CODE]){
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressZIPKey];
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressZIPKey, value);
+		}
 //		else if ([types containsObject:SUB_ADMINISTRATIVE])
 //			[addressDict setValue:value forKey:(NSString *)kABPersonAddressCountryKey];
-		else if ([types containsObject:SUB_CITY])
+		else if ([types containsObject:SUB_CITY]) {
 			[self setCityRegion:value];
-		else if ([types containsObject:SUB_STREET])
-			[self setHouseNumber:value];
-		else if ([types containsObject:STREET])
+			NSLog(@"set %@ = '%@'", @"CityRegion", value);
+		} else if ([types containsObject:SUB_STREET]) {
+			[self extendHouseNumber:value];
+			NSLog(@"set %@ = '%@'", @"HoseNumber", value);
+		} else if ([types containsObject:STREET_ADDRESS]) {
+			[self extendHouseNumber:value];
+			NSLog(@"set %@ = '%@'", @"HoseNumber", value);
+		} else if ([types containsObject:STREET]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressStreetKey];
+			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressStreetKey, value);
+		} else
+			NSLog(@"Can't assign anywhere '%@' with types %@", value, types);
 	}
 	
 	if ((self = [super initWithCoordinate:coord addressDictionary:addressDict])) {

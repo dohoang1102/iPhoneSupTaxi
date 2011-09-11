@@ -314,8 +314,8 @@
 		//Should Add Address here
 		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:5];
 		[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
-		[d setValue:[[self addressSearchBar] nameField] forKey:ANAME_KEY];
-		[d setValue:[[self addressSearchBar] addressField] forKey:ADDR_KEY];		
+		[d setValue:[[[self addressSearchBar] nameField] text] forKey:ANAME_KEY];
+		[d setValue:[[[self addressSearchBar] addressField] text] forKey:ADDR_KEY];		
 		[d setValue:[NSString stringWithFormat:@"%f", self.addressSearchBar.placeMark.coordinate.latitude] forKey:LAT_KEY];
 		[d setValue:[NSString stringWithFormat:@"%f", self.addressSearchBar.placeMark.coordinate.longitude] forKey:LON_KEY];
 		

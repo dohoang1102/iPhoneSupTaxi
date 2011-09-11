@@ -107,10 +107,18 @@
 @implementation ResponseHistory
 
 @synthesize _orders;
+@synthesize _page;
+@synthesize _pages;
+@synthesize _onPage;
+@synthesize _count;
 
 -(id)init{
 	if ((self = [super init])) {
 		_orders = [[NSMutableArray alloc] init];
+		_page = 0;
+		_pages = 0;
+		_onPage = 0;
+		_count = 0;
 	}
 	return self;
 }
@@ -159,6 +167,31 @@
 - (void)dealloc
 {
 	[_addressList release];
+    [super dealloc];
+}
+
+@end
+
+@implementation ResponsePreferred
+
+@synthesize _carriers;
+
+-(id)init{
+	if ((self = [super init])) {
+		_carriers = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+- (void)addCarrier:(Carrier *)carrier
+{
+	if (self._carriers == nil) {	_carriers = [[NSMutableArray alloc] init]; }
+	[self._carriers addObject:carrier];
+}
+
+- (void)dealloc
+{
+	[_carriers release];
     [super dealloc];
 }
 

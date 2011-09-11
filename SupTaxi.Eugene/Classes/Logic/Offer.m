@@ -7,7 +7,7 @@
 //
 
 #import "Offer.h"
-#import "NSDataAdditions.h"
+#import "Constants.h"
 
 @implementation Offer
 
@@ -26,18 +26,10 @@
         self.arrivalTime = arrivalTime;
         self.minPrice = minPrice;
 		self.carrierGuid = carrierId;
-		self.carrierLogo = [self getImageFromString:carrierLogoStr];
+		self.carrierLogo = [Constants getImageFromString:carrierLogoStr];
     }
     
     return self;
-}
-
-- (UIImage *) getImageFromString: (NSString*) imageStr
-{
-	if ((imageStr == nil) || [imageStr isEqualToString:@""])return nil;
-	NSData *dataObj = [NSData dataWithBase64EncodedString:imageStr];
-	UIImage *stringImage = [UIImage imageWithData:dataObj];
-	return stringImage;
 }
 
 - (void)dealloc

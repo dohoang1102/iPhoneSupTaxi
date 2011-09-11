@@ -46,6 +46,12 @@
 - (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId;
 - (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
 
+- (BOOL) GetPrefferedListRequest:(NSString*)userGuid;
+- (BOOL) AddPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId;
+- (BOOL) DelPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId;
+
+- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier;
+
 + (NSString *)GetRootURL;
 
 

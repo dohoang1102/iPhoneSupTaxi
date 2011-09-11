@@ -10,6 +10,7 @@
 #import "Offer.h"
 #import "Order.h"
 #import "Address.h"
+#import "Carrier.h"
 
 @interface Response : NSObject {
 
@@ -54,6 +55,10 @@
 @interface ResponseHistory : NSObject {
 	
 }
+@property (nonatomic, assign) NSInteger _page;
+@property (nonatomic, assign) NSInteger _pages;
+@property (nonatomic, assign) NSInteger _onPage;
+@property (nonatomic, assign) NSInteger _count;
 @property (nonatomic, retain) NSMutableArray * _orders; 
 
 - (void)addAnOrder:(Order *)order;
@@ -71,3 +76,14 @@
 - (void)addAnAddress:(Address *)address;
 
 @end
+
+@interface ResponsePreferred : NSObject {
+	
+}
+
+@property (nonatomic, retain) NSMutableArray * _carriers; 
+
+- (void)addCarrier:(Carrier *)carrier;
+
+@end
+

@@ -39,6 +39,7 @@
 @synthesize selectionDelegate;
 @synthesize _addressListResponse;
 @synthesize needReloadData;
+@synthesize addAddressButton;
 
 - (void) GetAddressesThreadMethod:(id)obj
 {
@@ -135,6 +136,14 @@
 	return retVal;
 }
 
+-(void)setSelectionDelegate:(id<AddressViewControllerDelegate>)newSelectionDelegate{
+	selectionDelegate = newSelectionDelegate;
+	if (selectionDelegate)
+		self.navigationItem.rightBarButtonItem = nil;
+	else
+		self.navigationItem.rightBarButtonItem = self.addAddressButton;
+}
+
 #pragma mark Init/Dealloc
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -149,6 +158,7 @@
 
 - (void)dealloc
 {
+	[addAddressButton release];
 	[addressTable release];
 	[searchBar release];
 	[_addressListResponse release];
@@ -169,8 +179,9 @@
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
 	if (self.addressType == my_addresses) {
-		UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Добавить" andTarget:self andSelector:@selector(onAddAddress:)];
-		self.navigationItem.rightBarButtonItem = orderButton;
+		self.addAddressButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Добавить" andTarget:self andSelector:@selector(onAddAddress:)];
+		if (!selectionDelegate)
+			self.navigationItem.rightBarButtonItem = self.addAddressButton;
 	} 
 	if (self.addressType != my_addresses || self.selectionDelegate != nil) {
 		UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Назад" andTarget:self andSelector:@selector(onBack:)];
@@ -193,7 +204,13 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
-	[self checkIfAuthenticated];	
+	
+	if (!selectionDelegate) {
+		if ([prefManager.prefs.userGuid isEqualToString:@""]) {
+            [self showAlertMessage:@"Для возможности просмотра списка Ваших адресов, Вам необходимо либо авторизоватся, либо зарегистрироватся через секцию Настройки!"];
+        }
+	}
+	[self loadAddresses];
 	//Deselect the row after returning to this view and reloading table
 	[[self addressTable] selectRowAtIndexPath:nil animated:YES scrollPosition:UITableViewScrollPositionNone];
 	[self performSelector:@selector(reloadTable) withObject:nil afterDelay:0.5];
@@ -206,10 +223,11 @@
 	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
 	
 	[self initPreferences];
+	/*if (!selectionDelegate) {
+		[self checkIfAuthenticated];
+	}*/
+	[self loadAddresses];
 	
-	if ([self checkIfAuthenticated]) {
-		[self loadAddresses];
-	}
 }
 
 - (BOOL) checkIfAuthenticated
@@ -255,15 +273,23 @@
 }
 
 -(void)editAddress:(Address *)address{
-	AddAddressViewController *newController = [[AddAddressViewController alloc] init];
-	[newController setDelegate:self];
-	[newController setAddress:address];
-	[[self navigationController] pushViewController:newController animated:YES];
-	[newController release];
+	if (selectionDelegate) {
+		[[self navigationController] popViewControllerAnimated:![selectionDelegate isKindOfClass:[AddressViewController class]]];
+		[selectionDelegate onAddressSelected:address];
+	}else if (self.addressType == my_addresses) {
+		AddAddressViewController *newController = [[AddAddressViewController alloc] init];
+		[newController setDelegate:self];
+		[newController setAddress:address];
+		[[self navigationController] pushViewController:newController animated:YES];
+		[newController release];
+	} else
+		[[self addressTable] selectRowAtIndexPath:nil animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 -(void)showNewControllerWithAddressType:(enum AddressType)anAddressType{
 	AddressViewController *newController = [[AddressViewController alloc] init];
+	if ([self selectionDelegate])
+		[newController setSelectionDelegate:self];
 	[newController setAddressType:anAddressType];
 	[self.navigationController pushViewController:newController animated:YES];
 	[newController release];
@@ -287,7 +313,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 	if (![self showsCategories]) {
-		Address *addr = [[self addresses] objectAtIndex:indexPath.row-DEFAULT_ROWS_COUNT];
+		Address *addr = [[self addresses] objectAtIndex:indexPath.row];
 		[self editAddress:addr];
 		return;
 	}
@@ -382,6 +408,15 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar{
 	[theSearchBar setText:@""];
 	[theSearchBar resignFirstResponder];
+}
+
+#pragma mark AddressViewControllerDelegate
+
+-(void)onAddressSelected:(id)address{
+	if (self.selectionDelegate) {
+		[self.selectionDelegate onAddressSelected:address];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 #pragma mark Events

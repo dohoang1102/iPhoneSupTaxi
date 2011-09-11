@@ -91,7 +91,7 @@
 	if ([[self.nameField text] isEqualToString:@""] || [[self.addressField text] isEqualToString:@""])
 		message = @"Пожалуйста заполните все поля";
 	
-	if (!message && (![self placeMark] || ![[self.addressField text] isEqualToString:[placeMark shortAddress]]))
+	if (!message && (![self placeMark]))
 		message = @"Адрес не может быть добавлен пока не определены координаты";
 	
 	if (message) {
@@ -112,12 +112,13 @@
 	[self onShowRoute];
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+	if (textField == self.nameField) return;
+	[self startAddressSearch:[textField text]];
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
 	[self resignEditFields];
-	if (textField == self.nameField) return YES;
-	
-	[self startAddressSearch:[textField text]];
-	
 	return YES;
 }
 

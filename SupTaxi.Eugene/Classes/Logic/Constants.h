@@ -12,5 +12,6 @@
 @interface Constants : NSObject
 
 + (NSString *) historyStatusById:(NSString*)guid;
++ (UIImage *) getImageFromString: (NSString*) imageStr;
 
 @end

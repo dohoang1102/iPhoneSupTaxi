@@ -418,10 +418,15 @@
 	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:11];
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
-	[d setValue:self.mapViewRouteSearchBar.fromField.text forKey:FROM_KEY];
-	[d setValue:self.mapViewRouteSearchBar.toField.text forKey:TO_KEY];
+	
+	NSString * from = ([self.mapViewRouteSearchBar.placeMarkFrom.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.fromField.text : self.mapViewRouteSearchBar.placeMarkFrom.shortAddress;
+	NSString * to = ([self.mapViewRouteSearchBar.placeMarkTo.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.toField.text : self.mapViewRouteSearchBar.placeMarkTo.shortAddress;
+						
+	[d setValue:from forKey:FROM_KEY];
+	[d setValue:to forKey:TO_KEY];
 	[d setValue:self.mapViewRouteSearchBar.timeField.text forKey:DATE_KEY];
-	[d setValue:self.mapViewRouteSearchBar.daysField.text forKey:SCHE_KEY];
+	[d setValue:[NSString stringWithFormat:@"%i", (int)prefManager.prefs.userHasRegularOrder] forKey:ISREG_KEY];
+    [d setValue:self.mapViewRouteSearchBar.daysField.text forKey:SCHE_KEY];
 
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.latitude] forKey:LAT_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.selfLocationPlacemark.coordinate.longitude] forKey:LON_KEY];

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PreferencesManager.h"
+#import "Response.h"
 
 @interface SettingsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
 	PreferencesManager * prefManager;
+    
+    Response		* _registerResponse;
+	ResponseLogin	* _loginResponse;
 }
 
 @property (nonatomic, retain) NSString * supTaxiID;
@@ -24,5 +28,7 @@
 @property (nonatomic) BOOL userHasRegularOrder;
 
 @property (nonatomic, retain) IBOutlet UITableView * tableView;
+@property (nonatomic, retain) Response		* _registerResponse;
+@property (nonatomic, retain) ResponseLogin	* _loginResponse;
 
 @end

@@ -20,6 +20,16 @@
 @synthesize prefs;
 @synthesize prefsFilePath;
 
+-(id)retain{
+    NSLog(@"Retaining, new retain count: %i", [self retainCount] + 1);
+    return [super retain];
+}
+
+-(oneway void)release{
+    NSLog(@"Releasing, new retain count: %i", [self retainCount] - 1);
+    [super release];
+}
+
 -(NSString *)prefsFilePath{
 	if (!prefsFilePath) {
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
@@ -56,6 +66,8 @@
 	[[self prefs] setUserPassword:@""];
 	[[self prefs] setUserFirstName:@""];
 	[[self prefs] setUserSecondName:@""];
+    [[self prefs] setUserCity:@""];
+    
 	[[self prefs] setUserHasContract:NO];
 	[[self prefs] setUserHasPrefered:NO];
 	[[self prefs] setUserHasRegularOrder:NO];
@@ -74,6 +86,12 @@
 -(void)updateUserGuid:(NSString*)userGuid
 {
 	[[self prefs] setUserGuid:userGuid];
+	[[self prefs] save];
+}
+
+-(void)updateUserCity:(NSString *)userCity
+{
+	[[self prefs] setUserCity:userCity];
 	[[self prefs] save];
 }
 
@@ -109,10 +127,12 @@
 	[[self prefs] save];
 }
 
-
-- (void) updateUserContractWithNumber:(NSString*)contractNumber contractCustomer:(NSString*)customer andContractCarrier:(NSString*)currier
+- (void) updateUserContractWithNumber:(NSString*)contractNumber contractCustomer:(NSString*)customer andContractCarrier:(NSString*)carrier
 {
-
+    [[self prefs] setUserContractNumber:contractNumber];
+	[[self prefs] setUserContractCustomer:customer];
+	[[self prefs] setUserContractCarrier:carrier];
+	[[self prefs] save];
 }
 
 

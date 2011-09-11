@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PreferencesManager.h"
 #import "Response.h"
+#import	"RegisterViewController.h"
 
 @class HistoryDetailViewController;
 
@@ -22,6 +23,7 @@
 	ResponseHistory * _historyResponse;
 	PreferencesManager * prefManager;
 	
+	RegisterViewController * registerController;
 	HistoryDetailViewController * detailView;
 }
 

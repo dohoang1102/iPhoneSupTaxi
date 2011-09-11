@@ -35,6 +35,14 @@
 
 @property (nonatomic, retain) NSTimer * timer;
 
+@property (nonatomic, assign) id orderDelegate;
+@property (nonatomic, assign) id historyDelegate;
+@property (nonatomic, assign) id addressDelegate;
+
+- (void) updateOrderView;
+- (void) updateHistoryView;
+- (void) updateAddressView;
+
 + (SupTaxiAppDelegate *)sharedAppDelegate;
 
 - (void) checkOrderOffers;

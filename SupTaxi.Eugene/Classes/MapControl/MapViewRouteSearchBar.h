@@ -41,6 +41,7 @@
 
 @property (nonatomic, retain) id parentController;
 
+@property (nonatomic, retain) NSString *currentFieldName;
 @property (nonatomic, retain) UITextField *currentTextField;
 
 @property (nonatomic, assign) BOOL daysVisible;

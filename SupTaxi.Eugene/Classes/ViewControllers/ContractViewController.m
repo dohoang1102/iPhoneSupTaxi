@@ -19,6 +19,9 @@
 - (BOOL) textFieldValidate;
 - (void) textFieldUnFocus;
 
+- (void) UpdateThreadMethod:(id)obj;
+- (void) UpdateResult:(id)obj;
+
 @end
 
 @implementation ContractViewController
@@ -27,11 +30,84 @@
 @synthesize txtContractCustomer;
 @synthesize txtContractCarrier;
 
+@synthesize _updateResponse;
+
+@synthesize selectorOnDone;
+@synthesize delegate;
+
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void) UpdateThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Регистрация"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		
+		
+		if ([responce UpdateUserRequest:prefManager.prefs.userGuid
+                               password:prefManager.prefs.userPassword
+                                  email:prefManager.prefs.userEmail
+                              firstName:prefManager.prefs.userFirstName
+                             secondName:prefManager.prefs.userSecondName
+                                   city:prefManager.prefs.userCity
+                                cNumber:prefManager.prefs.userContractNumber
+                              cCustomer:prefManager.prefs.userContractCustomer
+                               cCarrier:prefManager.prefs.userContractCarrier])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._updateResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(UpdateResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) UpdateResult:(id)obj
+{
+	if (!_updateResponse)
+	{
+		[self showAlertMessage:@"Ошибка запроса обновления!"];
+		return;
+	}
+	
+	if (_updateResponse._result == NO) //ошибка обновления:
+	{
+		[self showAlertMessage:@"Не удалось обновить данные, попробуйте еще раз!"];
+		return;	
+	}
+	else if (_updateResponse._result == YES) //все ок
+	{
+        // need to save contract locally
+        [prefManager updateUserHasContract:YES];
+        [prefManager updateUserContractWithNumber:txtContractNumber.text 
+                                 contractCustomer:txtContractCustomer.text 
+                               andContractCarrier:txtContractCarrier.text];
+        [self.navigationController popViewControllerAnimated:YES];
+        if (self.delegate){
+			[self.delegate performSelector:selectorOnDone];
+		}
+    }
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -58,10 +134,16 @@
 - (IBAction) contractSave:(id)sender{
 	[self textFieldUnFocus];
 	if ([self textFieldValidate] == NO) return;
-	
+	    
+    [NSThread detachNewThreadSelector:@selector(UpdateThreadMethod:)
+                             toTarget:self 
+                           withObject:nil];	
 }
 - (IBAction) contractDecline:(id)sender{
 	[self.navigationController popViewControllerAnimated:YES];
+    if (self.delegate){
+        [self.delegate performSelector:selectorOnDone];
+    }
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -89,7 +171,6 @@
 	[txtContractNumber release];
 	[txtContractCustomer release];
 	[txtContractCarrier release];
-	
     [super dealloc];
 }
 

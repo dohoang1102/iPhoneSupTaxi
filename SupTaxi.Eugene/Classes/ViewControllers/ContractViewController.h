@@ -8,14 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "PreferencesManager.h"
+#import "Response.h"
 
 @interface ContractViewController : UIViewController <UITextFieldDelegate>{
 	PreferencesManager * prefManager;
+    Response		* _updateResponse;
 }
 
 @property (nonatomic, retain) IBOutlet UITextField *txtContractNumber;
 @property (nonatomic, retain) IBOutlet UITextField *txtContractCustomer;
 @property (nonatomic, retain) IBOutlet UITextField *txtContractCarrier;
+
+@property (nonatomic, retain) Response * _updateResponse;
+
+@property (nonatomic, assign) SEL selectorOnDone;
+@property (nonatomic, assign) id delegate;
 
 - (IBAction) contractSave:(id)sender;
 - (IBAction) contractDecline:(id)sender;

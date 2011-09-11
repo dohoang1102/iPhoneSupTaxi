@@ -236,6 +236,58 @@
 	return false;
 }
 
+// Get List of carriers with preferred
+- (BOOL) GetPrefferedListRequest:(NSString*)userGuid{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Carriers.List\" Guid=\"%@\" IncludePreffered=\"true\" />", userGuid] ];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Add to preferred
+- (BOOL) AddPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"PrefferedCarriers.Add\" Guid=\"%@\" CarrierId=\"%i\" />", userGuid, carrierId] ];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+//Delete from preferred
+- (BOOL) DelPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"PrefferedCarriers.Del\" Guid=\"%@\" CarrierId=\"%i\" />", userGuid, carrierId] ];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier{
+    [self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],
+                               [NSString stringWithFormat:@"<Request Type=\"User.Update\" Guid=\"%@\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" City=\"%@\" ContractNumber=\"%@\" ContractCustomer=\"%@\" ContractCarrier=\"%@\" PreferredCarrier=\"\" />", userGuid, password, email, fName, sName, city, cNumber, cCustomer, cCarrier] ];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
 
 - (void) Clear
 {

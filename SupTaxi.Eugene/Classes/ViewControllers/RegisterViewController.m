@@ -12,6 +12,9 @@
 #import "AppProgress.h"
 #import "SupTaxiAppDelegate.h"
 
+#import "AddressViewController.h"
+#import "HistoryViewController.h"
+
 @interface RegisterViewController(Private)
  
 - (void) RegisterThreadMethod:(id)obj;
@@ -49,6 +52,7 @@
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+	NSLog(@"REG FORM textField %@" , textField.text);
     [textField resignFirstResponder];
     return YES;
 }
@@ -242,14 +246,19 @@
 
 - (IBAction)registerActionDecline:(id)sender
 {
-	if (self.delegate){
-		return;
+	NSLog(@"Delgate class: %@", [[self.delegate self] class]);
+	if (self.delegate && ([[self.delegate self] isKindOfClass:[AddressViewController class]] || [[self.delegate self] isKindOfClass:[HistoryViewController class]])){
+		UITabBarController * tc = [SupTaxiAppDelegate sharedAppDelegate].tabsController;
+		[tc setSelectedIndex:3];
 	}
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)registerAction:(id)sender
 {
+	
+	NSLog(@"REG FORM txtEmail %@" , txtEmail.text);
+	
 	[self textFieldUnFocus];
 	if ([self textFieldValidate] == NO) return;
 	

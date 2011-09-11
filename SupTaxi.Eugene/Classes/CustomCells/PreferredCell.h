@@ -1,18 +1,16 @@
 //
-//  OrderShowCell.h
+//  PreferredCell.h
 //  SupTaxi
 //
-//  Created by Eugene Zavalko on 01.09.11.
+//  Created by Eugene Zavalko on 09.09.11.
 //  Copyright 2011 EaZySoft. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "UICustomSwitch.h"
 
-@interface OrderShowCell : UITableViewCell
+@interface PreferredCell : UITableViewCell 
 
-@property (nonatomic, retain) UILabel *priceLabel;
-@property (nonatomic, retain) UILabel *timeLabel;
 @property (nonatomic, retain) UIImageView *carrierLogo;
 @property (nonatomic, retain) UICustomSwitch *switcher;
 

@@ -148,11 +148,17 @@
 #pragma mark MapViewSearchBarDelegate
 
 -(void)setSelfLocationSearchEnabled:(BOOL)enabled{
+	if ([self.mapView userLocation] && [[self.mapView userLocation] location]){
+		NSLog(@"take location from map");
+		[self.mapViewSearchBar onSelfLocationFound:[self.mapView userLocation]];
+	}
+	
 	[self.mapView setShowsUserLocation:enabled];
 }
 
 -(void)showPointsOnMap:(NSArray *)placeMarks{
 	[mapView removeAnnotations:[mapView annotations]];
+	self.routes = [NSArray array];
 	
 	if ([placeMarks count] == 0)
 		return;
