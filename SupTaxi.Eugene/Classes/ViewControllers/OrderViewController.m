@@ -107,6 +107,8 @@
 
 - (void) ShowOrderOffers:(id)obj
 {
+    [self setCurrentOrderId:nil];
+    
 	[cViewController release];
 	cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
 	[cViewController setResponce: _offerResponse];
@@ -207,6 +209,7 @@
 	[NSThread detachNewThreadSelector:@selector(CheckOrderOffersThreadMethod:)
 							 toTarget:self 
 						   withObject:currentOrderId];
+    [self setCurrentOrderId:nil];
 }
 
 #pragma mark - Action methods viewController
@@ -301,6 +304,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    [self setCurrentOrderId:nil];
+    
 	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
 	
 	carType_ = @"1";
@@ -388,6 +393,11 @@
 {
 	if ([self textFieldValidate] == NO) return;
 	
+    if (self.currentOrderId != nil) {
+        [self showAlertMessage:@"Вы не можете осуществить заказ пока не прийдет ответ на ваш предыдущий заказ!"];
+        return;
+    }
+    
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
 		RegisterViewController *registerViewController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
 		registerViewController.delegate = self;
