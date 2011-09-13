@@ -50,10 +50,11 @@ didStartElement:(NSString *)elementName
 	}else if ([elementName isEqualToString:@"Offer"])
 	{
 		Offer * offer = [[Offer alloc] initWithCarrierName:[attributeDict objectForKey:@"CarrierName"]
-											   arrivalTime:[[attributeDict objectForKey:@"ArrivalTime"] intValue] //
+											   arrivalTime:[[attributeDict objectForKey:@"ArrivalTime"] intValue] 
 												  minPrice:[[attributeDict objectForKey:@"MinPrice"] intValue] 
 												 carrierId:[[attributeDict objectForKey:@"CarrierId"] intValue] 
-											carrierLogoStr:[attributeDict objectForKey:@"CarrierLogo"]]; 
+											carrierLogoStr:[attributeDict objectForKey:@"CarrierLogo"]
+                                        carrierDescription:[attributeDict objectForKey:@"CarrierDescription"]]; 
 		ResponseOffers * response = (ResponseOffers *) [_arr objectAtIndex:0];
 		offer.orderId = [response._guid intValue];
 		[response addAnOffer:offer];
@@ -63,9 +64,10 @@ didStartElement:(NSString *)elementName
 	}else if ([elementName isEqualToString:@"Carrier"])
 	{
 		Carrier * carrier = [[Carrier alloc] initWithCarrierId:[[attributeDict objectForKey:@"Id"] intValue] 
-												 carrierName:[attributeDict objectForKey:@"Name"] 
-											  carrierLogoStr:[attributeDict objectForKey:@"Logo"]
-												 isPreferred:[[attributeDict objectForKey:@"IsPreferred"] boolValue]]; 
+                                                   carrierName:[attributeDict objectForKey:@"Name"] 
+                                                carrierLogoStr:[attributeDict objectForKey:@"Logo"]
+                                                   isPreferred:[[attributeDict objectForKey:@"IsPreferred"] boolValue]
+                                            carrierDescription:[attributeDict objectForKey:@"Description"]]; 
 		ResponsePreferred * response = (ResponsePreferred *) [_arr objectAtIndex:0];
 		[response addCarrier:carrier];
 		[_arr insertObject:response atIndex:0];

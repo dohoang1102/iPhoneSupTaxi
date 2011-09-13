@@ -18,9 +18,10 @@
 @property (nonatomic, copy) UIImage *carrierLogo;
 @property (nonatomic) int arrivalTime;
 @property (nonatomic) int minPrice;
+@property (nonatomic, copy) NSString *carrierDescription;
 
 - (id)initWithCarrierName:(NSString *)carrierName arrivalTime:(int)arrivalTime minPrice:(int)minPrice 
-				carrierId:(int) carrierId carrierLogoStr:(NSString*) carrierLogoStr;
+				carrierId:(int) carrierId carrierLogoStr:(NSString*) carrierLogoStr carrierDescription:(NSString*)carrierDescription;
 
 @end
 

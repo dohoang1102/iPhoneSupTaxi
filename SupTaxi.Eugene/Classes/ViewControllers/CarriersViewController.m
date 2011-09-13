@@ -27,6 +27,7 @@
 - (void) showAlertMessage:(NSString *)alertMessage;
 - (IBAction)rowImageClick:(id)sender;
 - (UILabel *)newLabel:(CGRect)frame;
+
 @end
 
 @implementation CarriersViewController
@@ -40,6 +41,7 @@
 @synthesize innerFooterView = innerFooterView_;
 @synthesize innerOfferFooterView = innerOfferFooterView_;
 @synthesize backgroundImage = backgroundImage_;
+@synthesize lblFromTo = lblFromTo_;
 
 @synthesize _resultResponse;
 @synthesize _orderResponse;
@@ -108,6 +110,7 @@
 
 - (void)dealloc
 {
+    [lblFromTo_ release];
     [innerOfferFooterView_ release];
     [headerView_ release];
     [footerView_ release];
@@ -139,8 +142,10 @@
     [innerOfferFooterView_ setHidden:YES];
     innerOfferFooterView_.layer.cornerRadius = 10;
     
-    UIColor *buttonColor = [UIColor colorWithRed:2.0/255.0 green:12.0/255.0 blue:2.0/255.0 alpha:1];
-    UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:buttonColor andTitle:@"Отмена" andTarget:self andSelector:@selector(backAction:)];
+    [lblFromTo_ setText:[NSString stringWithFormat:@"%@ - %@", _resultResponse._from, _resultResponse._to]];
+    
+    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+    UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = backButton;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1];
     
@@ -194,7 +199,7 @@
 // высота шапки
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
 {
-	return 50.0;
+	return 94.0;
 }
 
 // высота нижней части
@@ -259,10 +264,10 @@
         [view removeFromSuperview];
     }
     Offer *offer = [(UIOfferImage *)sender offer];
-    UILabel *lblTarif = [self newLabel:CGRectMake(5, 5, 170, 20)];
+    UILabel *lblTarif = [self newLabel:CGRectMake(5, 5, innerOfferFooterView_.frame.size.width - 10, innerOfferFooterView_.frame.size.height - 10)];
     [lblTarif setTag:1];
     [lblTarif setBackgroundColor:[UIColor clearColor]];
-    [lblTarif setText:[NSString stringWithFormat:@"Тариф: %d руб", offer.minPrice]];
+    [lblTarif setText:offer.carrierDescription];
     
     [innerOfferFooterView_ addSubview:lblTarif];
     [innerFooterView_ setHidden:YES];
@@ -273,6 +278,8 @@
 {
     UILabel *newLabel = [[UILabel alloc] initWithFrame:frame];
     newLabel.textAlignment = UITextAlignmentLeft;
+    [newLabel setLineBreakMode:UILineBreakModeWordWrap];
+    [newLabel setNumberOfLines:2];
     newLabel.font = [UIFont fontWithName:@"Arial" size:12.0];
     newLabel.backgroundColor = [UIColor whiteColor];
     newLabel.opaque = YES;

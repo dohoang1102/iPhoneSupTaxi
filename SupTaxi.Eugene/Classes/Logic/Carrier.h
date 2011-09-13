@@ -17,8 +17,9 @@
 @property (nonatomic, copy) NSString *carrierName;
 @property (nonatomic, copy) UIImage *carrierLogo;
 @property (nonatomic, assign) BOOL isPreferred;
+@property (nonatomic, copy) NSString *carrierDescription;
 
 - (id)initWithCarrierId:(int)cId carrierName:(NSString *)cName carrierLogoStr:(NSString *)cLogoStr
-				isPreferred:(BOOL) cIsPreferred;
+            isPreferred:(BOOL) cIsPreferred carrierDescription:(NSString*)cDescription;
 
 @end

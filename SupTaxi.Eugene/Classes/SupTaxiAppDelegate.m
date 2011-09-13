@@ -162,7 +162,7 @@
     }];
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
-		int k = 0;
+		//int k = 0;
         /*
         while ([application backgroundTimeRemaining] > 1.0) {
 			/*

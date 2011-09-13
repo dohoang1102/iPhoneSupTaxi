@@ -69,6 +69,10 @@
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
 				self._historyResponse = [resultData objectAtIndex:0]; 
+                if (nextPage.intValue == 0) {
+                    [_hItems removeAllObjects];
+                }
+                
 				[_hItems addObjectsFromArray:self._historyResponse._orders]; 
 			}
 			
@@ -165,7 +169,7 @@
 	/*if (![self checkIfAuthenticated]) {
 		return;
 	}*/
-	[self loadHistory];
+	//[self loadHistory];
 }
 
 - (BOOL) checkIfAuthenticated

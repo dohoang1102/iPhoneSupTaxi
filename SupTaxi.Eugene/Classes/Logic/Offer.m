@@ -17,8 +17,9 @@
 @synthesize minPrice = minPrice_;
 @synthesize carrierLogo = carrierLogo_;
 @synthesize orderId = orderId_;
+@synthesize carrierDescription = carrierDescription_;
 
-- (id)initWithCarrierName:(NSString *)carrierName arrivalTime:(int)arrivalTime minPrice:(int)minPrice carrierId:(int) carrierId carrierLogoStr:(NSString*) carrierLogoStr
+- (id)initWithCarrierName:(NSString *)carrierName arrivalTime:(int)arrivalTime minPrice:(int)minPrice carrierId:(int) carrierId carrierLogoStr:(NSString*) carrierLogoStr carrierDescription:(NSString*)carrierDescription
 {
     self = [super init];
     if (self != nil) {
@@ -27,6 +28,7 @@
         self.minPrice = minPrice;
 		self.carrierGuid = carrierId;
 		self.carrierLogo = [Constants getImageFromString:carrierLogoStr];
+        self.carrierDescription = carrierDescription;
     }
     
     return self;
@@ -34,6 +36,7 @@
 
 - (void)dealloc
 {
+    [carrierDescription_ release];
     [carrierName_ release];
 	[carrierLogo_ release];
     [super dealloc];

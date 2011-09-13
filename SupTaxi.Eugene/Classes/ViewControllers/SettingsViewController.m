@@ -286,7 +286,7 @@
 	}
 	else if (_loginResponse._result == NO && _loginResponse._wrongPassword == YES) //неправильный пароль
 	{
-		[self showAlertMessage:@"Проверь те правильность вашего пароля!"];
+		[self showAlertMessage:@"Проверьте правильность вашего пароля!"];
 	}
 	else if (_loginResponse._result == YES && _loginResponse._wrongPassword == NO) //правильный пароль и мыло
 	{
@@ -325,6 +325,8 @@
 {
     prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
 	
+    [self setUserPhone:prefManager.prefs.userPhone];
+    
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
 	UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];

@@ -22,6 +22,7 @@
 @property (nonatomic, retain) IBOutlet UIView *innerFooterView;
 @property (nonatomic, retain) IBOutlet UIView *innerOfferFooterView;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UILabel *lblFromTo;
 
 @property (nonatomic, retain) ResponseOffers *_resultResponse;
 @property (nonatomic, retain) Response * _orderResponse;

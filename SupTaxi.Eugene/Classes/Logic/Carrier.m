@@ -15,9 +15,10 @@
 @synthesize carrierName;
 @synthesize carrierLogo;
 @synthesize isPreferred;
+@synthesize carrierDescription;
 
 - (id)initWithCarrierId:(int)cId carrierName:(NSString *)cName carrierLogoStr:(NSString *)cLogoStr
-			isPreferred:(BOOL) cIsPreferred
+			isPreferred:(BOOL) cIsPreferred carrierDescription:(NSString*)cDescription
 {
 	self = [super init];
     if (self != nil) {
@@ -25,6 +26,7 @@
         self.carrierName = cName;
         self.carrierLogo = [Constants getImageFromString:cLogoStr];
 		self.isPreferred = cIsPreferred;
+        self.carrierDescription = cDescription;
 	}
 	 return self;
 }
@@ -32,6 +34,7 @@
 
 - (void)dealloc
 {	
+    [carrierDescription release];
 	[carrierName release];
     [carrierLogo release];
     [super dealloc];
