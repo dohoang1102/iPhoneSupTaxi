@@ -152,6 +152,7 @@
 	//self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 }

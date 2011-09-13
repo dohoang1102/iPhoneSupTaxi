@@ -27,7 +27,7 @@
 
 + (NSString *) orderRequestString
 {
-	return @"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"%@\" Schedule=\"%@\" Lat=\"%f\" Lon=\"%f\" FromLat=\"%f\" FromLon=\"%f\" ToLat=\"%f\" ToLon=\"%f\" />";
+	return @"<Request Type=\"Order\" Guid=\"%@\" From=\"%@\" To=\"%@\" DateTime=\"%@\" VehicleType=\"%i\" IsRegular=\"%@\" Schedule=\"%@\" Lat=\"%f\" Lon=\"%f\" FromLat=\"%f\" FromLon=\"%f\" ToLat=\"%f\" ToLon=\"%f\" FromDistrict=\"%@\" ToDistrict=\"%@\" />";
 }
 
 - (NSArray *) GetDataItems
@@ -74,14 +74,14 @@
 }
 
 //Sending an order to server (not Regular)
-- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType fromArea:(NSString*)fromArea toArea:(NSString*)toArea
 						   latitude: (float) latitude longitude: (float) longitude fromLat: (float) fromLat fromLon: (float) fromLon 
 							  toLat: (float) toLat toLon: (float) toLon
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
 	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:[ServerResponce orderRequestString],
-							   guid, from, to, orderDate, vehicleType, @"false", @"", latitude, longitude, fromLat, fromLon, toLat, toLon]];
+							   guid, from, to, orderDate, vehicleType, @"false", @"", latitude, longitude, fromLat, fromLon, toLat, toLon, fromArea, toArea]];
     
 	if (urlString) 
 	{
@@ -91,14 +91,14 @@
 }
 
 //Sending an order to server (Regular)
-- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType fromArea:(NSString*)fromArea toArea:(NSString*)toArea
 						   isRegular: (BOOL) isRegular schedule: (NSString *) schedule latitude: (float) latitude longitude: (float) longitude 
 							fromLat: (float) fromLat fromLon: (float) fromLon toLat: (float) toLat toLon: (float) toLon
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
 	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:[ServerResponce orderRequestString],
-							   guid, from, to, orderDate, vehicleType,((isRegular == NO) ? @"false" : @"true"), schedule, latitude, longitude, fromLat, fromLon, toLat, toLon]];
+							   guid, from, to, orderDate, vehicleType,((isRegular == NO) ? @"false" : @"true"), schedule, latitude, longitude, fromLat, fromLon, toLat, toLon, fromArea, toArea]];
     
 	if (urlString) 
 	{
@@ -142,7 +142,7 @@
 {
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Register\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" Phone=\"%@\" City=\"\" ContractNumber=\"\" ContractCustomer=\"\" ContractCarrier=\"\" PreferredCarrier=\"\" />",
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Register\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" Phone=\"%@\" City=\"\" ContractNumber=\"\" ContractCustomer=\"\" ContractCarrier=\"\" />",
 							   password, email, fName, sName, phone]];
     
 	if (urlString) 
@@ -196,11 +196,11 @@
 }
 
 //Add new address
-- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
+- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Add\" Guid=\"%@\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
-							   userGuid, name, address, lat, lon]];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Add\" Guid=\"%@\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\" District=\"%@\"/>", 
+							   userGuid, name, address, lat, lon, area]];
     
 	if (urlString) 
 	{
@@ -223,11 +223,11 @@
 }
 
 //Add new address
-- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon{
+- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon{
 	[self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
-	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Upd\" Guid=\"%@\" AddressId=\"%i\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", 
-							   userGuid, addressId, name, address, lat, lon]];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Addresses.Upd\" Guid=\"%@\" AddressId=\"%i\" Name=\"%@\" Address=\"%@\" Lat=\"%f\" Lon=\"%f\" District=\"%@\"/>", 
+							   userGuid, addressId, name, address, lat, lon, area]];
     
 	if (urlString) 
 	{
@@ -275,11 +275,12 @@
 	return false;
 }
 
-- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier{
+- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier phone:(NSString*)phone
+{
     [self Clear];
 	NSString * urlString = [ServerResponce GetRootURL];
 	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],
-                               [NSString stringWithFormat:@"<Request Type=\"User.Update\" Guid=\"%@\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" City=\"%@\" ContractNumber=\"%@\" ContractCustomer=\"%@\" ContractCarrier=\"%@\" PreferredCarrier=\"\" />", userGuid, password, email, fName, sName, city, cNumber, cCustomer, cCarrier] ];
+                               [NSString stringWithFormat:@"<Request Type=\"User.Update\" Guid=\"%@\" Password=\"%@\" Email=\"%@\" FirstName=\"%@\" SecondName=\"%@\" City=\"%@\" ContractNumber=\"%@\" ContractCustomer=\"%@\" ContractCarrier=\"%@\" Phone=\"%@\" />", userGuid, password, email, fName, sName, city, cNumber, cCustomer, cCarrier, phone] ];
     
 	if (urlString) 
 	{

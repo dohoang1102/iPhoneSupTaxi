@@ -17,15 +17,17 @@
 @synthesize longitude;
 @synthesize latitude;
 @synthesize addressType;
+@synthesize addressArea;
 
 -(void)initWithGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark{
 	if (![[placeMark shortAddress] isEqualToString:@""]) {
 		[self setAddress:[[placeMark shortAddress] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	}
-		[self setLatitude:[NSNumber numberWithDouble:placeMark.coordinate.latitude]];
-		[self setLongitude:[NSNumber numberWithDouble:placeMark.coordinate.longitude]];
-		if ([[self addressName] isEqualToString:@""])
-			[self setAddressName:[placeMark name]];
+    [self setAddressArea:[placeMark cityArea]];
+	[self setLatitude:[NSNumber numberWithDouble:placeMark.coordinate.latitude]];
+	[self setLongitude:[NSNumber numberWithDouble:placeMark.coordinate.longitude]];
+	if ([[self addressName] isEqualToString:@""])
+		[self setAddressName:[placeMark name]];
 }
 
 -(GoogleResultPlacemark *)googleResultPlacemark{
@@ -35,11 +37,12 @@
 	GoogleResultPlacemark *placeMark = [[GoogleResultPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
 	[placeMark setShortAddress:[self address]];
 	[placeMark setName:[self addressName]];
-	[placeMark setCoordinatesInitialized:YES];
+    [placeMark setCityArea:[self addressArea]];
+    [placeMark setCoordinatesInitialized:YES];
 	return [placeMark autorelease];
 }
 
--(id)inithWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString type:(NSInteger)type lon:(double)lon lat:(double)lat
+-(id)inithWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat
 {
 	self = [super init];
     if (self != nil) {
@@ -47,6 +50,7 @@
 		[self setAddress:addressString];
 		[self setAddressName:name];
 		[self setAddressType:type];
+        [self setAddressArea:area];
 		[self setLatitude:[NSNumber numberWithDouble:lat]];
 		[self setLongitude:[NSNumber numberWithDouble:lon]];
 	}
@@ -55,6 +59,7 @@
 
 - (void)dealloc
 {
+    [addressArea release];
     [addressName release];
 	[address release];
 	[latitude release];

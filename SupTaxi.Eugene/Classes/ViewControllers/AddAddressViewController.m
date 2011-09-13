@@ -41,6 +41,7 @@
 #define ADDR_KEY @"ADDR_KEY"
 #define LAT_KEY @"LAT_KEY"
 #define LON_KEY @"LON_KEY"
+#define AREA_KEY @"AREA_KEY"
 
 #define AID_KEY @"AID_KEY"
 
@@ -69,10 +70,12 @@
 		NSString * addr = [d objectForKey:ADDR_KEY];
 		double lat = [[d objectForKey:LAT_KEY] doubleValue];
 		double lon = [[d objectForKey:LON_KEY] doubleValue];
+        NSString * area = [d objectForKey:AREA_KEY];
 		
 		if ([responce AddAddressRequest:guid 
 								   name:name 
 								address:addr 
+                                   area:area
 									lat:lat 
 									lon:lon])
 		{
@@ -167,11 +170,13 @@
 		NSString * addr = [d objectForKey:ADDR_KEY];
 		double lat = [[d objectForKey:LAT_KEY] doubleValue];
 		double lon = [[d objectForKey:LON_KEY] doubleValue];
-		
+		NSString * area = [d objectForKey:AREA_KEY];
+        
 		if ([responce UpdAddressRequest:guid 
 							  addressId:addressId
 								   name:name 
 								address:addr 
+                                   area:area
 									lat:lat 
 									lon:lon])
 		{
@@ -247,6 +252,7 @@
 	self.navigationItem.leftBarButtonItem = backButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	
@@ -318,7 +324,8 @@
 		[d setValue:[[[self addressSearchBar] addressField] text] forKey:ADDR_KEY];		
 		[d setValue:[NSString stringWithFormat:@"%f", self.addressSearchBar.placeMark.coordinate.latitude] forKey:LAT_KEY];
 		[d setValue:[NSString stringWithFormat:@"%f", self.addressSearchBar.placeMark.coordinate.longitude] forKey:LON_KEY];
-		
+		[d setValue:self.addressSearchBar.placeMark.cityArea forKey:AREA_KEY];	
+        
 		[NSThread detachNewThreadSelector:@selector(AddAddressesThreadMethod:)
 								 toTarget:self 
 							   withObject:d];
@@ -334,7 +341,8 @@
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	[d setValue:[NSString stringWithFormat:@"%i", addr.addressId] forKey:AID_KEY];
 	[d setValue:addr.addressName forKey:ANAME_KEY];
-	[d setValue:addr.address forKey:ADDR_KEY];		
+	[d setValue:addr.address forKey:ADDR_KEY];
+	[d setValue:addr.addressArea forKey:AREA_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", [addr.latitude doubleValue]] forKey:LAT_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", [addr.longitude doubleValue]] forKey:LON_KEY];
 	

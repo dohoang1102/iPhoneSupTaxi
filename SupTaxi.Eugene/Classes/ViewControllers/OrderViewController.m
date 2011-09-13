@@ -53,6 +53,8 @@
 #define FLAT_KEY @"FLAT_KEY"
 #define TLON_KEY @"TLON_KEY"
 #define TLAT_KEY @"TLAT_KEY"
+#define FAREA_KEY @"FAREA_KEY"
+#define TAREA_KEY @"TAREA_KEY"
 
 @synthesize carTypes = carTypes_;
 @synthesize mapViewController;
@@ -138,11 +140,16 @@
 		float fLon = [[d objectForKey:FLON_KEY] floatValue];
 		float tLon = [[d objectForKey:TLON_KEY] floatValue];
 		
+        NSString * fromArea = [d objectForKey:FAREA_KEY];
+		NSString * toArea = [d objectForKey:TAREA_KEY];
+        
 		if ([responce SendOrderRequest:guid 
 								  from:from 
 									to:to 
 								  date:date 
 						   vehicleType:vType 
+                              fromArea:fromArea
+                                toArea:toArea
 							 isRegular:isRegular 
 							  schedule:schedule
 							  latitude:lat 
@@ -304,6 +311,7 @@
     self.navigationItem.rightBarButtonItem = orderButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	
@@ -312,35 +320,6 @@
 
 - (IBAction)clearForm:(id)sender
 {
-	/*
-	ResponseOffers *rOffers = [[ResponseOffers alloc] initWithResponseType:@"Order.Offers" andResult:YES];
-	for (int i = 0; i < 7; i++) {
-		Offer * offer = [[Offer alloc] initWithCarrierName:@"Рога и копыта" 
-											   arrivalTime:20 + i 
-												  minPrice:20 * i - 10 
-												 carrierId:12 * i 
-											carrierLogoStr:@"iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAIAAAABc2X6AAAAAXNSR0IArs4c"
-						 "6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFJSURB"
-						 "VHhe7ZrRDcMgDERZojt33izQFoHaogBSTpER9pPylcYF48M+zqTXkSbPMz26"
-						 "z1oTYVbfCc+8/Xwk/LWBiTAEDg+ALaylgYkwBBEmwgUDAngMTIQhgDSQBtIN"
-						 "5YJp/RibkFGumlz9/j888ajlaLW8vh9WWhzunxO3WxciPDjxbxfJ0YSJMBF2"
-						 "A+biSDzigWrZxFxgrQYmwhAIAAgACAAIAOt2AUmrom9eYsuvEI8WqAJ4DEyE"
-						 "IQLXYWdng7k7eQ+HcjiflnDYiViHxFMDCaTRtJxlNagl1LILaRriNMRP2f5G"
-						 "UHBaQgAY34mmLFGWKEs5Q9yYcoUrrGRpsjRZOrBMyw0AbgD0RJ+Ny5IzBWfi"
-						 "Tu0exnG43tPCYToPvpRqOg++4nnOUPEiDLWEWjqjlkAaSANpVEvrXYBMi0yL"
-						 "TItMu+4+v3Fv6Q16L0ywgZxa6QAAAABJRU5ErkJggg=="];
-		offer.orderId = 25;
-		[rOffers addAnOffer:offer];
-		[offer release];
-	}
-	
-	
-	CarriersViewController *cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
-	[cViewController setResponce: rOffers];
-	[self.navigationController pushViewController:cViewController animated:YES];
-	[cViewController release];
-	[rOffers release];*/
-	
 	[self clearFields];
 }
 
@@ -435,6 +414,9 @@
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkTo.coordinate.latitude] forKey:TLAT_KEY];
 	[d setValue:[NSString stringWithFormat:@"%f", self.mapViewRouteSearchBar.placeMarkTo.coordinate.longitude] forKey:TLON_KEY];
 
+    [d setValue:self.mapViewRouteSearchBar.placeMarkFrom.cityArea forKey:FAREA_KEY];
+	[d setValue:self.mapViewRouteSearchBar.placeMarkTo.cityArea forKey:TAREA_KEY];
+    
 	[NSThread detachNewThreadSelector:@selector(SendOrderThreadMethod:)
 							 toTarget:self 
 						   withObject:d];

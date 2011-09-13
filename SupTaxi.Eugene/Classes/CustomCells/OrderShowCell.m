@@ -9,6 +9,20 @@
 #import "OrderShowCell.h"
 #import "UICustomSwitch.h"
 
+@implementation UIOfferImage
+
+@synthesize offer;
+
+- (void)dealloc
+{
+    [offer release];
+    [super dealloc];
+}
+
+
+@end
+
+
 @implementation OrderShowCell
 
 @synthesize timeLabel;
@@ -27,9 +41,9 @@
     return newLabel;
 }
 
-- (UIImageView *)newImage
+- (UIOfferImage *)newImage
 {
-    UIImageView *newImage = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
+    UIOfferImage *newImage = [[[UIOfferImage alloc] initWithFrame:CGRectZero] autorelease];
     [newImage setContentMode:UIViewContentModeScaleAspectFit];
     return newImage;
 }
@@ -73,19 +87,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *contentView = self.contentView;
-        // логотип
+
         self.carrierLogo = [self newImage];
         [contentView addSubview:carrierLogo];
         [self.carrierLogo release];
-        // время
+
         self.timeLabel = [self newLabel];
         [contentView addSubview:timeLabel];
         [self.timeLabel release];
-        // цена
+
         self.priceLabel = [self newLabel];
         [contentView addSubview:priceLabel];
         [self.priceLabel release];
-        // переключатель
+ 
         self.switcher = [self newSwitcher];
         [contentView addSubview:switcher];
         [self.switcher release];

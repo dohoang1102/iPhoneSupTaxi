@@ -24,7 +24,4 @@
 @property (nonatomic, assign) SEL selectorOnDone;
 @property (nonatomic, assign) id delegate;
 
-- (IBAction) contractSave:(id)sender;
-- (IBAction) contractDecline:(id)sender;
-
 @end

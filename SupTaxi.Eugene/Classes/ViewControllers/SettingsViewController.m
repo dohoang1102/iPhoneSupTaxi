@@ -30,6 +30,9 @@
 - (void) RegisterResult:(id)obj;
 - (void) AuthenticateResult:(id)obj;
 
+- (void) UpdateThreadMethod:(id)obj;
+- (void) UpdateResult:(id)obj;
+
 - (void) textFieldUnFocus;
 - (BOOL) textFieldValidate;
 
@@ -89,6 +92,71 @@
 		default:
 			break;
 	}
+}
+
+- (void) UpdateThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Регистрация"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		
+        NSDictionary * d = (NSDictionary*)obj;
+		NSString * name = [d objectForKey:USER_NAME_KEY];
+		NSString * lName = [d objectForKey:USER_LNAME_KEY];
+        
+		if ([responce UpdateUserRequest:prefManager.prefs.userGuid
+                               password:prefManager.prefs.userPassword
+                                  email:prefManager.prefs.userEmail
+                              firstName:name
+                             secondName:lName
+                                   city:prefManager.prefs.userCity
+                                cNumber:prefManager.prefs.userContractNumber
+                              cCustomer:prefManager.prefs.userContractCustomer
+                               cCarrier:prefManager.prefs.userContractCarrier
+                                  phone:prefManager.prefs.userPhone])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._registerResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(UpdateResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) UpdateResult:(id)obj
+{
+	if (!_registerResponse)
+	{
+		[self showAlertMessage:@"Ошибка запроса обновления!"];
+		return;
+	}
+	
+	if (_registerResponse._result == NO) //ошибка обновления:
+	{
+		[self showAlertMessage:@"Не удалось обновить данные, попробуйте еще раз!"];
+		return;	
+	}
+	else if (_registerResponse._result == YES) //все ок
+	{
+        [prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
+        [tableView_ reloadData];
+    }
 }
 
 - (void) RegisterThreadMethod:(id)obj
@@ -181,7 +249,7 @@
 		[self showAlertMessage:@"Не удалось зарегистрироватся!"];
 		return;	
 	}
-	else if (_loginResponse._result == YES) //зарегистрировались успешно
+	else if (_registerResponse._result == YES) //зарегистрировались успешно
 	{
 		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
 		[d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
@@ -193,7 +261,6 @@
 		
 		//[self showAlertMessage:@"Регистрация прошла успешно!"];
 	}
-	NSLog(@"%@", _registerResponse._result);
 }
 
 - (void) AuthenticateResult:(id)obj
@@ -225,13 +292,17 @@
 	{
 		//TODO: Save userData
 		[prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
-		[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
 		[prefManager updateUserGuid:_loginResponse._guid];
-		
-        [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
-		
+		[prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
+		//[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
         
-        [tableView_ reloadData];
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+		[d setValue:self.userFirstName forKey:USER_NAME_KEY];
+		[d setValue:self.userSecondName forKey:USER_LNAME_KEY];
+		
+		[NSThread detachNewThreadSelector:@selector(UpdateThreadMethod:)
+								 toTarget:self 
+							   withObject:d];
 		//[self showAlertMessage:@"Вы успешно авторизованы!"];
 		//[self.navigationController popViewControllerAnimated:YES];
 	}
@@ -260,6 +331,7 @@
     self.navigationItem.rightBarButtonItem = orderButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
     
@@ -299,17 +371,19 @@
 
 -(BOOL)textFieldValidate {
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поля, SupTaxi ID и Пароль обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Все поля обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	NSArray *fieldArray;
 	int i = 0;
 	
 	fieldArray = [[NSArray arrayWithObjects: 
 				   [NSString stringWithFormat:@"%@",self.supTaxiID],
-				   [NSString stringWithFormat:@"%@",self.userPassword],nil] retain];
+				   [NSString stringWithFormat:@"%@",self.userPassword],
+				   [NSString stringWithFormat:@"%@",self.userFirstName],
+				   [NSString stringWithFormat:@"%@",self.userSecondName],nil] retain];
 	
 	@try {
 		for (NSString *fieldText in fieldArray){
-			if([fieldText isEqualToString:@""]){
+			if([fieldText isEqualToString:@"(null)"] || [fieldText isEqualToString:@""]){
 				[alert show]; 
 				return NO;
 				break;
@@ -367,13 +441,12 @@
 
 #pragma mark -
 #pragma UITableViewDelegate methods
-// высота каждой ячейки
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 30;
 }
 
-// высота шапки
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
 {
 	return 40.0;
@@ -459,7 +532,7 @@
 			case 2:
 				cell.titleLabel.text = @"Телефон";
 				[cell.textField setEnabled:NO];
-                [cell.textField setText:@"+380663991175"];
+                [cell.textField setText:prefManager.prefs.userPhone];
 				return cell;
 				break;
 		}
@@ -512,7 +585,6 @@
 		[self.navigationController pushViewController:contractViewController animated:YES];
 		[contractViewController release];
 	}
-	NSLog(@"Sender Switch : %d", (int)result);
 }
 
 - (void) updateHasContract {
@@ -522,18 +594,13 @@
 - (IBAction)changePreferred:(id)sender
 {
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;
+    [senderSwitch setOn:YES];
 	BOOL result = [senderSwitch isOn];
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
 		[self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не сохранили настройки и не авторизовались в систему!"];
 		[senderSwitch setOn:NO];
 		return;
 	}
-    if (!self.userHasContract) {
-        [self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не заполнили данные о контракте!"];
-        [senderSwitch setOn:NO];
-		return;
-
-    }
 	self.userHasWish = result;
 	
 	if (result) {
@@ -541,8 +608,6 @@
         [self.navigationController pushViewController:pViewController animated:YES];
 		[pViewController release];
 	}
-	
-	NSLog(@"Sender Switch : %d", (int)result);
 }
 
 
@@ -553,8 +618,6 @@
 	BOOL result = [senderSwitch isOn];
 	
 	self.userHasRegularOrder = result;
-	
-	NSLog(@"Sender Switch : %d", (int)result);
 }
 
 -(UIView*)headerViewWithText:(NSString*)text

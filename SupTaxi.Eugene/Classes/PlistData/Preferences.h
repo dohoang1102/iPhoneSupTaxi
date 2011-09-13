@@ -19,6 +19,7 @@
 	NSString *userFirstName;
 	NSString *userSecondName;
 	NSString *userCity;
+    NSString *userPhone;
     
 	BOOL userHasContract;
 	BOOL userHasPrefered;
@@ -37,6 +38,7 @@
 @property(nonatomic, copy) NSString *userFirstName;
 @property(nonatomic, copy) NSString *userSecondName;
 @property(nonatomic, copy) NSString *userCity;
+@property(nonatomic, copy) NSString *userPhone;
 
 @property(nonatomic) BOOL userHasContract;
 @property(nonatomic) BOOL userHasPrefered;

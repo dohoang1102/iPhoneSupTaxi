@@ -26,10 +26,10 @@
 - (NSUInteger) GetNavigateOnPage;
 - (NSUInteger) GetNavigateCount;
 
-- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType fromArea:(NSString*)fromArea toArea:(NSString*)toArea
 				 latitude: (float) latitude longitude: (float) longitude fromLat: (float) fromLat fromLon: (float) fromLon 
 					toLat: (float) toLat toLon: (float) toLon;
-- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType 
+- (BOOL) SendOrderRequest:(NSString*)guid from:(NSString*)from to:(NSString*)to date:(NSString*)orderDate vehicleType:(NSUInteger)vehicleType fromArea:(NSString*)fromArea toArea:(NSString*)toArea
 				isRegular: (BOOL) isRegular schedule: (NSString *) schedule latitude: (float) latitude longitude: (float) longitude 
 				  fromLat: (float) fromLat fromLon: (float) fromLon toLat: (float) toLat toLon: (float) toLon;
 - (BOOL) RegisterUserRequest:(NSString*)email password:(NSString*)password firstName:(NSString*)fName secondName:(NSString*)sName phone:(NSString*)phone;
@@ -42,15 +42,15 @@
 
 - (BOOL) GetAddressListRequest:(NSString*)userGuid;
 
-- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
+- (BOOL) AddAddressRequest:(NSString*)userGuid name:(NSString*)name address:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon;
 - (BOOL) DelAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId;
-- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address lat:(double)lat lon:(double)lon;
+- (BOOL) UpdAddressRequest:(NSString*)userGuid addressId:(NSInteger)addressId name:(NSString*)name address:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon;
 
 - (BOOL) GetPrefferedListRequest:(NSString*)userGuid;
 - (BOOL) AddPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId;
 - (BOOL) DelPreferredCarrierRequest:(NSString*)userGuid carrierId:(NSInteger)carrierId;
 
-- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier;
+- (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier phone:(NSString*)phone;
 
 + (NSString *)GetRootURL;
 

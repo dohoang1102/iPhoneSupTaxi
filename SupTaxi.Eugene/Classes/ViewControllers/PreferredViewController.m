@@ -181,12 +181,13 @@
     
 	self.tableView.allowsSelection = NO;
 	
-	UIColor *buttonColor = [UIColor colorWithRed:2.0/255.0 green:12.0/255.0 blue:2.0/255.0 alpha:1];
-    UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:buttonColor andTitle:@"Закрыть" andTarget:self andSelector:@selector(backAction:)];
+	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+    UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Закрыть" andTarget:self andSelector:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = backButton;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1];
      
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	
@@ -250,7 +251,8 @@
     
 	Carrier *carrier = [_preferredResponse._carriers objectAtIndex:indexPath.row];
     
-    cell.carrierLogo.image = carrier.carrierLogo;
+    [cell.carrierLogo setImage: carrier.carrierLogo];
+    [cell.lblCarrierName setText:carrier.carrierName];
 	[cell.switcher setOn:carrier.isPreferred];
 	[cell.switcher setTag:carrier.carrierId];
     [cell.switcher addTarget:self action:@selector(changeSelection:) forControlEvents:UIControlEventValueChanged];

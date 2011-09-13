@@ -23,6 +23,7 @@
 @synthesize lblTo;
 @synthesize lblStatus;
 @synthesize lblComment;
+@synthesize lblCarrier;
 
 -(void)initProperties{
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
@@ -31,6 +32,7 @@
 	self.navigationItem.leftBarButtonItem = backButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 }
@@ -60,6 +62,7 @@
 	[self.lblTo setText:orderToView.to];
 	[self.lblStatus setText:[Constants historyStatusById:orderToView.status]];
 	[self.lblComment setText:orderToView.comment];
+    [self.lblCarrier setText:orderToView.carrier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +85,7 @@
 	[lblTo release];
 	[lblStatus release];
 	[lblComment release];
+    [lblCarrier release];
 	
 	[orderToView release];
     [super dealloc];

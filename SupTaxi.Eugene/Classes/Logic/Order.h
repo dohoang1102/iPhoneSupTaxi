@@ -18,6 +18,9 @@
 @property (nonatomic, copy) NSString *to;
 @property (nonatomic, copy) NSString *comment;
 @property (nonatomic, copy) NSString *status;
+@property (nonatomic, copy) NSString *carrier;
+@property (nonatomic, copy) NSString *fromArea;
+@property (nonatomic, copy) NSString *toArea;
 @property (nonatomic, assign) float lat;
 @property (nonatomic, assign) float lon;
 @property (nonatomic, assign) float fromLat;
@@ -26,6 +29,6 @@
 @property (nonatomic, assign) float toLon;
 
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
-					 status:(NSString *)status lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon;
+					 status:(NSString *)status carrier:(NSString *)carrier fromArea:(NSString *)fromArea toArea:(NSString *)toArea lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon ;
 
 @end

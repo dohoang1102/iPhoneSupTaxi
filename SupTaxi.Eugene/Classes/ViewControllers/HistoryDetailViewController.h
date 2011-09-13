@@ -20,6 +20,7 @@
 @property (nonatomic, retain) IBOutlet UILabel * lblTo;
 @property (nonatomic, retain) IBOutlet UILabel * lblStatus;
 @property (nonatomic, retain) IBOutlet UILabel * lblComment;
+@property (nonatomic, retain) IBOutlet UILabel * lblCarrier;
 
 - (void) SetOrder:(Order*)order;
 

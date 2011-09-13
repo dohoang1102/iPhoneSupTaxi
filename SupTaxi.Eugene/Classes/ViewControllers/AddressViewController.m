@@ -189,6 +189,7 @@
 	}
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 }
@@ -367,6 +368,10 @@
 	UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	if (indexPath.row >= DEFAULT_ROWS_COUNT || ![self showsCategories]) {
 		Address *address = [self addressByIndexPath:indexPath];
+        
+        NSLog(@"Address: %@", address.address);
+        NSLog(@"Address Name: %@", address.addressName);
+        
 		cellTitle = [address addressName];
 		cellDetails = [address address];
 		accessoryType = UITableViewCellAccessoryNone;
@@ -378,7 +383,7 @@
 		cellTitle = @"Мои Адреса";
 		accessoryType = UITableViewCellAccessoryNone;
 	} 
-	
+    
 	[[cell imageView] setImage:cellIcon];
 	[[cell textLabel] setText:cellTitle];
 	[[cell detailTextLabel] setText:cellDetails];

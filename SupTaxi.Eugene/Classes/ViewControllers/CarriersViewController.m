@@ -25,7 +25,8 @@
 - (void) SendOrderAcceptThreadMethod:(id)obj;
 - (void) ShowOrderAcceptResult:(id)obj;
 - (void) showAlertMessage:(NSString *)alertMessage;
-
+- (IBAction)rowImageClick:(id)sender;
+- (UILabel *)newLabel:(CGRect)frame;
 @end
 
 @implementation CarriersViewController
@@ -37,6 +38,7 @@
 @synthesize headerView = headerView_;
 @synthesize footerView = footerView_;
 @synthesize innerFooterView = innerFooterView_;
+@synthesize innerOfferFooterView = innerOfferFooterView_;
 @synthesize backgroundImage = backgroundImage_;
 
 @synthesize _resultResponse;
@@ -106,6 +108,7 @@
 
 - (void)dealloc
 {
+    [innerOfferFooterView_ release];
     [headerView_ release];
     [footerView_ release];
     [innerFooterView_ release];
@@ -133,6 +136,8 @@
 	
     headerView_.backgroundColor = [UIColor clearColor];
     innerFooterView_.layer.cornerRadius = 10;
+    [innerOfferFooterView_ setHidden:YES];
+    innerOfferFooterView_.layer.cornerRadius = 10;
     
     UIColor *buttonColor = [UIColor colorWithRed:2.0/255.0 green:12.0/255.0 blue:2.0/255.0 alpha:1];
     UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:buttonColor andTitle:@"Отмена" andTarget:self andSelector:@selector(backAction:)];
@@ -152,6 +157,7 @@
     }
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	
@@ -232,7 +238,13 @@
     
     Offer *offer = [_resultResponse._offers objectAtIndex:indexPath.row];
     
-    cell.carrierLogo.image = offer.carrierLogo;
+    [cell.carrierLogo setOffer:offer];
+    
+    [[cell.carrierLogo imageView] setContentMode: UIViewContentModeScaleAspectFit];
+    [cell.carrierLogo setImage:offer.carrierLogo forState:UIControlStateNormal];
+    [cell.carrierLogo setImage:offer.carrierLogo forState:UIControlStateSelected];
+    [cell.carrierLogo setImage:offer.carrierLogo forState:UIControlStateHighlighted];
+    [cell.carrierLogo addTarget:self action:@selector(rowImageClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.timeLabel.text = [NSString stringWithFormat:@"~ %d минут*", offer.arrivalTime]; 
     cell.priceLabel.text = [NSString stringWithFormat:@"%d руб**", offer.minPrice]; 
 	[cell.switcher setOn:NO];
@@ -241,6 +253,33 @@
     return cell;
 }
 
+- (IBAction)rowImageClick:(id)sender
+{
+    for (UIView* view in innerOfferFooterView_.subviews) {
+        [view removeFromSuperview];
+    }
+    Offer *offer = [(UIOfferImage *)sender offer];
+    UILabel *lblTarif = [self newLabel:CGRectMake(5, 5, 170, 20)];
+    [lblTarif setTag:1];
+    [lblTarif setBackgroundColor:[UIColor clearColor]];
+    [lblTarif setText:[NSString stringWithFormat:@"Тариф: %d руб", offer.minPrice]];
+    
+    [innerOfferFooterView_ addSubview:lblTarif];
+    [innerFooterView_ setHidden:YES];
+    [innerOfferFooterView_ setHidden:NO];
+}
+
+- (UILabel *)newLabel:(CGRect)frame
+{
+    UILabel *newLabel = [[UILabel alloc] initWithFrame:frame];
+    newLabel.textAlignment = UITextAlignmentLeft;
+    newLabel.font = [UIFont fontWithName:@"Arial" size:12.0];
+    newLabel.backgroundColor = [UIColor whiteColor];
+    newLabel.opaque = YES;
+    
+    return newLabel;
+}
+     
 - (IBAction)changeSelection:(id)sender
 {
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;

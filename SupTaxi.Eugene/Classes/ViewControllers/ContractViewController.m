@@ -22,9 +22,16 @@
 - (void) UpdateThreadMethod:(id)obj;
 - (void) UpdateResult:(id)obj;
 
+- (void) contractSave:(id)sender;
+- (void) contractDecline:(id)sender;
+
 @end
 
 @implementation ContractViewController
+
+#define CNUMB_KEY @"UNAME"
+#define CCUST_KEY @"ULNAME"
+#define CCARR_KEY @"UPHONE"
 
 @synthesize txtContractNumber;
 @synthesize txtContractCustomer;
@@ -53,7 +60,10 @@
 	ServerResponce * responce = [[ServerResponce alloc] init];
 	if (responce) 
 	{
-		
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * number = [d objectForKey:CNUMB_KEY];
+		NSString * customer = [d objectForKey:CCUST_KEY];
+        NSString * carrier = [d objectForKey:CCARR_KEY];
 		
 		if ([responce UpdateUserRequest:prefManager.prefs.userGuid
                                password:prefManager.prefs.userPassword
@@ -61,9 +71,10 @@
                               firstName:prefManager.prefs.userFirstName
                              secondName:prefManager.prefs.userSecondName
                                    city:prefManager.prefs.userCity
-                                cNumber:prefManager.prefs.userContractNumber
-                              cCustomer:prefManager.prefs.userContractCustomer
-                               cCarrier:prefManager.prefs.userContractCarrier])
+                                cNumber:number
+                              cCustomer:customer
+                               cCarrier:carrier
+                                  phone:prefManager.prefs.userPhone])
 		{
 			NSArray * resultData = [responce GetDataItems];
 			if (resultData) {
@@ -103,6 +114,7 @@
         [prefManager updateUserContractWithNumber:txtContractNumber.text 
                                  contractCustomer:txtContractCustomer.text 
                                andContractCarrier:txtContractCarrier.text];
+        
         [self.navigationController popViewControllerAnimated:YES];
         if (self.delegate){
 			[self.delegate performSelector:selectorOnDone];
@@ -118,28 +130,34 @@
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
-    UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(contractSave:)];
-    self.navigationItem.rightBarButtonItem = saveButton;
-    
     UIBarButtonItem *contractDeclineButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(contractDecline:)];
     self.navigationItem.leftBarButtonItem = contractDeclineButton;
     
+    UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(contractSave:)];
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	
 	[self.navigationItem setHidesBackButton:YES];
 }
 
-- (IBAction) contractSave:(id)sender{
+- (void) contractSave:(id)sender{
 	[self textFieldUnFocus];
 	if ([self textFieldValidate] == NO) return;
-	    
+    
+    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+    [d setValue:txtContractNumber.text forKey:CNUMB_KEY];
+    [d setValue:txtContractCustomer.text forKey:CCUST_KEY];
+    [d setValue:txtContractCarrier.text forKey:CCARR_KEY];
+    
     [NSThread detachNewThreadSelector:@selector(UpdateThreadMethod:)
                              toTarget:self 
-                           withObject:nil];	
+                           withObject:d];	
 }
-- (IBAction) contractDecline:(id)sender{
+- (void) contractDecline:(id)sender{
 	[self.navigationController popViewControllerAnimated:YES];
     if (self.delegate){
         [self.delegate performSelector:selectorOnDone];

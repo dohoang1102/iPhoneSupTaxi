@@ -12,6 +12,7 @@
 @interface PreferredCell : UITableViewCell 
 
 @property (nonatomic, retain) UIImageView *carrierLogo;
+@property (nonatomic, retain) UILabel *lblCarrierName;
 @property (nonatomic, retain) UICustomSwitch *switcher;
 
 @end

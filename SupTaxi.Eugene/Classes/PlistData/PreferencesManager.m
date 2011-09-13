@@ -67,9 +67,10 @@
 	[[self prefs] setUserFirstName:@""];
 	[[self prefs] setUserSecondName:@""];
     [[self prefs] setUserCity:@""];
+    [[self prefs] setUserPhone:@"+380663991175"];
     
 	[[self prefs] setUserHasContract:NO];
-	[[self prefs] setUserHasPrefered:NO];
+	[[self prefs] setUserHasPrefered:YES];
 	[[self prefs] setUserHasRegularOrder:NO];
 	
 	[[self prefs] setUserContractNumber:@""];

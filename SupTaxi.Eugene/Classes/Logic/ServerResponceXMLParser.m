@@ -36,11 +36,12 @@ didStartElement:(NSString *)elementName
 	if ([elementName isEqualToString:@"Address"])
 	{
 		Address * address = [[Address alloc] inithWithId:[[attributeDict objectForKey:@"Id"] intValue]  
-												  name:[attributeDict objectForKey:@"Name"] 
-											   address:[attributeDict objectForKey:@"Address"] 
-												  type:[[attributeDict objectForKey:@"Subtype"] intValue] 
-												   lon:[[attributeDict objectForKey:@"Lon"] doubleValue] 
-												   lat:[[attributeDict objectForKey:@"Lat"] doubleValue]]; 
+                                                    name:[attributeDict objectForKey:@"Name"] 
+                                                 address:[attributeDict objectForKey:@"Address"] 
+                                             addressArea:[attributeDict objectForKey:@"District"]
+                                                    type:[[attributeDict objectForKey:@"Subtype"] intValue]
+                                                     lon:[[attributeDict objectForKey:@"Lon"] doubleValue] 
+                                                     lat:[[attributeDict objectForKey:@"Lat"] doubleValue]]; 
 		ResponseAddress * response = (ResponseAddress *) [_arr objectAtIndex:0];
 		[response addAnAddress:address];
 		[_arr insertObject:response atIndex:0];
@@ -77,6 +78,9 @@ didStartElement:(NSString *)elementName
 													 toPlace:[attributeDict objectForKey:@"To"] 
 													 comment:[attributeDict objectForKey:@"Comment"]
 													  status:[attributeDict objectForKey:@"Status"]
+                                                     carrier:[attributeDict objectForKey:@"Carrier"]
+                                                    fromArea:[attributeDict objectForKey:@"FromDistrict"]
+                                                      toArea:[attributeDict objectForKey:@"ToDistrict"]
 														 lat:[[attributeDict valueForKey:@"Lat"] floatValue]
 														 lon:[[attributeDict valueForKey:@"Lon"] floatValue] 
 													 fromLat:[[attributeDict valueForKey:@"FromLat"] floatValue]

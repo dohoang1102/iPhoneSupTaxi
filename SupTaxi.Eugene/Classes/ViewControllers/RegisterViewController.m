@@ -147,7 +147,7 @@
 		[self showAlertMessage:@"Не удалось зарегистрироватся!"];
 		return;	
 	}
-	else if (_loginResponse._result == YES) //зарегистрировались успешно
+	else if (_registerResponse._result == YES) //зарегистрировались успешно
 	{
 		NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
 		[d setValue:self.txtEmail.text forKey:USER_EMAIL_KEY];
@@ -159,7 +159,6 @@
 		
 		//[self showAlertMessage:@"Регистрация прошла успешно!"];
 	}
-	NSLog(@"%@", _registerResponse._result);
 }
 
 - (void) AuthenticateResult:(id)obj
@@ -218,6 +217,7 @@
     self.navigationItem.leftBarButtonItem = registerDeclineButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
+    img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
 	[img release];
 	

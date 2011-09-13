@@ -9,12 +9,17 @@
 #import "SupTaxiAppDelegate.h"
 #import "TabBarBackgroundView.h"
 #import "ServerResponce.h"
+#import "AppProgress.h"
 
 @interface SupTaxiAppDelegate(Private)
 
 - (void) CheckOrderOffersThreadMethod:(id)obj;
 - (void) ShowOrderOffers:(id)obj;
 - (void) timerTargetMethod: (NSTimer *) theTimer;
+- (void) showAlertMessage:(NSString *)alertMessage;
+
+- (void) CheckInetAndServerThreadMethod:(id)sender;
+- (void) ShowConnectionAlert:(id)obj;
 @end
 
 @implementation SupTaxiAppDelegate
@@ -28,13 +33,34 @@
 @synthesize _offerResponse;
 @synthesize timer;
 
-@synthesize orderDelegate;
-@synthesize historyDelegate;
-@synthesize addressDelegate;
-
 + (SupTaxiAppDelegate *)sharedAppDelegate
 {
     return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
+}
+
+- (void) CheckInetAndServerThreadMethod:(id)sender
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	
+	[progress StartProcessing:@"Проверка интернет соединения"];
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (![responce GetAddressListRequest:@"0"]) 
+	{
+			[self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+	}
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
 }
 
 - (void) CheckOrderOffersThreadMethod:(id)obj
@@ -87,6 +113,13 @@
     self.tabsController.selectedIndex = 3;//[[NSUserDefaults standardUserDefaults] integerForKey:@"currentTab"];
     [self.window makeKeyAndVisible];
     
+    AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress SetApplicationWindow:self.window];
+	
+	[NSThread detachNewThreadSelector:@selector(CheckInetAndServerThreadMethod:) 
+							 toTarget:self 
+						   withObject:nil];  
+     
     return YES;
 }
 
@@ -130,6 +163,7 @@
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
 		int k = 0;
+        /*
         while ([application backgroundTimeRemaining] > 1.0) {
 			/*
 			if (_backgroundWork) {
@@ -138,7 +172,7 @@
 					  , theTime);
 			}else {
 				break;
-			}*/
+			}*
 
             //NSString *friend = [self checkForIncomingChat];
             if (k == 2000000) {
@@ -157,7 +191,7 @@
             }
 			k++;
 			
-        }
+        }*/
         [application endBackgroundTask:self->bgTask];
         self->bgTask = UIBackgroundTaskInvalid;
     });
@@ -232,11 +266,7 @@
 
 
 - (void)dealloc {
-    
-    [orderDelegate release];
-    [historyDelegate release];
-    [addressDelegate release];
-    
+        
 	[prefManager release];
     [orderQueue release];
 	
@@ -246,26 +276,16 @@
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark Update remoteViews
-
-- (void) updateOrderView
+- (void) showAlertMessage:(NSString *)alertMessage
 {
-    
-    NSLog(@"updateOrderView");
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
-- (void) updateHistoryView
-{
-    if (self.historyDelegate) {
-        
-    }
-    NSLog(@"updateHistoryView");
-}
-- (void) updateAddressView
-{
-	NSLog(@"updateAddressView");
-}
-
 
 @end
 

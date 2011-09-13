@@ -14,7 +14,7 @@
 #define COUNTRY_CODE @""	//??
 #define CITY @"locality"
 #define POSTAL_CODE @"postal_code"	
-#define SUB_ADMINISTRATIVE @"administrative_area_level_3"	
+#define SUB_ADMINISTRATIVE @"administrative_area_level_2"	
 #define SUB_CITY @"sublocality"
 #define SUB_STREET @"street_number"
 #define STREET_ADDRESS @"street_address"
@@ -24,6 +24,7 @@
 
 #pragma mark Properties
 
+@synthesize cityArea;
 @synthesize cityRegion;
 @synthesize houseNumber;
 @synthesize shortAddress;
@@ -89,6 +90,7 @@
 }
 
 -(void)dealloc{
+    [cityArea release];
 	[cityRegion release];
 	[houseNumber release];
 	[shortAddress release];
@@ -121,6 +123,7 @@
 	for (NSDictionary *dict in addressComponents) {
 		NSArray *types = [dict valueForKey:@"types"];
 		NSString *value = [dict valueForKey:@"long_name"];
+        //NSLog(@"GET %@ = '%@'", (NSString *)kABPersonAddressStateKey, value);
 		if ([types containsObject:STATE]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressStateKey];
 			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressStateKey, value);
@@ -137,9 +140,10 @@
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressZIPKey];
 			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressZIPKey, value);
 		}
-//		else if ([types containsObject:SUB_ADMINISTRATIVE])
-//			[addressDict setValue:value forKey:(NSString *)kABPersonAddressCountryKey];
-		else if ([types containsObject:SUB_CITY]) {
+		else if ([types containsObject:SUB_ADMINISTRATIVE]){
+			[self setCityArea:value];
+            NSLog(@"set %@ = '%@'", @"Area", value);
+        } else if ([types containsObject:SUB_CITY]) {
 			[self setCityRegion:value];
 			NSLog(@"set %@ = '%@'", @"CityRegion", value);
 		} else if ([types containsObject:SUB_STREET]) {
@@ -172,6 +176,7 @@
 -(GoogleResultPlacemark *)clone{
 	GoogleResultPlacemark *retVal = [[GoogleResultPlacemark alloc] initWithCoordinate:self.coordinate addressDictionary:self.addressDictionary];
 	
+    retVal.cityArea = self.cityArea;
 	retVal.cityRegion = self.cityRegion;
 	retVal.houseNumber = self.houseNumber;
 	if ([self isNameCustom])

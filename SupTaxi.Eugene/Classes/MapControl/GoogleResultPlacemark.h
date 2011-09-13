@@ -14,6 +14,7 @@
 	BOOL coordinatesInitialized;
 }
 
+@property (nonatomic, retain) NSString *cityArea;
 @property (nonatomic, retain) NSString *cityRegion;
 @property (nonatomic, retain) NSString *houseNumber;
 @property (nonatomic, retain) NSString *shortAddress;

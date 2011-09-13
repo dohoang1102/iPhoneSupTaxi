@@ -12,7 +12,19 @@
 @implementation PreferredCell
 
 @synthesize carrierLogo;
+@synthesize lblCarrierName;
 @synthesize switcher;
+
+- (UILabel *)newLabel
+{
+    UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    newLabel.textAlignment = UITextAlignmentLeft;
+    newLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+    newLabel.backgroundColor = [UIColor whiteColor];
+    newLabel.opaque = YES;
+    
+    return newLabel;
+}
 
 - (UIImageView *)newImage
 {
@@ -42,8 +54,11 @@
         frame = CGRectMake(boundsX+5, 7.0, 60.0, 35.0);
         self.carrierLogo.frame = frame;
         
+        frame = CGRectMake(carrierLogo.frame.origin.x + carrierLogo.frame.size.width + 10.0, 7.0, 145.0, 35.0);
+        self.lblCarrierName.frame = frame;
+        
         [self.switcher scaleSwitch:CGSizeMake(0.75, 0.75)];
-        frame = CGRectMake(carrierLogo.frame.origin.x + carrierLogo.frame.size.width + 155.0, 17.0, switcher.frame.size.width, switcher.frame.size.height);
+        frame = CGRectMake(lblCarrierName.frame.origin.x + lblCarrierName.frame.size.width + 10.0, 17.0, switcher.frame.size.width, switcher.frame.size.height);
         self.switcher.frame = frame;		
         
     }
@@ -59,6 +74,10 @@
         [contentView addSubview:carrierLogo];
         [self.carrierLogo release];
 
+        self.lblCarrierName = [self newLabel];
+        [contentView addSubview:lblCarrierName];
+        [self.lblCarrierName release];
+        
 		self.switcher = [self newSwitcher];
         [contentView addSubview:switcher];
 		
