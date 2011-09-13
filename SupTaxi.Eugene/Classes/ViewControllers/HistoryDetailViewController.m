@@ -9,10 +9,13 @@
 #import "HistoryDetailViewController.h"
 #import "BarButtonItemGreenColor.h"
 #import	"Constants.h"
+#import "Address.h"
+#import "AddAddressViewController.h"
 
 @interface HistoryDetailViewController(Private)
 
 -(void)onBack:(id)sender;
+-(void)addAddress:(Address *)address;
 
 @end
 
@@ -78,6 +81,38 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (IBAction)btnAddFrom:(id)sender
+{
+    Address * addr = [[Address alloc] inithWithId:0 
+                                             name:@"" 
+                                          address:orderToView.from 
+                                      addressArea:orderToView.fromArea 
+                                             type:0
+                                              lon:orderToView.fromLon 
+                                              lat:orderToView.fromLat];
+    [self addAddress:addr];
+    [addr release];
+}
+
+- (IBAction)btnAddTo:(id)sender
+{
+    Address * addr = [[Address alloc] inithWithId:0 
+                                             name:@"" 
+                                          address:orderToView.to 
+                                      addressArea:orderToView.toArea 
+                                             type:0
+                                              lon:orderToView.toLon 
+                                              lat:orderToView.toLat];
+    [self addAddress:addr];
+    [addr release];
+}
+
+-(void)addAddress:(Address *)address{
+    AddAddressViewController *newController = [[AddAddressViewController alloc] init];
+    [newController setAddress:address];
+	[[self navigationController] pushViewController:newController animated:YES];
+	[newController release];
+}
 
 - (void)dealloc {
 	[lblTime release];

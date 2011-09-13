@@ -24,4 +24,7 @@
 
 - (void) SetOrder:(Order*)order;
 
+- (IBAction)btnAddFrom:(id)sender;
+- (IBAction)btnAddTo:(id)sender;
+
 @end

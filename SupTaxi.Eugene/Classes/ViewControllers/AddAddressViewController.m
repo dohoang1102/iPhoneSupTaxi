@@ -314,7 +314,7 @@
 
 -(void)addAddress{
 	Address *addr;
-	if (self.address) {
+	if (self.address && self.address.addressId > 0 ) {
 		addr = self.address;
 	} else {
 		//Should Add Address here
