@@ -16,28 +16,21 @@
     UIWindow *window;
 	UITabBarController *tabsController;
     PreferencesManager *prefManager;
-	NSMutableDictionary * orderQueue; // key = orderId, value = leftTime;
+	//NSMutableDictionary * orderQueue; // key = orderId, value = leftTime;
 	
 @private
 	ResponseOffers * _offerResponse;
-	UIBackgroundTaskIdentifier bgTask;
-	BOOL _backgroundWork;
-	NSTimer * timer;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabsController;
 
 @property (nonatomic, readonly) PreferencesManager *prefManager;
-@property (nonatomic, retain) NSMutableDictionary * orderQueue;
-
-@property (nonatomic, retain) Response * _offerResponse;
-
-@property (nonatomic, retain) NSTimer * timer;
+//@property (nonatomic, retain) NSMutableDictionary * orderQueue;
 
 + (SupTaxiAppDelegate *)sharedAppDelegate;
 
-- (void) checkOrderOffers;
+//- (void) checkOrderOffers;
 
 @end
 

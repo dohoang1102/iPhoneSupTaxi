@@ -17,6 +17,8 @@
 #import "Offer.h"
 #import "CarriersViewController.h"
 
+#import "MKOrderNotification.h"
+
 @interface OrderViewController(Private)
 
 - (void) CheckOrderOffersThreadMethod:(id)obj;
@@ -29,7 +31,7 @@
 - (void) sendOrder;
 - (void) clearFields;
 
-- (void) timerTargetMethod: (NSTimer *) theTimer;
+- (void) checkOrderOffers:(id)sender;
 
 @end
 
@@ -182,20 +184,26 @@
 	if (!_orderResponse || _orderResponse._result == NO)
 		[self showAlertMessage:@"Ошибка отправки заказа, повторите, пожалуйста, позже!"];
 	if (_orderResponse._result == YES) {
-		[self showAlertMessage:@"Ваш заказ принят на обработку, ожидайте ответ оператора!"];
+		[self showAlertMessage:@"Ваш заказ принят на обработку, через 5 минут ожидайте ответ оператора!"];
 		[self clearFields];
 		
 		[self setCurrentOrderId:_orderResponse._guid];
+        
+        [[MKOrderNotification sharedInstance] scheduleNotificationOn:[NSDate dateWithTimeIntervalSinceNow:60*5] 
+                                                                          text:@"Проверьте предложения от SupTaxi" 
+                                                                        action:@"Показать" 
+                                                                         sound:nil 
+                                                                   launchImage:nil 
+                                                                       andInfo:nil];
 		
-		timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(timerTargetMethod:) userInfo:nil repeats: NO];
-		NSLog(@"Timer started");
+        [[MKOrderNotification sharedInstance] setDelegate:self];
+        [[MKOrderNotification sharedInstance] setSelectorOnDone:@selector(checkOrderOffers:)];
 		
-		//[[SupTaxiAppDelegate sharedAppDelegate] checkOrderOffers];
 	}
 }
 
--(void) timerTargetMethod: (NSTimer *) theTimer {
-	NSLog(@"Me is here at 10 sec delay");
+-(void) checkOrderOffers: (id) sender {
+    
 	[NSThread detachNewThreadSelector:@selector(CheckOrderOffersThreadMethod:)
 							 toTarget:self 
 						   withObject:currentOrderId];

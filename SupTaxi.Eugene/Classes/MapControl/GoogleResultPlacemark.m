@@ -45,6 +45,9 @@
 }
 
 -(NSString *)shortAddress{
+    if (shortAddress) {
+        return shortAddress;
+    }
 	NSString *retVal = @"";
 	if (self.thoroughfare)
 		retVal = self.thoroughfare;
@@ -54,6 +57,7 @@
 			delimiter = @", ";
 		retVal = [NSString stringWithFormat:@"%@%@%@", retVal, delimiter, self.houseNumber];
 	}
+   
 	return retVal;
 }
 

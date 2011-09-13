@@ -36,6 +36,7 @@
 		4908526E140C1375004F4963 /* ServerResponce.m in Sources */ = {isa = PBXBuildFile; fileRef = 49085268140C1375004F4963 /* ServerResponce.m */; };
 		4908526F140C1375004F4963 /* ServerResponceXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4908526A140C1375004F4963 /* ServerResponceXMLParser.m */; };
 		491BDC8C141EB29B009D048B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 491BDC8B141EB29A009D048B /* Icon.png */; };
+		491BDC9F141F75F1009D048B /* MKOrderNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 491BDC9E141F75F1009D048B /* MKOrderNotification.m */; };
 		4941A6CB1417EFB9000BC3D5 /* HistoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941A6CA1417EFB9000BC3D5 /* HistoryDetailViewController.m */; };
 		4941A6DD1417F372000BC3D5 /* HistoryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941A6DC1417F372000BC3D5 /* HistoryItemCell.m */; };
 		4941A7BD1418219D000BC3D5 /* AddAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4941A7BA1418219D000BC3D5 /* AddAddressViewController.xib */; };
@@ -142,6 +143,8 @@
 		49085269140C1375004F4963 /* ServerResponceXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerResponceXMLParser.h; sourceTree = "<group>"; };
 		4908526A140C1375004F4963 /* ServerResponceXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerResponceXMLParser.m; sourceTree = "<group>"; };
 		491BDC8B141EB29A009D048B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
+		491BDC9D141F75F1009D048B /* MKOrderNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKOrderNotification.h; sourceTree = "<group>"; };
+		491BDC9E141F75F1009D048B /* MKOrderNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKOrderNotification.m; sourceTree = "<group>"; };
 		4941A6C91417EFB9000BC3D5 /* HistoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDetailViewController.h; sourceTree = "<group>"; };
 		4941A6CA1417EFB9000BC3D5 /* HistoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDetailViewController.m; sourceTree = "<group>"; };
 		4941A6DB1417F372000BC3D5 /* HistoryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryItemCell.h; sourceTree = "<group>"; };
@@ -441,6 +444,8 @@
 				49493E0E1411261C008E5AAB /* UICustomSwitch.m */,
 				49BB579D141908E900BF28D1 /* Constants.h */,
 				49BB579E141908E900BF28D1 /* Constants.m */,
+				491BDC9D141F75F1009D048B /* MKOrderNotification.h */,
+				491BDC9E141F75F1009D048B /* MKOrderNotification.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -736,6 +741,7 @@
 				49BFC2C0141A53D800629CB2 /* PreferredViewController.m in Sources */,
 				49BFC2C6141A545500629CB2 /* PreferredCell.m in Sources */,
 				49BFC2F9141A5EA500629CB2 /* Carrier.m in Sources */,
+				491BDC9F141F75F1009D048B /* MKOrderNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
