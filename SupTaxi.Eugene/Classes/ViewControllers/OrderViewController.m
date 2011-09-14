@@ -190,8 +190,8 @@
 		[self clearFields];
 		
 		[self setCurrentOrderId:_orderResponse._guid];
-        
-        [[MKOrderNotification sharedInstance] scheduleNotificationOn:[NSDate dateWithTimeIntervalSinceNow:60*5] 
+        //set time 60 * 5 (5 min)
+        [[MKOrderNotification sharedInstance] scheduleNotificationOn:[NSDate dateWithTimeIntervalSinceNow:30] 
                                                                           text:@"Проверьте предложения от SupTaxi" 
                                                                         action:@"Показать" 
                                                                          sound:nil 
