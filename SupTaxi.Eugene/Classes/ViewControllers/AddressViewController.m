@@ -269,7 +269,7 @@
 #pragma mark Helping Methods
 
 -(Address *)addressByIndexPath:(NSIndexPath *)indexPath{
-	int addressIndex = self.addressType == my_addresses ? (indexPath.row > DEFAULT_ROWS_COUNT ? indexPath.row-DEFAULT_ROWS_COUNT :indexPath.row) :indexPath.row;     
+	int addressIndex = self.addressType == my_addresses ? (indexPath.row >= DEFAULT_ROWS_COUNT ? indexPath.row-DEFAULT_ROWS_COUNT :indexPath.row) : (indexPath.row >= [[self addresses] count] ? indexPath.row-DEFAULT_ROWS_COUNT : indexPath.row);     
 	return [[self addresses] objectAtIndex:addressIndex];
 }
 
