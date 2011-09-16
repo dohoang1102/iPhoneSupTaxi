@@ -261,12 +261,12 @@
 	
 	[self textFieldUnFocus];
 	if ([self textFieldValidate] == NO) return;
-	
+	/*
 	if (self.btnAccept.selected == NO) {
 		[self showAlertMessage:@"Не приняв условия регистрации Вы не можете быть зарегистрированным!"];
 		return;
 	}
-	
+	*/
 	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
 	[d setValue:self.txtEmail.text forKey:USER_EMAIL_KEY];
 	[d setValue:self.txtPassword.text forKey:USER_PASSWORD_KEY];

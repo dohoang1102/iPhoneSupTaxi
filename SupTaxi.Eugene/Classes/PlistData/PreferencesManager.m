@@ -10,7 +10,7 @@
 
 @interface PreferencesManager(Private)
 
-- (void) initFields;
+//- (void) initFields;
 
 @end
 

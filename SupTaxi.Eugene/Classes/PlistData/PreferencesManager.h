@@ -17,6 +17,8 @@
 @property (nonatomic, retain) Preferences *prefs;
 @property (nonatomic, retain) NSString *prefsFilePath;
 
+- (void)initFields;
+
 - (void) updateUserGuid:(NSString*)userGuid;
 - (void) updateUserCity:(NSString*)userCity;
 - (void) updateUserCredentialsWithEmail:(NSString*)userEmail andPassword:(NSString*)userPassword;

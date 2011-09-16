@@ -72,6 +72,11 @@
     return YES;
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.navigationItem setRightBarButtonItem:nil];
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField{
 	
     int index = textField.tag;
@@ -92,6 +97,9 @@
 		default:
 			break;
 	}
+    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+    UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];
+    self.navigationItem.rightBarButtonItem = saveButton;
 }
 
 - (void) UpdateThreadMethod:(id)obj
@@ -99,7 +107,7 @@
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
 	AppProgress * progress = [AppProgress GetDefaultAppProgress];
-	[progress StartProcessing:@"Регистрация"];
+	[progress StartProcessing:@"Обновлене данных на сервере"];
 	
 	
 	ServerResponce * responce = [[ServerResponce alloc] init];
@@ -137,26 +145,6 @@
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	
 	[pool release];
-}
-
-- (void) UpdateResult:(id)obj
-{
-	if (!_registerResponse)
-	{
-		[self showAlertMessage:@"Ошибка запроса обновления!"];
-		return;
-	}
-	
-	if (_registerResponse._result == NO) //ошибка обновления:
-	{
-		[self showAlertMessage:@"Не удалось обновить данные, попробуйте еще раз!"];
-		return;	
-	}
-	else if (_registerResponse._result == YES) //все ок
-	{
-        [prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
-        [tableView_ reloadData];
-    }
 }
 
 - (void) RegisterThreadMethod:(id)obj
@@ -236,6 +224,26 @@
 	[pool release];
 }
 
+- (void) UpdateResult:(id)obj
+{
+	if (!_registerResponse)
+	{
+		[self showAlertMessage:@"Ошибка запроса обновления!"];
+		return;
+	}
+	
+	if (_registerResponse._result == NO) //ошибка обновления:
+	{
+		[self showAlertMessage:@"Не удалось обновить данные, попробуйте еще раз!"];
+		return;	
+	}
+	else if (_registerResponse._result == YES) //все ок
+	{
+        [prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
+        [tableView_ reloadData];
+    }
+}
+
 - (void) RegisterResult:(id)obj
 {
 	if (!_registerResponse)
@@ -288,23 +296,16 @@
 	{
 		[self showAlertMessage:@"Проверьте правильность вашего пароля!"];
 	}
-	else if (_loginResponse._result == YES && _loginResponse._wrongPassword == NO) //правильный пароль и мыло
+	else if (_loginResponse._result == YES && _loginResponse._wrongPassword == NO) //правильный пароль и мыло авторизовались удачно
 	{
-		//TODO: Save userData
-		[prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
-		[prefManager updateUserGuid:_loginResponse._guid];
-		[prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
-		//[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
-        
-        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
-		[d setValue:self.userFirstName forKey:USER_NAME_KEY];
-		[d setValue:self.userSecondName forKey:USER_LNAME_KEY];
-		
-		[NSThread detachNewThreadSelector:@selector(UpdateThreadMethod:)
-								 toTarget:self 
-							   withObject:d];
-		//[self showAlertMessage:@"Вы успешно авторизованы!"];
-		//[self.navigationController popViewControllerAnimated:YES];
+        //if first time login ok
+        if ([prefManager.prefs.userGuid isEqualToString:@""] && [prefManager.prefs.userEmail isEqualToString:@""]) {
+            //TODO: Save userData from server
+            [prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
+            [prefManager updateUserGuid:_loginResponse._guid];
+            [prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
+            [tableView_ reloadData];
+        }
 	}
 }
 
@@ -358,13 +359,49 @@
     [self textFieldUnFocus];
 	if ([self textFieldValidate] == NO) return;
 	
-	NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
-	[d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
-	[d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
-	
-	[NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
-							 toTarget:self 
-						   withObject:d];
+    //FirstTime RUN // no user data saved // try to login if no try to register and login again
+    if ([prefManager.prefs.userGuid isEqualToString:@""] && [prefManager.prefs.userEmail isEqualToString:@""]) {
+        
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+        [d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
+        [d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
+        
+        [NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+                                 toTarget:self 
+                               withObject:d];
+        
+        return;
+    }
+    
+    //Already in system and just want to update user data
+    if (![prefManager.prefs.userGuid isEqualToString:@""] && [prefManager.prefs.userEmail isEqualToString:self.supTaxiID]) {
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+		[d setValue:self.userFirstName forKey:USER_NAME_KEY];
+		[d setValue:self.userSecondName forKey:USER_LNAME_KEY];
+		
+		[NSThread detachNewThreadSelector:@selector(UpdateThreadMethod:)
+								 toTarget:self 
+							   withObject:d];
+        return;
+    }
+    
+    //LogedIn but trying to change user
+    if (![prefManager.prefs.userGuid isEqualToString:@""] && ![prefManager.prefs.userEmail isEqualToString:self.supTaxiID]) {
+        
+        //Before login with new user we need to clear data with old user
+        [prefManager initFields];
+        
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+        [d setValue:self.supTaxiID forKey:USER_EMAIL_KEY];
+        [d setValue:self.userPassword forKey:USER_PASSWORD_KEY];
+        
+        [NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+                                 toTarget:self 
+                               withObject:d];
+        
+        return;
+    }
+    
 }
 
 -(void)textFieldUnFocus {
@@ -373,15 +410,13 @@
 
 -(BOOL)textFieldValidate {
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Все поля обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поле \"SupTaxi ID\" и \"Пароль\" обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	NSArray *fieldArray;
 	int i = 0;
 	
 	fieldArray = [[NSArray arrayWithObjects: 
 				   [NSString stringWithFormat:@"%@",self.supTaxiID],
-				   [NSString stringWithFormat:@"%@",self.userPassword],
-				   [NSString stringWithFormat:@"%@",self.userFirstName],
-				   [NSString stringWithFormat:@"%@",self.userSecondName],nil] retain];
+				   [NSString stringWithFormat:@"%@",self.userPassword],nil] retain];
 	
 	@try {
 		for (NSString *fieldText in fieldArray){
