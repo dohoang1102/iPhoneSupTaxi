@@ -31,5 +31,14 @@
 	return stringImage;
 }
 
++ (NSString *) getCarTypeString: (NSString *) carId
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	[dict setObject:@"Эконом" forKey:@"1"];
+	[dict setObject:@"Грузовые" forKey:@"2"];
+	[dict setObject:@"VIP" forKey:@"3"];
+	
+	return [dict objectForKey: carId];
+}
 
 @end

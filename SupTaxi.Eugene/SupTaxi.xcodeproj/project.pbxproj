@@ -79,8 +79,8 @@
 		49CBC286140D32AC00D2DCC9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC284140D32AC00D2DCC9 /* MBProgressHUD.m */; };
 		49CBC299140D3B7700D2DCC9 /* AditionalPrecompileds.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC298140D3B7700D2DCC9 /* AditionalPrecompileds.m */; };
 		49CBC424140D5DAC00D2DCC9 /* car_type_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC421140D5DAC00D2DCC9 /* car_type_1.png */; };
-		49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC422140D5DAC00D2DCC9 /* car_type_2.png */; };
-		49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_3.png */; };
+		49CBC425140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC422140D5DAC00D2DCC9 /* car_type_3.png */; };
+		49CBC426140D5DAC00D2DCC9 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_2.png */; };
 		49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */; };
 		58FF5FD2141608290088166E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBA141608290088166E /* JSONKit.m */; };
 		58FF5FD3141608290088166E /* GoogleResultPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBD141608290088166E /* GoogleResultPlacemark.m */; };
@@ -210,8 +210,8 @@
 		49CBC297140D3B7700D2DCC9 /* AditionalPrecompileds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AditionalPrecompileds.h; sourceTree = "<group>"; };
 		49CBC298140D3B7700D2DCC9 /* AditionalPrecompileds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AditionalPrecompileds.m; sourceTree = "<group>"; };
 		49CBC421140D5DAC00D2DCC9 /* car_type_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_1.png; sourceTree = "<group>"; };
-		49CBC422140D5DAC00D2DCC9 /* car_type_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_2.png; sourceTree = "<group>"; };
-		49CBC423140D5DAC00D2DCC9 /* car_type_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_3.png; sourceTree = "<group>"; };
+		49CBC422140D5DAC00D2DCC9 /* car_type_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_3.png; sourceTree = "<group>"; };
+		49CBC423140D5DAC00D2DCC9 /* car_type_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_2.png; sourceTree = "<group>"; };
 		49CBC439140D602B00D2DCC9 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		58FF5FB9141608290088166E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -351,8 +351,8 @@
 				4987A5C1140E320C009C0A12 /* Reg */,
 				49B83DDE1410176E0063357A /* 37x-Checkmark.png */,
 				49CBC421140D5DAC00D2DCC9 /* car_type_1.png */,
-				49CBC422140D5DAC00D2DCC9 /* car_type_2.png */,
-				49CBC423140D5DAC00D2DCC9 /* car_type_3.png */,
+				49CBC422140D5DAC00D2DCC9 /* car_type_3.png */,
+				49CBC423140D5DAC00D2DCC9 /* car_type_2.png */,
 				4908510C140BD66A004F4963 /* btn_bg1.png */,
 				49085077140BC325004F4963 /* logo_header copy.png */,
 				4908505B140BB080004F4963 /* btn_bg.png */,
@@ -660,8 +660,8 @@
 				4908510D140BD66A004F4963 /* btn_bg1.png in Resources */,
 				49085242140C0847004F4963 /* OrderViewController.xib in Resources */,
 				49CBC424140D5DAC00D2DCC9 /* car_type_1.png in Resources */,
-				49CBC425140D5DAC00D2DCC9 /* car_type_2.png in Resources */,
-				49CBC426140D5DAC00D2DCC9 /* car_type_3.png in Resources */,
+				49CBC425140D5DAC00D2DCC9 /* car_type_3.png in Resources */,
+				49CBC426140D5DAC00D2DCC9 /* car_type_2.png in Resources */,
 				4987A5C7140E320C009C0A12 /* background.png in Resources */,
 				4987A5C8140E320C009C0A12 /* checkbox_checked.png in Resources */,
 				4987A5C9140E320C009C0A12 /* checkbox_unchecked.png in Resources */,

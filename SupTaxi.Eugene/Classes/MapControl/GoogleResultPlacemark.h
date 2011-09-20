@@ -24,6 +24,7 @@
 @property (nonatomic, assign) BOOL selfLocation;
 @property (nonatomic, assign) BOOL coordinatesInitialized;
 
+@property (nonatomic, retain) NSString *subwayStation;
 
 +(id)googleResultPlaceMarkForSelfLocation;
 +(id)googleResultPlaceMarkForSelfLocationWithCoordinates:(CLLocationCoordinate2D)coord startPoint:(BOOL)isStartPoint;

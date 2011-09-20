@@ -183,6 +183,9 @@
 		if (!selectionDelegate)
 			self.navigationItem.rightBarButtonItem = self.addAddressButton;
 	} 
+    if ([prefManager.prefs.userGuid isEqualToString:@""])
+    	self.navigationItem.rightBarButtonItem = nil;
+    
 	if (self.addressType != my_addresses || self.selectionDelegate != nil) {
 		UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Назад" andTarget:self andSelector:@selector(onBack:)];
 		self.navigationItem.leftBarButtonItem = backButton;
@@ -205,10 +208,17 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
+    
+    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
+	if (![prefManager.prefs.userGuid isEqualToString:@""]) {
+		self.addAddressButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Добавить" andTarget:self andSelector:@selector(onAddAddress:)];
+		self.navigationItem.rightBarButtonItem = self.addAddressButton;
+	} 
+    
 	if (!selectionDelegate) {
 		if ([prefManager.prefs.userGuid isEqualToString:@""]) {
-            [self showAlertMessage:@"Для возможности просмотра списка Ваших адресов, Вам необходимо либо авторизоватся, либо зарегистрироватся через секцию Настройки!"];
+            [self showAlertMessage:@"Для возможности просмотраи добавления списка Ваших адресов, Вам необходимо либо авторизоваться, либо зарегистрироваться через секцию Настройки!"];
         }
 	}
 	[self loadAddresses];

@@ -50,13 +50,21 @@
 @synthesize _firstName;
 @synthesize _secondName;
 @synthesize _wrongPassword;
+@synthesize _city;
+@synthesize _contractNumber;
+@synthesize _contractCustomer;
+@synthesize _contractCarrier;
 
-- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName andWrongPass:(BOOL) wrongPass{
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName wrongPass:(BOOL) wrongPass city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier{
     self = [super initWithResponseType:responseType result:result andGuid:guid];
     if (self != nil) {
 		[self set_firstName:fName];
 		[self set_secondName:sName];
 		[self set_wrongPassword:wrongPass];
+        [self set_city:city];
+        [self set_contractNumber:cNumber];
+        [self set_contractCustomer:cCustomer];
+        [self set_contractCarrier:cCarrier];
 	}
     
     return self;
@@ -65,6 +73,10 @@
 {
     self._firstName = nil;
 	self._secondName = nil;
+    self._city = nil;
+    self._contractNumber = nil;
+    self._contractCustomer = nil;
+    self._contractCarrier = nil;
     [super dealloc];
 }
 

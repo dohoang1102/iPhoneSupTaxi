@@ -26,8 +26,14 @@
 @synthesize fromLon = _fromLon;
 @synthesize toLon = _toLon;
 
+@synthesize finishedAt = _finishedAt;
+@synthesize schedule = _schedule;
+@synthesize vType =_vType;
+
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
-					 status:(NSString *)status carrier:(NSString *)carrier fromArea:(NSString *)fromArea toArea:(NSString *)toArea lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon
+					 status:(NSString *)status carrier:(NSString *)carrier fromArea:(NSString *)fromArea toArea:(NSString *)toArea 
+                        lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon 
+                 finishedAt:(NSString *)finishedAt schedule:(NSString *)schedule vType:(int)vType
 {
     self = [super init];
     if (self != nil) {
@@ -45,6 +51,10 @@
 		self.status = status;
         self.fromArea = fromArea;
         self.toArea = toArea;
+        
+        self.finishedAt = finishedAt;
+        self.schedule = schedule;
+        self.vType = vType;
     }
     
     return self;
@@ -52,6 +62,8 @@
 
 - (void)dealloc
 {	
+    [_finishedAt release];
+    [_schedule release];
     [_fromArea release];
     [_toArea release];
 	[_status release];

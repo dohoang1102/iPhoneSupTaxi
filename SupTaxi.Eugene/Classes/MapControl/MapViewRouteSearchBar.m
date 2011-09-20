@@ -9,7 +9,7 @@
 #import "MapViewRouteSearchBar.h"
 #import "AddressViewController.h"
 #import "Address.h"
-#import "SupTaxiAppDelegate.h";
+#import "SupTaxiAppDelegate.h"
 #import	"RegisterViewController.h"
 
 @implementation MapViewRouteSearchBar
@@ -144,11 +144,15 @@
 }
 
 -(BOOL)validate{
+    if ([self.fromField.text isEqualToString:@""] || [self.toField.text isEqualToString:@""]) {
+		return NO;
+	}
+    /*
 	if (self.placeMarkFrom == nil || ![self.placeMarkFrom coordinatesInitialized])
 		return NO;
 	if (self.placeMarkTo == nil || ![self.placeMarkTo coordinatesInitialized]) {
 		return NO;
-	}
+	}*/
 	return YES;
 }
 
@@ -186,9 +190,11 @@
 		self.requestedCurrentLocation = NO;
 	} else if (self.currentTextField == fromField){
 		self.placeMarkFrom = placeMark;
+        if (![[placeMark name] isEqualToString:@""]) //
 		[fromField setText:[placeMark name]];
 	} else {
 		self.placeMarkTo = placeMark;
+        if (![[placeMark name] isEqualToString:@""]) //
 		[toField setText:[placeMark name]];
 	}
 	self.currentTextField = nil;
@@ -232,7 +238,7 @@
 }
 
 -(void)updateSelfLocationSearch{
-	BOOL selfLocationSearchEnabled = (self.placeMarkFrom && self.placeMarkFrom.selfLocation || self.placeMarkTo && self.placeMarkTo.selfLocation);
+	BOOL selfLocationSearchEnabled = ((self.placeMarkFrom && self.placeMarkFrom.selfLocation) || (self.placeMarkTo && self.placeMarkTo.selfLocation));
 	[self.delegate setSelfLocationSearchEnabled:selfLocationSearchEnabled];
 }
 
@@ -253,6 +259,8 @@
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField == self.daysField) return;
+    
 	GoogleResultPlacemark *placeMark = textField == self.fromField ? placeMarkFrom : placeMarkTo;
 	
 	if (placeMark && [[placeMark name] isEqualToString:[textField text]]) {
@@ -352,6 +360,14 @@
 	[toField setText:tmpText];
 	[tmpText release];
 	[self onShowRoute];
+}
+
+#pragma mark GoogleServiceManagerDelegate
+
+-(void)onRequestFail{
+    [super onRequestFail];
+    self.currentFieldName = nil;
+    self.currentTextField = nil;
 }
 
 @end

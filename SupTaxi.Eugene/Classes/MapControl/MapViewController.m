@@ -162,26 +162,36 @@
 	
 	if ([placeMarks count] == 0)
 		return;
-	[mapView addAnnotations:placeMarks];
-
+    
 	//searching center between our placemarks
 	CLLocationDegrees latitude = 0;
 	CLLocationDegrees longtitude = 0;
+	NSMutableArray * usedPlaceMarks = [NSMutableArray array];
 	for (GoogleResultPlacemark *placeMark in placeMarks) {
+		if (!CLLocationCoordinate2DIsValid(placeMark.coordinate))
+			continue;
+        
+		[usedPlaceMarks addObject:placeMark];
 		latitude += placeMark.coordinate.latitude;
 		longtitude += placeMark.coordinate.longitude;
 	}
-	latitude /= [placeMarks count];
-	longtitude /= [placeMarks count];
+	if ([usedPlaceMarks count] == 0)
+		return;
+	[mapView addAnnotations:usedPlaceMarks];
+	latitude /= [usedPlaceMarks count];
+	longtitude /= [usedPlaceMarks count];
 	CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake(latitude, longtitude);
+	
+	if (!CLLocationCoordinate2DIsValid(centerCoord))
+		return;
 	
 	//calculating scale factor
 	CLLocationDegrees latitudeMapDist = 0.001;
 	CLLocationDegrees longtitudeMapDist = 0.001;
-	if ([placeMarks count] > 1) {
+	if ([usedPlaceMarks count] > 1) {
 		latitudeMapDist = 0;
 		longtitudeMapDist = 0;
-		for (GoogleResultPlacemark *placeMark in placeMarks) {
+		for (GoogleResultPlacemark *placeMark in usedPlaceMarks) {
 			CLLocationDegrees latDiff = ABS(placeMark.coordinate.latitude - centerCoord.latitude)*2;
 			CLLocationDegrees lonDiff = ABS(placeMark.coordinate.longitude - centerCoord.longitude)*2;
 			if (latDiff > latitudeMapDist)
@@ -189,23 +199,29 @@
 			if (lonDiff > longtitudeMapDist)
 				longtitudeMapDist = lonDiff;
 		}
-
+        
 		latitudeMapDist = latitudeMapDist + latitudeMapDist*4/100;	//increase at 4%
 		longtitudeMapDist = longtitudeMapDist + longtitudeMapDist*4/100;	//increase at 4%
 	}
 	
 	//showing routes
-	if ([placeMarks count] > 1) {
-		GoogleResultPlacemark *from = [placeMarks objectAtIndex:0];
-		GoogleResultPlacemark *to = [placeMarks objectAtIndex:1];
-
+	if ([usedPlaceMarks count] > 1) {
+		GoogleResultPlacemark *from = [usedPlaceMarks objectAtIndex:0];
+		GoogleResultPlacemark *to = [usedPlaceMarks objectAtIndex:1];
+        
 		googleManager = [[GoogleServiceDirectionsManager alloc] initWithDelegate:self];
 		[self.googleManager calculateRoutesFrom:from.coordinate to:to.coordinate];
 	}
 	
+	
 	//scaling and moving map
 	MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, MKCoordinateSpanMake(latitudeMapDist, longtitudeMapDist));
-	[mapView setRegion:region animated:YES];
+    @try {
+        [mapView setRegion:region animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Ex: %@", exception);
+    }
 }
 
 #pragma mark MKMapViewDelegate

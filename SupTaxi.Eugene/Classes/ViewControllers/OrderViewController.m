@@ -32,6 +32,7 @@
 - (void) clearFields;
 
 - (void) checkOrderOffers:(id)sender;
+- (void) ShowConnectionAlert:(id)obj;
 
 @end
 
@@ -79,6 +80,11 @@
     return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
 }
 
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
+}
+
 - (void) CheckOrderOffersThreadMethod:(id)obj
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -98,7 +104,11 @@
 			[self performSelectorOnMainThread:@selector(ShowOrderOffers:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
 		[responce release];
 	}
 	
@@ -171,10 +181,13 @@
 			[self performSelectorOnMainThread:@selector(ShowOrderResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
 		[responce release];
 	}
-	
 	
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	
@@ -252,6 +265,19 @@
 	
     [pickerView setTag:kCarPickerTag];
     
+    int row = 0;
+    int counter = 0;
+    NSArray * keys = [carTypes_ allValues];
+    for (NSString * key in keys) {
+        if ([key isEqualToString:self.carType]) {
+            row = counter;
+            break;
+        }
+        counter ++;
+    }
+    NSLog(@"Row %i", row);
+    [pickerView selectRow:row inComponent:0 animated:NO];
+    
     [actionSheet addSubview:pickerView];
     
     [pickerView release];
@@ -310,9 +336,7 @@
 	
 	carType_ = @"1";
 	
-	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"Эконом",
-				 @"2", @"Бизнес",
-				 @"3", @"Грузовой", nil];
+	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"Эконом", @"2", @"Грузовой", @"3", @"VIP", nil];
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
@@ -329,6 +353,11 @@
 	[img release];
 	
 	[self initPreferences];
+    
+    [self.mapViewRouteSearchBar.carImageView setImage:[UIImage imageNamed:@"car_type_1.png"]];
+	NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:1]];
+    [self.mapViewRouteSearchBar.carTypeLabel setText:carTypeKey];
+
 }
 
 - (IBAction)clearForm:(id)sender
@@ -491,6 +520,7 @@
             carType_ = [[NSString alloc] initWithString:[carTypes_ objectForKey:key]];
 			NSLog(@"%@",carType_);
 			NSString *imageName = [NSString stringWithFormat:@"car_type_%@.png", carType_];
+            NSLog(@"%@",imageName);
 			UIImage *img = [UIImage imageNamed:imageName];
 			[self.mapViewRouteSearchBar.carImageView setImage:img];
 			NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:rowIndex]];

@@ -28,6 +28,9 @@
 @synthesize lblComment;
 @synthesize lblCarrier;
 
+@synthesize lblSchedule;
+@synthesize lblCType;
+
 -(void)initProperties{
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
@@ -66,6 +69,8 @@
 	[self.lblStatus setText:[Constants historyStatusById:orderToView.status]];
 	[self.lblComment setText:orderToView.comment];
     [self.lblCarrier setText:orderToView.carrier];
+    [self.lblCType setText:[Constants getCarTypeString: [NSString stringWithFormat:@"%d", orderToView.vType]]];
+    [self.lblSchedule setText:orderToView.schedule];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,6 +127,9 @@
 	[lblComment release];
     [lblCarrier release];
 	
+    [lblSchedule release];
+    [lblCType release];
+    
 	[orderToView release];
     [super dealloc];
 }

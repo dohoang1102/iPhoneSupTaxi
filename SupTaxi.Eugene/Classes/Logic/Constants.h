@@ -13,5 +13,6 @@
 
 + (NSString *) historyStatusById:(NSString*)guid;
 + (UIImage *) getImageFromString: (NSString*) imageStr;
++ (NSString *) getCarTypeString: (NSString*) carId;
 
 @end

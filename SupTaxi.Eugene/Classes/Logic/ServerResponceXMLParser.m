@@ -88,7 +88,10 @@ didStartElement:(NSString *)elementName
 													 fromLat:[[attributeDict valueForKey:@"FromLat"] floatValue]
 													   toLat:[[attributeDict valueForKey:@"ToLat"] floatValue]
 													 fromLon:[[attributeDict valueForKey:@"FromLon"] floatValue]
-													   toLon:[[attributeDict valueForKey:@"ToLon"] floatValue]];
+													   toLon:[[attributeDict valueForKey:@"ToLon"] floatValue]
+                                                  finishedAt:[attributeDict objectForKey:@"FinishedAt"]
+                                                    schedule:[attributeDict objectForKey:@"Schedule"]
+                                                       vType:[[attributeDict valueForKey:@"VehicleTypeId"] intValue]];
 		ResponseHistory * response = (ResponseHistory *) [_arr objectAtIndex:0];
 		[response addAnOrder:order];
 		[_arr insertObject:response atIndex:0];
@@ -106,7 +109,11 @@ didStartElement:(NSString *)elementName
 																		  guid:GuidString 
 																		 fName:[attributeDict objectForKey:@"FirstName"] 
 																		 sName:[attributeDict objectForKey:@"SecondName"] 
-																  andWrongPass:[[attributeDict objectForKey:@"WrongPassword"] boolValue]];
+																     wrongPass:[[attributeDict objectForKey:@"WrongPassword"] boolValue]
+                                                                          city:[attributeDict objectForKey:@"City"] 
+                                                                       cNumber:[attributeDict objectForKey:@"ContractNumber"]
+                                                                     cCustomer:[attributeDict objectForKey:@"ContractCustomer"]
+                                                                      cCarrier:[attributeDict objectForKey:@"ContractCarrier"]];
 			[_arr addObject:resp];
 			[resp release];
 		}else if ([TypeString isEqualToString:@"Order.Offers"]) {

@@ -22,6 +22,9 @@
 @property (nonatomic, retain) IBOutlet UILabel * lblComment;
 @property (nonatomic, retain) IBOutlet UILabel * lblCarrier;
 
+@property (nonatomic, retain) IBOutlet UILabel * lblSchedule;
+@property (nonatomic, retain) IBOutlet UILabel * lblCType;
+
 - (void) SetOrder:(Order*)order;
 
 - (IBAction)btnAddFrom:(id)sender;

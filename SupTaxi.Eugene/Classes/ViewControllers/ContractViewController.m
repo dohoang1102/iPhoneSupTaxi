@@ -127,7 +127,11 @@
     [super viewDidLoad];
 	
 	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
-	
+    
+    [self.txtContractNumber setText:prefManager.prefs.userContractNumber];
+    [self.txtContractCustomer setText:prefManager.prefs.userContractCustomer];
+    [self.txtContractCarrier setText:prefManager.prefs.userContractCarrier];
+    	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
     UIBarButtonItem *contractDeclineButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(contractDecline:)];

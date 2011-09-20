@@ -27,6 +27,8 @@
 - (BOOL) textFieldValidate;
 - (void) textFieldUnFocus;
 
+- (void) ShowConnectionAlert:(id)obj;
+
 @end
 
 @implementation RegisterViewController
@@ -89,7 +91,11 @@
 			[self performSelectorOnMainThread:@selector(RegisterResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+             [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                    withObject:nil 
+                                 waitUntilDone:NO];
+        }
 		[responce release];
 	}
 	
@@ -124,7 +130,12 @@
 			[self performSelectorOnMainThread:@selector(AuthenticateResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
+
 		[responce release];
 	}
 	
@@ -161,6 +172,11 @@
 	}
 }
 
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
+}
+
 - (void) AuthenticateResult:(id)obj
 {
 	if (!_loginResponse)
@@ -193,6 +209,14 @@
 		[prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
 		[prefManager updateUserGuid:_loginResponse._guid];
 		
+        [prefManager updateUserHasContract:![_loginResponse._contractNumber isEqualToString:@""]];
+        
+        [prefManager updateUserContractWithNumber:_loginResponse._contractNumber 
+                                 contractCustomer:_loginResponse._contractCustomer
+                               andContractCarrier:_loginResponse._contractCarrier];
+        [prefManager updateUserCity:_loginResponse._city];
+
+        
 		//[self showAlertMessage:@"Вы успешно авторизованы!"];
 		//TODO: Get back to Order and send it
 		[self.navigationController popViewControllerAnimated:YES];
@@ -304,6 +328,18 @@
 			i++;
 		}
 		
+        NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
+        
+        if (![emailTest evaluateWithObject:self.txtEmail.text])
+        {
+            [alert release];
+            alert = [[UIAlertView alloc] initWithTitle:nil message:@"Логином является Email. Проверьте его правильность!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return NO;
+        }
+
+        
 		// check that all the field were passed (i == array.count) if so execute
 		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
 			return YES;        

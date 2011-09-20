@@ -19,6 +19,7 @@
 #define SUB_STREET @"street_number"
 #define STREET_ADDRESS @"street_address"
 #define STREET @"route"
+#define SUBWAY @"subway_station"
 
 @implementation GoogleResultPlacemark
 
@@ -34,6 +35,8 @@
 @synthesize selfLocation;
 @synthesize coordinatesInitialized;
 
+@synthesize subwayStation;
+
 -(NSString *)name{
 	if (self.selfLocation) {
 		return @"Мое месторасположение";
@@ -45,6 +48,9 @@
 }
 
 -(NSString *)shortAddress{
+    if ([self subwayStation])
+		return [NSString stringWithFormat:@"ст.метро %@", [self subwayStation]];
+    
     if (shortAddress) {
         return shortAddress;
     }
@@ -99,6 +105,7 @@
 	[houseNumber release];
 	[shortAddress release];
 	[name release];
+    [subwayStation release];
 	[super dealloc];
 }
 
@@ -143,6 +150,9 @@
 		} else if ([types containsObject:POSTAL_CODE]){
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressZIPKey];
 			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressZIPKey, value);
+		}else if ([types containsObject:SUBWAY]) {
+			[self setSubwayStation:value];
+			NSLog(@"set %@ = '%@'", @"SubwayStation", value);
 		}
 		else if ([types containsObject:SUB_ADMINISTRATIVE]){
 			[self setCityArea:value];

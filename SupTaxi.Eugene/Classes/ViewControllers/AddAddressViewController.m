@@ -31,6 +31,7 @@
 - (void) UpdAddressesResult:(id)obj;
 
 - (void) showAlertMessage:(NSString *)alertMessage;
+- (void) ShowConnectionAlert:(id)obj;
 
 @end
 
@@ -87,7 +88,11 @@
 			[self performSelectorOnMainThread:@selector(AddAddressesResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
 		[responce release];
 	}
 	
@@ -95,6 +100,11 @@
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	
 	[pool release];
+}
+
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
 }
 
 - (void) AddAddressesResult:(id)obj

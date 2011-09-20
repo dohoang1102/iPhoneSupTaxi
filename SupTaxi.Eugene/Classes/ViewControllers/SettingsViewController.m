@@ -45,6 +45,9 @@
 - (void) updateHasContract;
 - (void) initPreferences;
 
+- (void) reloadTableData;
+- (void) ShowConnectionAlert:(id)obj;
+
 @end
 
 
@@ -64,6 +67,21 @@
 @synthesize _loginResponse;
 
 @synthesize tableView = tableView_;
+
+- (void) reloadTableData
+{
+    [self setSupTaxiID: prefManager.prefs.userEmail];
+    [self setUserFirstName: prefManager.prefs.userFirstName];
+    [self setUserSecondName: prefManager.prefs.userSecondName];
+    [self setUserPassword: prefManager.prefs.userPassword];
+    [self setUserPhone: prefManager.prefs.userPhone];
+    
+    [self setUserHasContract: prefManager.prefs.userHasContract];
+    [self setUserHasWish: prefManager.prefs.userHasPrefered];
+    [self setUserHasRegularOrder: prefManager.prefs.userHasRegularOrder];
+    
+    [tableView_ reloadData];
+}
 
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -137,7 +155,12 @@
 			[self performSelectorOnMainThread:@selector(UpdateResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
+
 		[responce release];
 	}
 	
@@ -179,7 +202,12 @@
 			[self performSelectorOnMainThread:@selector(RegisterResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
+
 		[responce release];
 	}
 	
@@ -214,7 +242,12 @@
 			[self performSelectorOnMainThread:@selector(AuthenticateResult:) 
 								   withObject:nil 
 								waitUntilDone:NO];
-		}
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
+
 		[responce release];
 	}
 	
@@ -222,6 +255,11 @@
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	
 	[pool release];
+}
+
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
 }
 
 - (void) UpdateResult:(id)obj
@@ -240,7 +278,8 @@
 	else if (_registerResponse._result == YES) //все ок
 	{
         [prefManager updateUserDataWithName:self.userFirstName andSecondName:self.userSecondName];
-        [tableView_ reloadData];
+        [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
+        [self reloadTableData];
     }
 }
 
@@ -304,7 +343,16 @@
             [prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
             [prefManager updateUserGuid:_loginResponse._guid];
             [prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
-            [tableView_ reloadData];
+            [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
+            
+            [prefManager updateUserHasContract:![_loginResponse._contractNumber isEqualToString:@""]];
+            
+            [prefManager updateUserContractWithNumber:_loginResponse._contractNumber 
+                                     contractCustomer:_loginResponse._contractCustomer
+                                   andContractCarrier:_loginResponse._contractCarrier];
+            [prefManager updateUserCity:_loginResponse._city];
+            
+            [self reloadTableData];
         }
 	}
 }
@@ -313,7 +361,7 @@
 {
     [super viewDidAppear:animated];
     [self initPreferences];
-	[tableView_ reloadData];
+	[self reloadTableData];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -410,7 +458,7 @@
 
 -(BOOL)textFieldValidate {
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поле \"SupTaxi ID\" и \"Пароль\" обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поле \"Логин\" и \"Пароль\" обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	NSArray *fieldArray;
 	int i = 0;
 	
@@ -428,6 +476,17 @@
 			i++;
 		}
 		
+        NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
+        
+        if (![emailTest evaluateWithObject:self.supTaxiID])
+        {
+            [alert release];
+            alert = [[UIAlertView alloc] initWithTitle:nil message:@"Логином является Email. Проверьте его правильность!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return NO;
+        }
+        
 		// check that all the field were passed (i == array.count) if so execute
 		if(i == [[NSNumber numberWithInt: fieldArray.count] intValue]){
 			return YES;        
@@ -540,7 +599,7 @@
 				
 		switch (section) {
 			case 0:
-				cell.titleLabel.text = @"SupTaxi ID";
+				cell.titleLabel.text = @"Логин";
 				cell.textField.delegate = self;
 				cell.textField.tag = 0;
 				[cell.textField setText:prefManager.prefs.userEmail];
@@ -609,23 +668,23 @@
 	UICustomSwitch  *senderSwitch = (UICustomSwitch *)sender;
 	BOOL result = [senderSwitch isOn];
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
-		[self showAlertMessage:@"Вы не можете добавить информацию о контракте пока Вы не сохранили настройки и не авторизовались в систему!"];
+		[self showAlertMessage:@"Вы не можете добавить информацию о контракте пока Вы не сохранили настройки и не авторизовались в системе!"];
 		[senderSwitch setOn:NO];
 		return;
 	}
 	
 	self.userHasContract = result;
-	if (result) {
+	//if (result) {
 		ContractViewController *contractViewController = [[ContractViewController alloc] initWithNibName:@"ContractViewController" bundle:nil];
         contractViewController.delegate = self;
 		contractViewController.selectorOnDone = @selector(updateHasContract);
 		[self.navigationController pushViewController:contractViewController animated:YES];
 		[contractViewController release];
-	}
+	//}
 }
 
 - (void) updateHasContract {
-    [self.tableView reloadData];
+    [self reloadTableData];
 }
 
 - (IBAction)changePreferred:(id)sender
@@ -634,7 +693,7 @@
     [senderSwitch setOn:YES];
 	BOOL result = [senderSwitch isOn];
 	if ([prefManager.prefs.userGuid isEqualToString:@""]) {
-		[self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не сохранили настройки и не авторизовались в систему!"];
+		[self showAlertMessage:@"Вы не можете выбрать предпочетаемые компании пока Вы не сохранили настройки и не авторизовались в системе!"];
 		[senderSwitch setOn:NO];
 		return;
 	}

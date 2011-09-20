@@ -32,8 +32,12 @@
 @property (nonatomic, copy) NSString *_firstName;
 @property (nonatomic, copy) NSString *_secondName;
 @property (nonatomic, assign) BOOL _wrongPassword;
+@property (nonatomic, copy) NSString *_city;
+@property (nonatomic, copy) NSString *_contractNumber;
+@property (nonatomic, copy) NSString *_contractCustomer;
+@property (nonatomic, copy) NSString *_contractCarrier;
 
-- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName andWrongPass:(BOOL) wrongPass;
+- (id)initWithResponseType:(NSString *)responseType result:(BOOL)result guid:(NSString *)guid fName:(NSString *)fName sName:(NSString *)sName wrongPass:(BOOL) wrongPass city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier;
 
 @end
 
