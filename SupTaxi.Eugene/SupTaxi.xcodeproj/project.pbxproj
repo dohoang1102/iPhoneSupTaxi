@@ -82,6 +82,8 @@
 		49CBC425140D5DAC00D2DCC9 /* car_type_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC422140D5DAC00D2DCC9 /* car_type_3.png */; };
 		49CBC426140D5DAC00D2DCC9 /* car_type_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CBC423140D5DAC00D2DCC9 /* car_type_2.png */; };
 		49CBC43C140D602B00D2DCC9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */; };
+		58660D40142A020300D37D7B /* WildCardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 58660D3F142A020300D37D7B /* WildCardGestureRecognizer.m */; };
+		58660D44142A02CA00D37D7B /* MapViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 58660D43142A02CA00D37D7B /* MapViewControllerTouch.m */; };
 		58FF5FD2141608290088166E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBA141608290088166E /* JSONKit.m */; };
 		58FF5FD3141608290088166E /* GoogleResultPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBD141608290088166E /* GoogleResultPlacemark.m */; };
 		58FF5FD4141608290088166E /* GoogleServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF5FBF141608290088166E /* GoogleServiceManager.m */; };
@@ -214,6 +216,10 @@
 		49CBC423140D5DAC00D2DCC9 /* car_type_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_type_2.png; sourceTree = "<group>"; };
 		49CBC439140D602B00D2DCC9 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		49CBC43A140D602B00D2DCC9 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		58660D3E142A020300D37D7B /* WildCardGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildCardGestureRecognizer.h; sourceTree = "<group>"; };
+		58660D3F142A020300D37D7B /* WildCardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildCardGestureRecognizer.m; sourceTree = "<group>"; };
+		58660D42142A02CA00D37D7B /* MapViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewControllerTouch.h; sourceTree = "<group>"; };
+		58660D43142A02CA00D37D7B /* MapViewControllerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewControllerTouch.m; sourceTree = "<group>"; };
 		58FF5FB9141608290088166E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		58FF5FBA141608290088166E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		58FF5FBC141608290088166E /* GoogleResultPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleResultPlacemark.h; sourceTree = "<group>"; };
@@ -543,9 +549,13 @@
 				58FF5FF214160AE70088166E /* Classes */,
 				58FF5FF114160ADF0088166E /* TopBars */,
 				58FF5FF014160AD40088166E /* Extensions */,
+				58660D3E142A020300D37D7B /* WildCardGestureRecognizer.h */,
+				58660D3F142A020300D37D7B /* WildCardGestureRecognizer.m */,
 				58FF5FC6141608290088166E /* MapViewController.h */,
 				58FF5FC7141608290088166E /* MapViewController.m */,
 				58FF5FC8141608290088166E /* MapViewController.xib */,
+				58660D42142A02CA00D37D7B /* MapViewControllerTouch.h */,
+				58660D43142A02CA00D37D7B /* MapViewControllerTouch.m */,
 			);
 			path = MapControl;
 			sourceTree = "<group>";
@@ -742,6 +752,8 @@
 				49BFC2C6141A545500629CB2 /* PreferredCell.m in Sources */,
 				49BFC2F9141A5EA500629CB2 /* Carrier.m in Sources */,
 				491BDC9F141F75F1009D048B /* MKOrderNotification.m in Sources */,
+				58660D40142A020300D37D7B /* WildCardGestureRecognizer.m in Sources */,
+				58660D44142A02CA00D37D7B /* MapViewControllerTouch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

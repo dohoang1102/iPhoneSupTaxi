@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSString *subwayStation;
 
 +(id)googleResultPlaceMarkForSelfLocation;
++(id)googleResultPlaceMarkWithCoordinates:(CLLocationCoordinate2D)coord isStartPoint:(BOOL)isStartPoint;
 +(id)googleResultPlaceMarkForSelfLocationWithCoordinates:(CLLocationCoordinate2D)coord startPoint:(BOOL)isStartPoint;
 +(id)googleResultPlacemarkWithResponceDictionary:(NSDictionary *)responce;
 +(id)googleResultPlaceMarkByGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark;

@@ -11,7 +11,7 @@
 
 @protocol MapViewSearchBarDelegate <NSObject>
 
--(void)showPointsOnMap:(NSArray *)placeMarks;
+-(void)showPointsOnMap:(NSArray *)placeMarks shouldResizeMap:(BOOL)shouldResizeMap;
 -(void)setSelfLocationSearchEnabled:(BOOL)enabled;
 
 @end

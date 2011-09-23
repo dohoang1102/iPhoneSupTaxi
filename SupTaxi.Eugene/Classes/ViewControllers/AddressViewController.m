@@ -15,7 +15,7 @@
 #import "AppProgress.h"
 #import "SupTaxiAppDelegate.h"
 #import "RegisterViewController.h"
-
+#import "MapViewControllerTouch.h"
 
 #define DEFAULT_ROWS_COUNT 3
 
@@ -40,6 +40,8 @@
 @synthesize _addressListResponse;
 @synthesize needReloadData;
 @synthesize addAddressButton;
+@synthesize selectOnMapButton;
+@synthesize allowsOnMapSelection;
 
 - (void) GetAddressesThreadMethod:(id)obj
 {
@@ -138,9 +140,10 @@
 
 -(void)setSelectionDelegate:(id<AddressViewControllerDelegate>)newSelectionDelegate{
 	selectionDelegate = newSelectionDelegate;
-	if (selectionDelegate)
-		self.navigationItem.rightBarButtonItem = nil;
-	else
+	if (selectionDelegate) {
+		if (self.allowsOnMapSelection)
+			self.navigationItem.rightBarButtonItem = self.selectOnMapButton;
+	} else
 		self.navigationItem.rightBarButtonItem = self.addAddressButton;
 }
 
@@ -158,6 +161,7 @@
 
 - (void)dealloc
 {
+	[selectOnMapButton release];
 	[addAddressButton release];
 	[addressTable release];
 	[searchBar release];
@@ -175,16 +179,27 @@
 
 #pragma mark - View lifecycle
 
+-(void)updateRightBarButton{
+	if (self.addressType != my_addresses) {
+		self.navigationItem.rightBarButtonItem = nil;
+		return;
+	}
+	if (!selectionDelegate && ![prefManager.prefs.userGuid isEqualToString:@""])
+		self.navigationItem.rightBarButtonItem = self.addAddressButton;
+	else if (selectionDelegate && self.allowsOnMapSelection)
+		self.navigationItem.rightBarButtonItem = self.selectOnMapButton;
+}
+
 -(void)initPreferences{
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
 	if (self.addressType == my_addresses) {
 		self.addAddressButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Добавить" andTarget:self andSelector:@selector(onAddAddress:)];
-		if (!selectionDelegate)
-			self.navigationItem.rightBarButtonItem = self.addAddressButton;
+		self.selectOnMapButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Выбрать на карте" andTarget:self andSelector:@selector(onSelectOnMap:)];
+		[self updateRightBarButton];
 	} 
-    if ([prefManager.prefs.userGuid isEqualToString:@""])
-    	self.navigationItem.rightBarButtonItem = nil;
+//    if ([prefManager.prefs.userGuid isEqualToString:@""] && (!selectionDelegate || !self.allowsOnMapSelection))
+//    	self.navigationItem.rightBarButtonItem = nil;
     
 	if (self.addressType != my_addresses || self.selectionDelegate != nil) {
 		UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Назад" andTarget:self andSelector:@selector(onBack:)];
@@ -209,16 +224,11 @@
 -(void)viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
     
-    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+	[self updateRightBarButton];
 	
-	if (![prefManager.prefs.userGuid isEqualToString:@""]) {
-		self.addAddressButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Добавить" andTarget:self andSelector:@selector(onAddAddress:)];
-		self.navigationItem.rightBarButtonItem = self.addAddressButton;
-	} 
-    
 	if (!selectionDelegate) {
 		if ([prefManager.prefs.userGuid isEqualToString:@""]) {
-            [self showAlertMessage:@"Для возможности просмотраи добавления списка Ваших адресов, Вам необходимо либо авторизоваться, либо зарегистрироваться через секцию Настройки!"];
+            [self showAlertMessage:@"Для возможности просмотра и добавления списка Ваших адресов, Вам необходимо либо авторизоваться, либо зарегистрироваться через секцию Настройки!"];
         }
 	}
 	[self loadAddresses];
@@ -434,6 +444,13 @@
 	}
 }
 
+-(void)onPlaceMarksSelected:(NSArray *)placeMarks{
+	if (self.selectionDelegate) {
+		[self.selectionDelegate onPlaceMarksSelected:placeMarks];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
 #pragma mark Events
 
 -(void)onAddAddress:(id)sender{
@@ -453,6 +470,14 @@
 										   otherButtonTitles:nil];
 	[alert show];
 	[alert release];
+}
+
+-(void)onSelectOnMap:(id)sender{
+	MapViewControllerTouch *newVc = [[MapViewControllerTouch alloc] init];
+	[newVc setSelectionDelegate:self];
+	[[self navigationController] pushViewController:newVc animated:YES];
+	[newVc release];
+	[newVc setMapManipulationsEnabled:YES];
 }
 
 @end

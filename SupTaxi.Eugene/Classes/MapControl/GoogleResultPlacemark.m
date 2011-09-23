@@ -82,12 +82,17 @@
 	return [retVal autorelease];
 }
 
-+(id)googleResultPlaceMarkForSelfLocationWithCoordinates:(CLLocationCoordinate2D)coord startPoint:(BOOL)isStartPoint{
++(id)googleResultPlaceMarkWithCoordinates:(CLLocationCoordinate2D)coord isStartPoint:(BOOL)isStartPoint{
 	GoogleResultPlacemark *retVal = [[GoogleResultPlacemark alloc] initWithCoordinate:coord addressDictionary:nil];
-	[retVal setSelfLocation:YES];
 	[retVal setStartPoint:isStartPoint];
 	[retVal setCoordinatesInitialized:YES];
 	return [retVal autorelease];
+}
+
++(id)googleResultPlaceMarkForSelfLocationWithCoordinates:(CLLocationCoordinate2D)coord startPoint:(BOOL)isStartPoint{
+	GoogleResultPlacemark *retVal = [GoogleResultPlacemark googleResultPlaceMarkWithCoordinates:coord isStartPoint:isStartPoint];
+	[retVal setSelfLocation:YES];
+	return retVal;
 }
 
 +(id)googleResultPlacemarkWithResponceDictionary:(NSDictionary *)responce{

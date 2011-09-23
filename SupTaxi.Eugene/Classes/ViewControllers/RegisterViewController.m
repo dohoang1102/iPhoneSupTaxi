@@ -310,7 +310,7 @@
 
 -(BOOL)textFieldValidate {
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поля, Email и Пароль обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Поля, Логин и Пароль обязательны для заполнения." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	NSArray *fieldArray;
 	int i = 0;
 	

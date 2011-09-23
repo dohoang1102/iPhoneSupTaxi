@@ -267,10 +267,12 @@
 	[img release];
 	
 	//Creating and adding MapViewController
-	MapViewController *newMapViewController = [[MapViewController alloc] init];
+	MapViewControllerTouch *newMapViewController = [[MapViewControllerTouch alloc] init];
 	[[newMapViewController view] setFrame:[[self view] frame]];
 	[[self view] addSubview:[newMapViewController view]];
 	self.mapController = newMapViewController;
+	[newMapViewController setMapManipulationsEnabled:YES];
+	[newMapViewController moveToMoscow];
 	[newMapViewController release];
 	
 	MapViewAddressSearchBar *searchBar = [[MapViewAddressSearchBar alloc] init];
@@ -292,6 +294,7 @@
 			[[self addressSearchBar] startAddressSearch:[[self address] address]];
 		}else {
 			[[self addressSearchBar] setPlaceMark:[[self address] googleResultPlacemark]];
+			[[self addressSearchBar] onShowRoute];
 		}
 	}
 }

@@ -301,6 +301,27 @@
 	
 }
 
+-(void)onPlaceMarksSelected:(NSArray *)placeMarks{
+	if ([placeMarks count] == 0)
+		return;
+	
+	if ([placeMarks count] == 1) {
+		GoogleResultPlacemark *placeMark = (GoogleResultPlacemark *)[placeMarks objectAtIndex:0];
+		[currentTextField setText:[placeMark name]];
+		if (self.currentTextField == fromField)
+			self.placeMarkFrom = placeMark;
+		else
+			self.placeMarkTo = placeMark;
+	} else {
+		self.placeMarkFrom = (GoogleResultPlacemark *)[placeMarks objectAtIndex:0];
+		[fromField setText:[self.placeMarkFrom name]];
+
+		self.placeMarkTo = (GoogleResultPlacemark *)[placeMarks objectAtIndex:1];
+		[toField setText:[self.placeMarkTo name]];
+	}
+	[self onShowRoute];
+}
+
 #pragma mark Events
 
 -(IBAction)onChangeCar:(id)sender{
@@ -327,8 +348,9 @@
 
 - (void) loadAddressList:(id)sender
 {
-	self.currentTextField = sender == fromAddressButton ? fromField : toField;
+	self.currentTextField = (sender == fromAddressButton ? fromField : toField);
 	AddressViewController *newVc = [[AddressViewController alloc] init];
+	[newVc setAllowsOnMapSelection:YES];//(sender == fromAddressButton)];
 	[newVc setSelectionDelegate:self];
 	[[self.parentController navigationController] pushViewController:newVc animated:YES];
 }

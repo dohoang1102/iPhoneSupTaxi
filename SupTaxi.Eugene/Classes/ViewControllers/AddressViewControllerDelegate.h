@@ -12,5 +12,6 @@
 @protocol AddressViewControllerDelegate <NSObject>
 
 -(void)onAddressSelected:(id)address;
+-(void)onPlaceMarksSelected:(NSArray*)placeMarks;
 
 @end

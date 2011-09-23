@@ -56,11 +56,12 @@
 		lat += dlat;
 		shift = 0;
 		result = 0;
-		do {
-			b = [encoded characterAtIndex:index++] - 63;
-			result |= (b & 0x1f) << shift;
-			shift += 5;
-		} while (b >= 0x20);
+		if (index < len)
+			do {
+				b = [encoded characterAtIndex:index++] - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
 		NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
 		lng += dlng;
 		NSNumber *latitude = [[[NSNumber alloc] initWithFloat:lat * 1e-5] autorelease];

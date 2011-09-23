@@ -25,7 +25,12 @@
 @property (nonatomic, retain) UIColor *lineColor;
 @property (nonatomic, retain) NSString *distance;
 @property (nonatomic, retain) NSString *time;
+@property (nonatomic, assign) BOOL mapManipulationsEnabled;
 
 @property (nonatomic, retain) GoogleServiceDirectionsManager *googleManager;
+
+-(void)initPreferences;
+-(void) updateRouteView;
+-(void)hideRouteView;
 
 @end

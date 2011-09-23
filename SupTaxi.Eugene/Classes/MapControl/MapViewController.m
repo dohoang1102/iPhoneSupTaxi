@@ -7,7 +7,6 @@
 //
 
 #import "MapViewController.h"
-#import "JSONKit.h"
 
 @implementation MapViewController
 
@@ -23,6 +22,13 @@
 @synthesize distance;
 @synthesize time;
 @synthesize googleManager;
+@synthesize mapManipulationsEnabled;
+
+-(void)setMapManipulationsEnabled:(BOOL)mapManipulationsEnabledValue{
+	mapManipulationsEnabled = mapManipulationsEnabledValue;
+	[self.mapView setZoomEnabled:mapManipulationsEnabled];
+	[self.mapView setScrollEnabled:mapManipulationsEnabled];
+}
 
 -(void)setMapViewSearchBar:(MapViewBaseBar *)theMapViewSearchBar{
 	[theMapViewSearchBar retain];
@@ -142,7 +148,10 @@
 	
 	routeView.image = img;
 	CGContextRelease(context);
+	CGImageRelease(image);
 	
+	routeView.hidden = NO;
+	[routeView setNeedsDisplay];
 }
 
 #pragma mark MapViewSearchBarDelegate
@@ -156,7 +165,7 @@
 	[self.mapView setShowsUserLocation:enabled];
 }
 
--(void)showPointsOnMap:(NSArray *)placeMarks{
+-(void)showPointsOnMap:(NSArray *)placeMarks shouldResizeMap:(BOOL)shouldResizeMap{
 	[mapView removeAnnotations:[mapView annotations]];
 	self.routes = [NSArray array];
 	
@@ -178,6 +187,7 @@
 	if ([usedPlaceMarks count] == 0)
 		return;
 	[mapView addAnnotations:usedPlaceMarks];
+
 	latitude /= [usedPlaceMarks count];
 	longtitude /= [usedPlaceMarks count];
 	CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake(latitude, longtitude);
@@ -205,6 +215,7 @@
 	}
 	
 	//showing routes
+	[self updateRouteView];
 	if ([usedPlaceMarks count] > 1) {
 		GoogleResultPlacemark *from = [usedPlaceMarks objectAtIndex:0];
 		GoogleResultPlacemark *to = [usedPlaceMarks objectAtIndex:1];
@@ -214,6 +225,10 @@
 	}
 	
 	
+	if (!shouldResizeMap)
+		return;	
+		
+	
 	//scaling and moving map
 	MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, MKCoordinateSpanMake(latitudeMapDist, longtitudeMapDist));
     @try {
@@ -222,6 +237,10 @@
     @catch (NSException *exception) {
         NSLog(@"Ex: %@", exception);
     }
+}
+
+-(void)hideRouteView{
+	routeView.hidden = YES;
 }
 
 #pragma mark MKMapViewDelegate
@@ -250,14 +269,12 @@
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
 {
-	routeView.hidden = YES;
+	[self hideRouteView];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self updateRouteView];
-	routeView.hidden = NO;
-	[routeView setNeedsDisplay];
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
@@ -266,6 +283,10 @@
 }
 
 -(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
+	
+}
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 	
 }
 

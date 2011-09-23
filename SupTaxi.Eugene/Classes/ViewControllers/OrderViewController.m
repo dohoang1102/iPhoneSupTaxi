@@ -29,9 +29,13 @@
 - (void) showAlertMessage:(NSString *)alertMessage;
 - (BOOL) textFieldValidate;
 - (void) sendOrder;
+- (void) performSendOrder:(id)obj;
+
 - (void) clearFields;
 
 - (void) checkOrderOffers:(id)sender;
+
+- (void) CheckInetAndServerThreadMethod:(id)sender;
 - (void) ShowConnectionAlert:(id)obj;
 
 @end
@@ -78,6 +82,32 @@
 + (SupTaxiAppDelegate *)sharedAppDelegate
 {
     return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
+}
+
+- (void) CheckInetAndServerThreadMethod:(id)sender
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	
+	[progress StartProcessing:@"Проверка интернет соединения"];
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (![responce GetAddressListRequest:@"0"]) 
+	{
+        [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                               withObject:nil 
+                            waitUntilDone:NO];
+	}else
+    {
+        [self performSelectorOnMainThread:@selector(performSendOrder:) 
+                               withObject:nil 
+                            waitUntilDone:NO];
+    }
+        
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
 }
 
 - (void) ShowConnectionAlert:(id)obj
@@ -334,13 +364,10 @@
     
 	prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
 	
-	carType_ = @"1";
-	
 	carTypes_ = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"Эконом", @"2", @"Грузовой", @"3", @"VIP", nil];
 	
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
-	// кнопка очистить
     UIBarButtonItem *clearBtn = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Очистить" andTarget:self andSelector:@selector(clearForm:)];
     self.navigationItem.leftBarButtonItem = clearBtn;
 	
@@ -357,7 +384,7 @@
     [self.mapViewRouteSearchBar.carImageView setImage:[UIImage imageNamed:@"car_type_1.png"]];
 	NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:1]];
     [self.mapViewRouteSearchBar.carTypeLabel setText:carTypeKey];
-
+    [self setCarType:@"1"];
 }
 
 - (IBAction)clearForm:(id)sender
@@ -371,6 +398,7 @@
 	[self.mapViewRouteSearchBar.carImageView setImage:[UIImage imageNamed:@"car_type_1.png"]];
 	NSString * carTypeKey = [NSString stringWithString:[carTypes_.allKeys objectAtIndex:1]];
 	[self.mapViewRouteSearchBar.carTypeLabel setText:carTypeKey];
+    [self setCarType:@"1"];
 }
 
 -(BOOL)textFieldValidate {
@@ -420,7 +448,14 @@
 
 - (IBAction)orderTaxi:(id)sender
 {
-	if ([self textFieldValidate] == NO) return;
+    [NSThread detachNewThreadSelector:@selector(CheckInetAndServerThreadMethod:)
+							 toTarget:self 
+						   withObject:nil];
+}
+
+- (void) performSendOrder:(id)obj
+{
+    if ([self textFieldValidate] == NO) return;
 	
     if (self.currentOrderId != nil) {
         [self showAlertMessage:@"Вы не можете осуществить заказ пока не прийдет ответ на ваш предыдущий заказ!"];
@@ -436,7 +471,7 @@
 		return;
 	}
 	[self sendOrder];
-    
+
 }
 
 - (void) sendOrder
@@ -445,9 +480,9 @@
 	[d setValue:[NSNumber numberWithUnsignedInteger:[carType_ intValue]] forKey:VTYPE_KEY];
 	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
 	
-	NSString * from = ([self.mapViewRouteSearchBar.placeMarkFrom.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.fromField.text : self.mapViewRouteSearchBar.placeMarkFrom.shortAddress;
-	NSString * to = ([self.mapViewRouteSearchBar.placeMarkTo.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.toField.text : self.mapViewRouteSearchBar.placeMarkTo.shortAddress;
-						
+	NSString * from = (self.mapViewRouteSearchBar.placeMarkFrom == nil || [self.mapViewRouteSearchBar.placeMarkFrom.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.fromField.text : self.mapViewRouteSearchBar.placeMarkFrom.shortAddress;
+	NSString * to = (self.mapViewRouteSearchBar.placeMarkTo == nil || [self.mapViewRouteSearchBar.placeMarkTo.shortAddress isEqualToString:@""])? self.mapViewRouteSearchBar.toField.text : self.mapViewRouteSearchBar.placeMarkTo.shortAddress;
+    
 	[d setValue:from forKey:FROM_KEY];
 	[d setValue:to forKey:TO_KEY];
 	[d setValue:self.mapViewRouteSearchBar.timeField.text forKey:DATE_KEY];

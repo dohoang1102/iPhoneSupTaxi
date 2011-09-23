@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MapViewController.h"
+#import "MapViewControllerTouch.h"
 #import "MapViewAddressSearchBar.h"
 #import "Address.h"
 #import "AddressViewController.h"
@@ -19,7 +19,7 @@
 	PreferencesManager * prefManager;
 }
 
-@property (nonatomic, retain) MapViewController *mapController;
+@property (nonatomic, retain) MapViewControllerTouch *mapController;
 @property (nonatomic, retain) MapViewAddressSearchBar *addressSearchBar;
 
 @property (nonatomic, retain) Address *address;

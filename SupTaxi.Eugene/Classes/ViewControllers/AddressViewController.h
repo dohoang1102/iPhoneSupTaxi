@@ -24,11 +24,13 @@ enum AddressType { my_addresses, train_stations, airoports }; // 0, 1, 2
 @property (nonatomic, retain) IBOutlet UITableView *addressTable;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) UIBarButtonItem *addAddressButton;
+@property (nonatomic, retain) UIBarButtonItem *selectOnMapButton;
 
 @property (nonatomic, assign) enum AddressType addressType;
 
 @property (nonatomic, retain) ResponseAddress * _addressListResponse;
 
 @property (nonatomic, assign) BOOL needReloadData;
+@property (nonatomic, assign) BOOL allowsOnMapSelection;
 
 @end

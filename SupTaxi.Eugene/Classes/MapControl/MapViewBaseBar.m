@@ -135,7 +135,7 @@
 
 -(void)onShowRoute{
 	NSLog(@"Show points at map");
-	[delegate showPointsOnMap:[self placeMarks]];
+	[delegate showPointsOnMap:[self placeMarks] shouldResizeMap:YES];
 }
 
 -(void)startAddressSearch:(NSString *)address{
@@ -146,7 +146,7 @@
 }
 
 -(void)startPlacemarkSearch:(GoogleResultPlacemark *)placeMark{
-	self.googleManager = [[GoogleServiceManager alloc] initWithDelegate:self];
+	self.googleManager = [[[GoogleServiceManager alloc] initWithDelegate:self] autorelease];
 	[self.googleManager searchCoordinatesbyLongtitude:placeMark.coordinate.longitude latitude:placeMark.coordinate.latitude];
 }
 

@@ -361,7 +361,16 @@
 {
     [super viewDidAppear:animated];
     [self initPreferences];
-	[self reloadTableData];
+    
+    if (![prefManager.prefs.userGuid isEqualToString:@""]) {
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+        [d setValue:prefManager.prefs.userEmail forKey:USER_EMAIL_KEY];
+        [d setValue:prefManager.prefs.userPassword forKey:USER_PASSWORD_KEY];
+        
+        [NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+                                 toTarget:self 
+                               withObject:d];
+    }else [self reloadTableData];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

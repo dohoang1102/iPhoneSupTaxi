@@ -18,13 +18,6 @@
 
 @synthesize placeMark;
 
--(void)setPlaceMark:(GoogleResultPlacemark *)newPlaceMark{
-	[newPlaceMark retain];
-	[placeMark release];
-	placeMark = newPlaceMark;
-	[self onShowRoute];
-}
-
 #pragma mark Init/Dealloc
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -90,10 +83,10 @@
 	NSString *message = nil;
 	if ([[self.nameField text] isEqualToString:@""] || [[self.addressField text] isEqualToString:@""])
 		message = @"Пожалуйста заполните все поля";
-	
+	/*
 	if (!message && (![self placeMark]))
 		message = @"Адрес не может быть добавлен пока не определены координаты";
-	
+	*/
 	if (message) {
 		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alertView show];
