@@ -349,6 +349,7 @@
 	[searchBar release];
 	
 	[self.mapViewRouteSearchBar initWithSelfLocation];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{

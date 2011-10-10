@@ -153,6 +153,21 @@ didStartElement:(NSString *)elementName
 			
 			[_arr addObject:resp];
 			[resp release];
+        }else if ([TypeString isEqualToString:@"Nearest.Get"]) {
+			ResponseNearestAddress * resp = [[ResponseNearestAddress alloc] initWithResponseType:TypeString andResult:Result];
+            if (Result) {
+                Address * addr = [[Address alloc] inithWithId:[[attributeDict objectForKey:@"Id"] intValue] 
+                                                         name:[attributeDict objectForKey:@"Name"] 
+                                                      address:[attributeDict objectForKey:@"Address"] 
+                                                  addressArea:[attributeDict objectForKey:@"District"] 
+                                                         type:[[attributeDict objectForKey:@"Subtype"]intValue] 
+                                                          lon:[[attributeDict objectForKey:@"Lon"] doubleValue] 
+                                                          lat:[[attributeDict objectForKey:@"Lat"] doubleValue]];
+                [resp setAddress:addr];
+            }    
+			[_arr addObject:resp];
+			[resp release];
+            
 		}else {
 			Response * resp = [[Response alloc] initWithResponseType:TypeString result:Result andGuid:GuidString];
 			[_arr addObject:resp];

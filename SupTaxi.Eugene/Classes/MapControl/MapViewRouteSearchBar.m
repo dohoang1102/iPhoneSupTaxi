@@ -11,6 +11,12 @@
 #import "Address.h"
 #import "SupTaxiAppDelegate.h"
 #import	"RegisterViewController.h"
+#import "AppProgress.h"
+#import "ServerResponce.h"
+
+#define USER_GUID_KEY @"uGUID"
+#define LAT_KEY @"LAT_KEY"
+#define LON_KEY @"LON_KEY"
 
 @implementation MapViewRouteSearchBar
 
@@ -34,6 +40,66 @@
 @synthesize parentController;
 
 @synthesize daysVisible;
+
+- (void) GetNearestThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Поиск ближайшего адреса"];
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * guid = [d objectForKey:USER_GUID_KEY];
+        double lat = [[d objectForKey:LAT_KEY] doubleValue];
+		double lon = [[d objectForKey:LON_KEY] doubleValue];
+		if ([responce GetNearestAddressRequest:guid 
+                                      latitude:lat 
+                                     longitude:lon]) 
+		{
+            ResponseNearestAddress * response = nil;
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				response = [resultData objectAtIndex:0]; 
+			}
+			
+            if (response.address){
+			[self performSelectorOnMainThread:@selector(AddressesResult:) 
+								   withObject:response.address 
+								waitUntilDone:NO];
+            }
+		}else{
+            [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
+                                   withObject:nil 
+                                waitUntilDone:NO];
+        }
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	[pool release];
+}
+
+- (void) AddressResult:(id)obj
+{
+    if (obj != nil) {
+        //Address * address = (Address *)obj;
+        [self onAddressSelected:obj];
+        return;
+    }
+   // [self.fromField setText:[self.placeMarkFrom name]];
+	//[self.delegate setSelfLocationSearchEnabled:YES];
+}
+
+- (void) ShowConnectionAlert:(id)obj
+{
+	[self showAlertMessage:@"Проверьте интернет соединение!"];
+    //[self.fromField setText:[self.placeMarkFrom name]];
+	//[self.delegate setSelfLocationSearchEnabled:YES];
+}
 
 -(void)setDaysVisible:(BOOL)daysVisibleVal{
 	if (daysVisible == daysVisibleVal)
@@ -206,8 +272,21 @@
 		self.selfLocationPlacemark = [GoogleResultPlacemark googleResultPlaceMarkForSelfLocation];
 	}
 	self.placeMarkFrom = [GoogleResultPlacemark googleResultPlaceMarkForSelfLocation];
-	[self.fromField setText:[self.placeMarkFrom name]];
-	[self.delegate setSelfLocationSearchEnabled:YES];
+    
+    /// Call Get Nearest thread method
+    [self.fromField setText:[self.placeMarkFrom name]];
+    [self.delegate setSelfLocationSearchEnabled:YES];
+    
+    if ([prefManager.prefs.userGuid isEqualToString:@""]) return;
+    
+    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:3];
+    [d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
+    [d setValue:[NSString stringWithFormat:@"%f", self.placeMarkFrom.coordinate.latitude] forKey:LAT_KEY];
+    [d setValue:[NSString stringWithFormat:@"%f", self.placeMarkFrom.coordinate.longitude] forKey:LON_KEY];
+    
+    [NSThread detachNewThreadSelector:@selector(GetNearestThreadMethod:)
+                             toTarget:self 
+                           withObject:d];
 }
 
 -(void)onSelfLocationFound:(MKUserLocation *)location{
@@ -390,6 +469,17 @@
     [super onRequestFail];
     self.currentFieldName = nil;
     self.currentTextField = nil;
+}
+
+- (void) showAlertMessage:(NSString *)alertMessage
+{
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
 
 @end

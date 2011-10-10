@@ -81,6 +81,16 @@
 
 @end
 
+@interface ResponseNearestAddress : Response {
+	
+}
+
+@property (nonatomic, retain) Address * address;
+
+- (id)initWithResponseType:(NSString *)responseType andResult:(BOOL)result;
+
+@end
+
 @interface ResponsePreferred : NSObject {
 	
 }

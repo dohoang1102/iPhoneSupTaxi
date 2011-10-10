@@ -43,6 +43,7 @@
 	if ((self = [super init])) {
 		self.prefs = [[Preferences alloc] initWithPath:[self prefsFilePath]];
 		if (self.prefs.notFirstRun == NO) {
+            [self.prefs setNotFirstRun:YES];
 			[self initFields];
 		}
 	}

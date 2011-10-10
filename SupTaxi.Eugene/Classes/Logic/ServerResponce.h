@@ -52,6 +52,8 @@
 
 - (BOOL) UpdateUserRequest:(NSString*)userGuid password:(NSString*)password email:(NSString*)email firstName:(NSString*)fName secondName:(NSString*)sName city:(NSString*)city cNumber:(NSString*)cNumber cCustomer:(NSString*)cCustomer cCarrier:(NSString*)cCarrier phone:(NSString*)phone;
 
+- (BOOL) GetNearestAddressRequest:(NSString*)userGuid latitude: (float) latitude longitude: (float) longitude;
+
 + (NSString *)GetRootURL;
 
 

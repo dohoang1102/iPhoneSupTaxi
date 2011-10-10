@@ -289,6 +289,18 @@
 	return false;
 }
 
+- (BOOL) GetNearestAddressRequest:(NSString*)userGuid latitude: (float) latitude longitude: (float) longitude
+{
+    [self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"Nearest.Get\" Guid=\"%@\" Lat=\"%f\" Lon=\"%f\"/>", userGuid, latitude, longitude]];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
 
 - (void) Clear
 {

@@ -184,6 +184,25 @@
 
 @end
 
+@implementation ResponseNearestAddress
+
+@synthesize address;
+
+- (id)initWithResponseType:(NSString *)responseType andResult:(BOOL)result{
+    if ((self = [super initWithResponseType:responseType andResult:result])) {
+    }
+    
+    return self;
+}
+- (void)dealloc
+{
+	[address release];
+    [super dealloc];
+}
+
+@end
+
+
 @implementation ResponsePreferred
 
 @synthesize _carriers;
