@@ -42,7 +42,7 @@
 	return [placeMark autorelease];
 }
 
--(id)inithWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat
+-(id)initWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat
 {
 	self = [super init];
     if (self != nil) {
@@ -55,6 +55,16 @@
 		[self setLongitude:[NSNumber numberWithDouble:lon]];
 	}
 	return self;
+}
+
+-(void)initiateWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat
+{
+    [self setAddressId:addrId];
+    [self setAddress:addressString];
+    [self setAddressName:name];
+    [self setAddressType:type];
+    [self setAddressArea:area];
+    [self setLatitude:[NSNumber numberWithDouble:lat]];
 }
 
 - (void)dealloc

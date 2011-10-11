@@ -51,8 +51,6 @@
         
         frame = CGRectMake(boundsX+5, 5.0, boundsW-10, 40.0);
         self.lblFromTo.frame = frame;
-        /*frame = CGRectMake(boundsX+5, 25.0, boundsW-10, 20.0);
-        self.lblTo.frame = frame;*/
 		
         frame = CGRectMake(boundsX+5, 50, boundsW/2-30, 15.0);
         self.lblDate.frame = frame;
@@ -68,46 +66,17 @@
     if (self) {
         UIView *contentView = self.contentView;
 
-        self.lblFromTo = [self newFromToLabel];
+        self.lblFromTo = [[self newFromToLabel] autorelease];
         [contentView addSubview:lblFromTo];
-        [self.lblFromTo release];
-/*
-        self.lblTo = [self newFromToLabel];
-        [contentView addSubview:lblTo];
-        [self.lblTo release];     
-		*/
-		self.lblDate = [self newDateStatusLabel:UITextAlignmentLeft];
-        [contentView addSubview:lblDate];
-        [self.lblDate release];
-		
-        self.lblStatus = [self newDateStatusLabel:UITextAlignmentRight];
-        [contentView addSubview:lblStatus];
-        [self.lblStatus release]; 
-    }
-    return self;
-}
+        //self.lblFromTo = nil;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
-        UIView *contentView = self.contentView;
-        
-        self.lblFromTo = [self newFromToLabel];
-        [contentView addSubview:lblFromTo];
-        [self.lblFromTo release];
-		/*
-		 self.lblTo = [self newFromToLabel];
-		 [contentView addSubview:lblTo];
-		 [self.lblTo release];     
-		 */
-		self.lblDate = [self newDateStatusLabel:UITextAlignmentLeft];
+		self.lblDate = [[self newDateStatusLabel:UITextAlignmentLeft] autorelease];
         [contentView addSubview:lblDate];
-        [self.lblDate release];
+        //self.lblDate = nil;
 		
-        self.lblStatus = [self newDateStatusLabel:UITextAlignmentRight];
+        self.lblStatus = [[self newDateStatusLabel:UITextAlignmentRight] autorelease];
         [contentView addSubview:lblStatus];
-        [self.lblStatus release]; 
-		
+        //self.lblStatus = nil; 
     }
     return self;
 }
@@ -119,6 +88,9 @@
 
 - (void)dealloc
 {
+    [lblDate release];
+    [lblFromTo release];
+    [lblStatus release];
     [super dealloc];
 }
 

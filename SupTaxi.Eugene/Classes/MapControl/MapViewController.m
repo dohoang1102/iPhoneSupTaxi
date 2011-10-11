@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import <CoreGraphics/CGColorSpace.h>
 
 @implementation MapViewController
 
@@ -118,14 +119,15 @@
 #pragma mark Helping Methods
 
 -(void) updateRouteView {
+    CGColorSpaceRef cRef = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = 	CGBitmapContextCreate(nil, 
 												  routeView.frame.size.width, 
 												  routeView.frame.size.height, 
 												  8, 
 												  4 * routeView.frame.size.width,
-												  CGColorSpaceCreateDeviceRGB(),
+												  cRef,
 												  kCGImageAlphaPremultipliedLast);
-	
+    CGColorSpaceRelease(cRef);
 	CGContextSetStrokeColorWithColor(context, lineColor.CGColor);
 	CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 1.0);
 	CGContextSetLineWidth(context, 3.0);
@@ -250,7 +252,7 @@
 		NSString *userLocIdentifier = @"userLocation";
 		MKAnnotationView *view = [theMapView dequeueReusableAnnotationViewWithIdentifier:userLocIdentifier];
 		if (!view) {
-			view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:userLocIdentifier];
+			view = [[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:userLocIdentifier] autorelease];
 		}
 		return view;
 	}
@@ -258,7 +260,7 @@
 	NSString *identifier = @"annotation";
 	MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[theMapView dequeueReusableAnnotationViewWithIdentifier:identifier];
 	if (!annotationView) {
-		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+		annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier] autorelease];
 	} else
 		[annotationView setAnnotation:annotation];
 	[annotationView setPinColor:[(GoogleResultPlacemark *)annotation colorForPin]];

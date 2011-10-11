@@ -28,7 +28,7 @@
 
 - (UIImageView *)newImage
 {
-    UIImageView *newImage = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
+    UIImageView *newImage = [[UIImageView alloc] initWithFrame:CGRectZero];
     [newImage setContentMode:UIViewContentModeScaleAspectFit];
     return newImage;
 }
@@ -38,8 +38,7 @@
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
     UICustomSwitch *newSwitcher = [UICustomSwitch switchWithLeftText:@"I" andRight:@"O"]; 
 	[newSwitcher setTintColor: color];
-    
-    return newSwitcher;
+    return [newSwitcher retain];
 }
 
 - (void)layoutSubviews
@@ -69,16 +68,21 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
 		UIView *contentView = self.contentView;
-        
-        self.carrierLogo = [self newImage];
+        UIImageView * img = [self newImage];
+        self.carrierLogo = img;
+        [img release];
         [contentView addSubview:carrierLogo];
-        [self.carrierLogo release];
+        self.carrierLogo = nil;
 
-        self.lblCarrierName = [self newLabel];
+        UILabel * lbl = [self newLabel];
+        self.lblCarrierName = lbl;
+        [lbl release];
         [contentView addSubview:lblCarrierName];
-        [self.lblCarrierName release];
+        self.lblCarrierName = nil;
         
-		self.switcher = [self newSwitcher];
+        UICustomSwitch * sw = [self newSwitcher];
+		self.switcher = sw;
+        [sw release];
         [contentView addSubview:switcher];
 		
     }

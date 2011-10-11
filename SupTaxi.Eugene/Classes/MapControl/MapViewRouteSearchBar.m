@@ -83,12 +83,23 @@
 	[pool release];
 }
 
-- (void) AddressResult:(id)obj
+- (void) AddressesResult:(id)obj
 {
     if (obj != nil) {
+        Address *addr = (Address *)obj;
+        GoogleResultPlacemark *placeMark = [addr googleResultPlacemark];
+        [fromField setText:[addr addressName]];
+        self.placeMarkFrom = placeMark;
+
+        if ([placeMark coordinatesInitialized]) {
+            [self onShowRoute];
+        } else {
+            self.currentFieldName = addr.addressName;
+            [self startAddressSearch:[addr address]];
+        }
+        
         //Address * address = (Address *)obj;
-        [self onAddressSelected:obj];
-        return;
+        //[self onAddressSelected:obj];
     }
    // [self.fromField setText:[self.placeMarkFrom name]];
 	//[self.delegate setSelfLocationSearchEnabled:YES];

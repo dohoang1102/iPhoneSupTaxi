@@ -92,7 +92,7 @@
 }
 
 - (NSMutableArray*) getAddressesByType: (NSInteger)type{
-	NSMutableArray * returnArray = [[NSMutableArray alloc] init];
+	NSMutableArray * returnArray = [[[NSMutableArray alloc] init] autorelease];
 	if (_addressListResponse == nil) {
 		return [NSArray array];
 	}
@@ -101,7 +101,7 @@
 			[returnArray addObject:addr];
 	}
 	
-	return [returnArray autorelease];
+	return returnArray;
 }
 			 
 -(NSArray *)addresses{

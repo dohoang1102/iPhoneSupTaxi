@@ -17,7 +17,7 @@
 @property (nonatomic, assign) id<GoogleServiceManagerDelegate> delegate;
 @property (nonatomic, retain) NSMutableData *dataFromConnection;
 
--(id)initWithDelegate:(id<GoogleServiceManagerDelegate>)googleServiceManagerDelegate;
+-(id)initWithDelegate:(id)googleServiceManagerDelegate;
 
 - (void) searchCoordinatesForAddress:(NSString *)inAddress;
 -(void)searchCoordinatesbyLongtitude:(double)longitude latitude:(double)latitude;

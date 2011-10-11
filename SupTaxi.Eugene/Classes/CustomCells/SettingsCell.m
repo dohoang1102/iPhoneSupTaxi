@@ -56,25 +56,13 @@
     if (self) {
         UIView *contentView = self.contentView;
         
-        self.titleLabel = [self newLabel];
+        self.titleLabel = [[self newLabel] autorelease];
         [contentView addSubview:titleLabel];
-        [self.titleLabel release];
+        //self.titleLabel = nil;
         
-        self.textField = [self newTextField];
+        self.textField = [[self newTextField] autorelease];
         [contentView addSubview:textField];
         //[self.textField release];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if ((self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier])) {
-        UIView *contentView = self.contentView;
-        
-        self.titleLabel = [self newLabel];
-        [contentView addSubview:titleLabel];
-        [self.titleLabel release];
     }
     return self;
 }
@@ -88,6 +76,8 @@
 
 - (void)dealloc
 {
+    [titleLabel release];
+    [textField release];
     [super dealloc];
 }
 

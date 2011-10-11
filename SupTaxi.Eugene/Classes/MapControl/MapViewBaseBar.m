@@ -139,7 +139,9 @@
 }
 
 -(void)startAddressSearch:(NSString *)address{
-	self.googleManager = [[GoogleServiceManager alloc] initWithDelegate:self];
+    GoogleServiceManager * gmanager = [[GoogleServiceManager alloc] initWithDelegate:self];
+	self.googleManager = gmanager;
+    [gmanager release];
 	NSString *beforeAddress = ADD_BEFORE_ADDRESS;
 	NSString *addressToFind = [NSString stringWithFormat:@"%@%@", beforeAddress, address];
 	[self.googleManager searchCoordinatesForAddress:addressToFind];

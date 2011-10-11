@@ -54,7 +54,7 @@
 - (BOOL) checkIfAuthenticated;
 - (void) loadAddressList:(id)sender;
 - (void) showAlertMessage:(NSString *)alertMessage;
-- (void) AddressResult:(id)obj;
+- (void) AddressesResult:(id)obj;
 - (void) ShowConnectionAlert:(id)obj;
 - (void) GetNearestThreadMethod:(id)obj;
 

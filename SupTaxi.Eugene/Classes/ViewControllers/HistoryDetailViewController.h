@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Order.h"
+#import "Address.h"
 
 @interface HistoryDetailViewController : UIViewController {
 
@@ -29,5 +30,6 @@
 
 - (IBAction)btnAddFrom:(id)sender;
 - (IBAction)btnAddTo:(id)sender;
+- (Address*) getAddress:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon;
 
 @end

@@ -13,7 +13,7 @@
 
 + (NSString *) historyStatusById:(NSString*)guid
 {
-	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
 	[dict setObject:@"Новый" forKey:@"0"];
 	[dict setObject:@"Есть предложения" forKey:@"1"];
 	[dict setObject:@"Подтверждено предложение" forKey:@"2"];
@@ -33,7 +33,7 @@
 
 + (NSString *) getCarTypeString: (NSString *) carId
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
 	[dict setObject:@"Эконом" forKey:@"1"];
 	[dict setObject:@"Грузовые" forKey:@"2"];
 	[dict setObject:@"VIP" forKey:@"3"];

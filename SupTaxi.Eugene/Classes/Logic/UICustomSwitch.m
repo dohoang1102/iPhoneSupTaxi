@@ -58,12 +58,12 @@
 	self.on = NO;
 	self.value = 0.0;
 	
-	self.clippingView = [[UIView alloc] initWithFrame:CGRectMake(4,2,87,23)];
+	self.clippingView = [[[UIView alloc] initWithFrame:CGRectMake(4,2,87,23)] autorelease];
 	self.clippingView.clipsToBounds = YES;
 	self.clippingView.userInteractionEnabled = NO;
 	self.clippingView.backgroundColor = [UIColor clearColor];
 	[self addSubview:self.clippingView];
-	[self.clippingView release];
+	self.clippingView = nil;
 	
 	NSString *leftLabelText = NSLocalizedString(@"ON","Custom UISwitch ON label. If localized to empty string then I/O will be used");
 	if ([leftLabelText length] == 0)	
@@ -71,7 +71,7 @@
 		leftLabelText = @"l";		// use helvetica lowercase L to be a 1. 
 	}
 	
-	self.leftLabel = [[UILabel alloc] init];
+	self.leftLabel = [[[UILabel alloc] init] autorelease];
 	self.leftLabel.frame = CGRectMake(0, 0, 48, 23);
 	self.leftLabel.text = leftLabelText;
 	self.leftLabel.textAlignment = UITextAlignmentCenter;
@@ -81,7 +81,7 @@
 	//		self.leftLabel.shadowColor = [UIColor redColor];
 	//		self.leftLabel.shadowOffset = CGSizeMake(0,0);
 	[self.clippingView addSubview:self.leftLabel];
-	[self.leftLabel release];
+	self.leftLabel = nil;
 	
 	
 	NSString *rightLabelText = NSLocalizedString(@"OFF","Custom UISwitch OFF label. If localized to empty string then I/O will be used");
@@ -90,7 +90,7 @@
 		rightLabelText = @"O";	// use helvetica uppercase o to be a 0. 
 	}
 	
-	self.rightLabel = [[UILabel alloc] init];
+	self.rightLabel = [[[UILabel alloc] init] autorelease];
 	self.rightLabel.frame = CGRectMake(95, 0, 48, 23);
 	self.rightLabel.text = rightLabelText;
 	self.rightLabel.textAlignment = UITextAlignmentCenter;
@@ -100,7 +100,7 @@
 	//		self.rightLabel.shadowColor = [UIColor redColor];
 	//		self.rightLabel.shadowOffset = CGSizeMake(0,0);
 	[self.clippingView addSubview:self.rightLabel];
-	[self.rightLabel release];
+	self.rightLabel = nil;
 	
 	
 }

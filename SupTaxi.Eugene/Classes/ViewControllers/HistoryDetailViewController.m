@@ -88,28 +88,26 @@
 
 - (IBAction)btnAddFrom:(id)sender
 {
-    Address * addr = [[Address alloc] inithWithId:0 
-                                             name:@"" 
-                                          address:orderToView.from 
-                                      addressArea:orderToView.fromArea 
-                                             type:0
-                                              lon:orderToView.fromLon 
-                                              lat:orderToView.fromLat];
+    Address * addr = [self getAddress:orderToView.from area:orderToView.fromArea lat:orderToView.fromLon lon:orderToView.fromLat];
     [self addAddress:addr];
-    [addr release];
 }
 
 - (IBAction)btnAddTo:(id)sender
 {
-    Address * addr = [[Address alloc] inithWithId:0 
-                                             name:@"" 
-                                          address:orderToView.to 
-                                      addressArea:orderToView.toArea 
-                                             type:0
-                                              lon:orderToView.toLon 
-                                              lat:orderToView.toLat];
+    Address * addr = [self getAddress:orderToView.to area:orderToView.toArea lat:orderToView.toLon lon:orderToView.toLat];
     [self addAddress:addr];
-    [addr release];
+}
+
+- (Address*) getAddress:(NSString*)address area:(NSString*)area lat:(double)lat lon:(double)lon
+{
+    Address * addr = [[Address alloc] initWithId:0 
+                                             name:@"" 
+                                          address:address 
+                                      addressArea:area 
+                                             type:0
+                                              lon:lon 
+                                              lat:lat];
+    return [addr autorelease];
 }
 
 -(void)addAddress:(Address *)address{

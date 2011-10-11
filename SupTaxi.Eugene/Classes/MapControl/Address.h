@@ -21,7 +21,8 @@
 @property (nonatomic, assign) NSInteger addressType; //0 - general 1- station 2 - aero
 @property (nonatomic, retain) NSString * addressArea;
 
--(id)inithWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat;
+-(id)initWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat;
+-(void)initiateWithId:(NSInteger) addrId name:(NSString*)name address:(NSString*)addressString addressArea:(NSString*)area type:(NSInteger)type lon:(double)lon lat:(double)lat;
 -(void)initWithGoogleResultPlacemark:(GoogleResultPlacemark *)placeMark;
 -(GoogleResultPlacemark *)googleResultPlacemark;
 

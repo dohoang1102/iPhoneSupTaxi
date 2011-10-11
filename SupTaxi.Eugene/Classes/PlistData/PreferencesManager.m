@@ -34,6 +34,16 @@
 	if (!prefsFilePath) {
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 		NSString *appApplicationSupportDirectoryPath = [paths objectAtIndex:0];
+        
+        BOOL isDir;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:appApplicationSupportDirectoryPath isDirectory:&isDir] || !isDir){
+            NSError *error = nil;
+            [[NSFileManager defaultManager] createDirectoryAtPath:appApplicationSupportDirectoryPath withIntermediateDirectories:YES attributes:nil error:&error];
+            if (error) {
+                NSLog(@"Unable to create path '%@': %@", appApplicationSupportDirectoryPath, error);
+            }
+        }
+        
 		prefsFilePath = [[appApplicationSupportDirectoryPath stringByAppendingPathComponent:@"Preferences.plist"] retain];
 	}
 	return prefsFilePath;
@@ -41,7 +51,9 @@
 
 -(id)init{
 	if ((self = [super init])) {
-		self.prefs = [[Preferences alloc] initWithPath:[self prefsFilePath]];
+        Preferences * pref = [[Preferences alloc] initWithPath:[self prefsFilePath]];
+		self.prefs = pref;
+        [pref release];
 		if (self.prefs.notFirstRun == NO) {
             [self.prefs setNotFirstRun:YES];
 			[self initFields];

@@ -238,7 +238,7 @@
 {
     OrderShowCell *cell = (OrderShowCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
     if (cell == nil) {
-        cell = [[[OrderShowCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CellId"] autorelease];        
+        cell = [[[OrderShowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellId"] autorelease];        
     }
     
     Offer *offer = [_resultResponse._offers objectAtIndex:indexPath.row];
@@ -270,6 +270,7 @@
     [lblTarif setText:offer.carrierDescription];
     
     [innerOfferFooterView_ addSubview:lblTarif];
+    [lblTarif release];
     [innerFooterView_ setHidden:YES];
     [innerOfferFooterView_ setHidden:NO];
 }

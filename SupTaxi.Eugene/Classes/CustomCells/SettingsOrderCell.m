@@ -31,8 +31,7 @@
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
     UICustomSwitch *newSwitcher = [UICustomSwitch switchWithLeftText:@"I" andRight:@"O"]; 
 	[newSwitcher setTintColor: color];
-    
-    return newSwitcher;
+    return [newSwitcher retain];
 }
 
 - (void)layoutSubviews
@@ -63,34 +62,18 @@
     if (self) {
         UIView *contentView = self.contentView;
         
-        self.titleLabel = [self newLabel];
+        self.titleLabel = [[self newLabel] autorelease];
         [contentView addSubview:titleLabel];
-        [self.titleLabel release];
+        //self.titleLabel = nil;
         
-        self.valueLabel = [self newLabel];
+        self.valueLabel = [[self newLabel] autorelease];
         [contentView addSubview:valueLabel];
-        [self.valueLabel release];
+        //self.valueLabel = nil;
         
-        self.switcher = [self newSwitcher];
+        self.switcher = [[self newSwitcher] autorelease];
         [contentView addSubview:switcher];
         //[self.switcher release];
         
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if ((self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier])) {
-        UIView *contentView = self.contentView;
-        
-        self.titleLabel = [self newLabel];
-        [contentView addSubview:titleLabel];
-        [self.titleLabel release];
-        
-        self.valueLabel = [self newLabel];
-        [contentView addSubview:valueLabel];
-        [self.valueLabel release];
     }
     return self;
 }
@@ -104,6 +87,9 @@
 
 - (void)dealloc
 {
+    [titleLabel release];
+    [valueLabel release];
+    [switcher release];
     [super dealloc];
 }
 

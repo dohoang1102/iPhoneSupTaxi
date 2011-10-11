@@ -35,7 +35,7 @@ didStartElement:(NSString *)elementName
 	
 	if ([elementName isEqualToString:@"Address"])
 	{
-		Address * address = [[Address alloc] inithWithId:[[attributeDict objectForKey:@"Id"] intValue]  
+		Address * address = [[Address alloc] initWithId:[[attributeDict objectForKey:@"Id"] intValue]  
                                                     name:[attributeDict objectForKey:@"Name"] 
                                                  address:[attributeDict objectForKey:@"Address"] 
                                              addressArea:[attributeDict objectForKey:@"District"]
@@ -44,8 +44,8 @@ didStartElement:(NSString *)elementName
                                                      lat:[[attributeDict objectForKey:@"Lat"] doubleValue]]; 
 		ResponseAddress * response = (ResponseAddress *) [_arr objectAtIndex:0];
 		[response addAnAddress:address];
-		[_arr insertObject:response atIndex:0];
-		[address release];
+        [address release];
+		[_arr insertObject:response atIndex:0];		
 		
 	}else if ([elementName isEqualToString:@"Offer"])
 	{
@@ -156,7 +156,7 @@ didStartElement:(NSString *)elementName
         }else if ([TypeString isEqualToString:@"Nearest.Get"]) {
 			ResponseNearestAddress * resp = [[ResponseNearestAddress alloc] initWithResponseType:TypeString andResult:Result];
             if (Result) {
-                Address * addr = [[Address alloc] inithWithId:[[attributeDict objectForKey:@"Id"] intValue] 
+                Address * addr = [[Address alloc] initWithId:[[attributeDict objectForKey:@"Id"] intValue] 
                                                          name:[attributeDict objectForKey:@"Name"] 
                                                       address:[attributeDict objectForKey:@"Address"] 
                                                   addressArea:[attributeDict objectForKey:@"District"] 
@@ -164,6 +164,7 @@ didStartElement:(NSString *)elementName
                                                           lon:[[attributeDict objectForKey:@"Lon"] doubleValue] 
                                                           lat:[[attributeDict objectForKey:@"Lat"] doubleValue]];
                 [resp setAddress:addr];
+                [addr release];
             }    
 			[_arr addObject:resp];
 			[resp release];

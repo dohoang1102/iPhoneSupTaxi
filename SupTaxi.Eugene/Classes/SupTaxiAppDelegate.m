@@ -48,6 +48,9 @@
 								   withObject:nil 
 								waitUntilDone:NO];
 	}
+    
+    [responce release];
+    
 	[progress StopProcessing:@"Готово" andHideTime:0.5];
 	
 	[pool release];

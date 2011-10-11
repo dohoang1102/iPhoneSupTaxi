@@ -24,9 +24,9 @@
 
 #pragma mark Init/dealloc
 
--(id)initWithDelegate:(id<GoogleServiceManagerDelegate>)googleServiceManagerDelegate{
+-(id)initWithDelegate:(id)googleServiceManagerDelegate{
 	if ((self = [super init])) {
-		self.delegate = googleServiceManagerDelegate;
+		self.delegate = (id<GoogleServiceManagerDelegate>)googleServiceManagerDelegate;
 	}
 	return self;
 }

@@ -7,6 +7,7 @@
 //
 
 #import "AditionalPrecompileds.h"
+#import <QuartzCore/CALayer.h>
 
 #ifdef __OBJC__
 

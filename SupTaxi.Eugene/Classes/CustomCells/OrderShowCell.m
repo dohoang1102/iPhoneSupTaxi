@@ -43,7 +43,7 @@
 
 - (UIOfferImage *)newImage
 {
-    UIOfferImage *newImage = [[[UIOfferImage alloc] initWithFrame:CGRectZero] autorelease];
+    UIOfferImage *newImage = [[UIOfferImage alloc] initWithFrame:CGRectZero];
     [newImage setContentMode:UIViewContentModeScaleAspectFit];
     return newImage;
 }
@@ -53,8 +53,7 @@
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
     UICustomSwitch *newSwitcher = [UICustomSwitch switchWithLeftText:@"I" andRight:@"O"]; 
 	[newSwitcher setTintColor: color];
-    
-    return newSwitcher;
+    return [newSwitcher retain];
 }
 
 - (void)layoutSubviews
@@ -87,39 +86,22 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *contentView = self.contentView;
-
-        self.carrierLogo = [self newImage];
+        self.carrierLogo = [[self newImage] autorelease];
         [contentView addSubview:carrierLogo];
-        [self.carrierLogo release];
+        //self.carrierLogo =nil;
 
-        self.timeLabel = [self newLabel];
+        self.timeLabel = [[self newLabel] autorelease];
         [contentView addSubview:timeLabel];
-        [self.timeLabel release];
+        //self.timeLabel = nil;
 
-        self.priceLabel = [self newLabel];
+        self.priceLabel = [[self newLabel] autorelease];
         [contentView addSubview:priceLabel];
-        [self.priceLabel release];
+        //self.priceLabel = nil;
  
-        self.switcher = [self newSwitcher];
+        self.switcher = [[self newSwitcher] autorelease];
         [contentView addSubview:switcher];
-        [self.switcher release];
+        //self.switcher = nil;
         
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
-        UIView *contentView = self.contentView;
-        
-        self.priceLabel = [self newLabel];
-        [contentView addSubview:priceLabel];
-        [self.priceLabel release];
-        
-        self.timeLabel = [self newLabel];
-        [contentView addSubview:timeLabel];
-        [self.timeLabel release];
     }
     return self;
 }
@@ -133,10 +115,10 @@
 
 - (void)dealloc
 {
-//    [priceLabel release];
-//    [timeLabel release];
-//    [carrierLogo release];
-//    [switcher release];
+    [priceLabel release];
+    [timeLabel release];
+    [carrierLogo release];
+    [switcher release];
     [super dealloc];
 }
 

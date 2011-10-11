@@ -87,8 +87,9 @@
 	NSString *routeLine = [routesArray objectAtIndex:0];
 	NSString *distance = [[[results valueForKeyPath:@"routes.legs.distance.text"] objectAtIndex:0] objectAtIndex:0];
 	NSString *time = [[[results valueForKeyPath:@"routes.legs.duration.text"] objectAtIndex:0] objectAtIndex:0];
-	
-	NSArray *routes = [self decodePolyLine:[routeLine mutableCopy]];
+	NSMutableString * rLineCopy = [routeLine mutableCopy];
+	NSArray *routes = [self decodePolyLine:rLineCopy];
+    [rLineCopy release];
 	[delegate onRoutesCalculated:routes distance:distance time:time];
 }
 
