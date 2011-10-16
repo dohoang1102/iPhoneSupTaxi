@@ -11,11 +11,23 @@
 #import	"Constants.h"
 #import "Address.h"
 #import "AddAddressViewController.h"
+#import "AppProgress.h"
+#import "ServerResponce.h"
+#import "SupTaxiAppDelegate.h"
+
+#define USER_GUID_KEY @"uGUID"
+#define HID_KEY @"HID_KEY"
 
 @interface HistoryDetailViewController(Private)
 
 -(void)onBack:(id)sender;
+-(void)onDel:(id)sender;
 -(void)addAddress:(Address *)address;
+
+- (void) DelHistoryThreadMethod:(id)obj;
+- (void) DelHistoryResult:(id)obj;
+
+- (void) showAlertMessage:(NSString *)alertMessage;
 
 @end
 
@@ -30,12 +42,63 @@
 
 @synthesize lblSchedule;
 @synthesize lblCType;
+@synthesize _response;
+
+- (void) DelHistoryThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Удаляем запись"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * guid = [d objectForKey:USER_GUID_KEY];
+		NSInteger hId = [[d objectForKey:HID_KEY] intValue];
+		
+		if ([responce DelOrdersHistoryRequest:guid hId:hId])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._response = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(DelHistoryResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) DelHistoryResult:(id)obj
+{
+	if (!_response || _response._result == NO)
+		[self showAlertMessage:@"Не удалось удалить адрес, попробуйте, пожалуйста, еще раз!"];
+	if (_response._result == YES) {
+		[[self navigationController] popViewControllerAnimated:YES];
+	}
+}
 
 -(void)initProperties{
+    
+    prefManager = [SupTaxiAppDelegate sharedAppDelegate].prefManager;
+    
 	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
 	
 	UIBarButtonItem *backButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Назад" andTarget:self andSelector:@selector(onBack:)];
 	self.navigationItem.leftBarButtonItem = backButton;
+    
+    UIBarButtonItem *delButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Удалить" andTarget:self andSelector:@selector(onDel:)];
+	self.navigationItem.rightBarButtonItem = delButton;
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
     img.backgroundColor = [UIColor clearColor];
@@ -45,6 +108,16 @@
 
 -(void)onBack:(id)sender{
 	[[self navigationController] popViewControllerAnimated:YES];
+}
+
+-(void)onDel:(id)sender{
+    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:3];
+	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
+	[d setValue:[NSString stringWithFormat:@"%i", orderToView.orderId] forKey:HID_KEY];
+    
+	[NSThread detachNewThreadSelector:@selector(DelHistoryThreadMethod:)
+                             toTarget:self 
+                           withObject:d];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -118,6 +191,7 @@
 }
 
 - (void)dealloc {
+    [_response release];
 	[lblTime release];
 	[lblFrom release];
 	[lblTo release];
@@ -135,6 +209,17 @@
 - (void) SetOrder:(Order*)order
 {
 	orderToView = order;
+}
+
+- (void) showAlertMessage:(NSString *)alertMessage
+{
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"" 
+													 message:alertMessage 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
 
 @end

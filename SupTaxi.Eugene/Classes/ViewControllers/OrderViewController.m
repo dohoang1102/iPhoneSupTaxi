@@ -147,12 +147,12 @@
 }
 
 - (void) ShowOrderOffers:(id)obj
-{
-    [self setCurrentOrderId:nil];
-    
-	[cViewController release];
+{   
+    [cViewController release];
 	cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
+    [cViewController setOrderId:currentOrderId];
 	[cViewController setResponce: _offerResponse];
+    [self setCurrentOrderId:nil];
 	[self.navigationController pushViewController:cViewController animated:YES];
 }
 
@@ -213,6 +213,7 @@
 								   withObject:nil 
 								waitUntilDone:NO];
 		}else{
+            [self setCurrentOrderId:nil];
             [self performSelectorOnMainThread:@selector(ShowConnectionAlert:) 
                                    withObject:nil 
                                 waitUntilDone:NO];
@@ -253,7 +254,7 @@
 	[NSThread detachNewThreadSelector:@selector(CheckOrderOffersThreadMethod:)
 							 toTarget:self 
 						   withObject:currentOrderId];
-    [self setCurrentOrderId:nil];
+    //[self setCurrentOrderId:nil];
 }
 
 #pragma mark - Action methods viewController
@@ -341,6 +342,7 @@
 	[[newMapViewController view] setFrame:[[self view] bounds]];
 	[[self view] addSubview:[newMapViewController view]];
 	self.mapViewController = newMapViewController;
+	[newMapViewController setMapManipulationsEnabled:YES];
 	[newMapViewController release];
 	
 	MapViewRouteSearchBar *searchBar = [[MapViewRouteSearchBar alloc] init];
@@ -406,13 +408,14 @@
 -(BOOL)textFieldValidate {
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Пожалуйста, заполните все поля." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	NSArray *fieldArray;
+	NSMutableArray *fieldArray = [[NSMutableArray alloc] init];
 	int i = 0;
 	
-	fieldArray = [[NSArray arrayWithObjects: 
-				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.fromField.text],
-				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.toField.text],
-				   [NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.timeField.text],nil] retain];
+    [fieldArray addObject:[NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.fromField.text]];
+    [fieldArray addObject:[NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.toField.text]];
+    [fieldArray addObject:[NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.timeField.text]];
+    if (prefManager.prefs.userHasRegularOrder)
+        [fieldArray addObject:[NSString stringWithFormat:@"%@",self.mapViewRouteSearchBar.daysField.text]];
 	
 	@try {
 		for (NSString *fieldText in fieldArray){

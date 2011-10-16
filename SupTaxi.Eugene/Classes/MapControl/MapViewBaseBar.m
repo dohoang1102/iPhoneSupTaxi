@@ -21,9 +21,12 @@
 @synthesize hidden;
 
 @synthesize delegate;
+@synthesize knownAddressesDelegate;
 @synthesize googleManager;
 
 @synthesize requestedCurrentLocation;
+@synthesize blinkTimer;
+@synthesize blinkCount;
 
 #pragma mark Init/Dealloc
 
@@ -38,6 +41,9 @@
 
 - (void)dealloc
 {
+	[blinkTimer invalidate];
+	[blinkTimer release];
+	
 	[googleManager release];
 	[hideButton release];
 	
@@ -104,6 +110,40 @@
 	
 }
 
+-(NSString *)nameForKnownAdderessByLocation:(CLLocationCoordinate2D)coordinate{
+	if (knownAddressesDelegate == nil)
+		return nil;
+	for (GoogleResultPlacemark *placeMark in [knownAddressesDelegate knownAddresses])
+		if (placeMark.coordinate.longitude == coordinate.longitude 
+			&& placeMark.coordinate.latitude == coordinate.latitude) {
+			return [placeMark name];
+		}
+
+	return nil;
+}
+
+#pragma mark HideButton blinking
+
+
+-(void)scheduleBlinkTimer{
+	self.blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(onChangeHiddenButtonColor) userInfo:nil repeats:NO];
+}
+
+-(void)onChangeHiddenButtonColor{
+	UIColor *newColor = self.blinkCount % 2 == 1 ? [UIColor blackColor] : [UIColor cyanColor];
+	self.blinkCount++;
+	[hideButton setBackgroundColor:newColor];
+	if (self.blinkCount < 8)
+		[self scheduleBlinkTimer];
+	else
+		self.blinkTimer = nil;
+}
+
+-(void)setupBlinkTimer{
+	self.blinkCount = 0;
+	[self scheduleBlinkTimer];
+}
+
 -(void)hide{
 	float hiddenHeight = hideButton.frame.origin.y;
 	CGRect curFrame = self.view.frame;
@@ -113,7 +153,8 @@
 	[self resignEditFields];
 	
 	[UIView beginAnimations:@"Hiding searchBar" context:nil];
-	
+	[UIView setAnimationDelegate:self];
+	[UIView setAnimationDidStopSelector:@selector(setupBlinkTimer)];
 	CGRect newSearchBarFrame = CGRectMake(curFrame.origin.x, -hiddenHeight, curFrame.size.width, curFrame.size.height);
 	[self.view setFrame:newSearchBarFrame];
 	hidden = YES;

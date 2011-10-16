@@ -30,7 +30,7 @@
 @property (nonatomic, retain) GoogleServiceDirectionsManager *googleManager;
 
 -(void)initPreferences;
--(void) updateRouteView;
+-(void)updateRouteView:(BOOL)shouldResizeMap;
 -(void)hideRouteView;
 
 @end

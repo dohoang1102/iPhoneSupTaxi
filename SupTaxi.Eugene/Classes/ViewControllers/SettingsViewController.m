@@ -341,19 +341,19 @@
         if ([prefManager.prefs.userGuid isEqualToString:@""] && [prefManager.prefs.userEmail isEqualToString:@""]) {
             //TODO: Save userData from server
             [prefManager updateUserCredentialsWithEmail:self.supTaxiID andPassword:self.userPassword];
-            [prefManager updateUserGuid:_loginResponse._guid];
-            [prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
-            [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
-            
-            [prefManager updateUserHasContract:![_loginResponse._contractNumber isEqualToString:@""]];
-            
-            [prefManager updateUserContractWithNumber:_loginResponse._contractNumber 
-                                     contractCustomer:_loginResponse._contractCustomer
-                                   andContractCarrier:_loginResponse._contractCarrier];
-            [prefManager updateUserCity:_loginResponse._city];
-            
-            [self reloadTableData];
         }
+        [prefManager updateUserGuid:_loginResponse._guid];
+        [prefManager updateUserDataWithName:_loginResponse._firstName andSecondName:_loginResponse._secondName];
+        [prefManager updateUserHasRegularOrder:self.userHasRegularOrder];
+        
+        [prefManager updateUserHasContract:![_loginResponse._contractNumber isEqualToString:@""]];
+        
+        [prefManager updateUserContractWithNumber:_loginResponse._contractNumber 
+                                 contractCustomer:_loginResponse._contractCustomer
+                               andContractCarrier:_loginResponse._contractCarrier];
+        [prefManager updateUserCity:_loginResponse._city];
+        
+        [self reloadTableData];
 	}
 }
 
@@ -377,6 +377,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self initPreferences];
+    /*
+    if (![prefManager.prefs.userGuid isEqualToString:@""]) {
+        NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+        [d setValue:prefManager.prefs.userEmail forKey:USER_EMAIL_KEY];
+        [d setValue:prefManager.prefs.userPassword forKey:USER_PASSWORD_KEY];
+        
+        [NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
+                                 toTarget:self 
+                               withObject:d];
+    }else [self reloadTableData];
+     */
 }
 
 - (void) initPreferences

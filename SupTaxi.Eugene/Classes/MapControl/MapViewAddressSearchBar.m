@@ -76,7 +76,11 @@
 
 -(void)setFoundPlaceMark:(GoogleResultPlacemark *)newPlaceMark{
 	self.placeMark = newPlaceMark;
-	[addressField setText:[self.placeMark name]];
+
+	//search for such place in address book, and get its name if it exists
+	NSString *customName = [self nameForKnownAdderessByLocation:self.placeMark.coordinate];
+	NSString *name = customName == nil ? [[self placeMark] name] : customName;
+	[addressField setText:name];
 }
 
 -(BOOL)validate{
@@ -106,7 +110,7 @@
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-	if (textField == self.nameField) return;
+	if (textField == self.nameField || [[textField text] isEqualToString:@""]) return;
 	[self startAddressSearch:[textField text]];
 }
 

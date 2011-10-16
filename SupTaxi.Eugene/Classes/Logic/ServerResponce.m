@@ -137,6 +137,21 @@
 	return false;
 }
 
+//Send offer reject request
+- (BOOL) SendOrderRejectRequest:(NSString*)guid orderId:(int)orderId
+{
+	[self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],
+                               [NSString stringWithFormat:@"<Request Type=\"Order.Reject\" Guid=\"%@\" OrderId=\"%d\" />", guid, orderId]];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
 //Sending registration request
 - (BOOL) RegisterUserRequest:(NSString*)email password:(NSString*)password firstName:(NSString*)fName secondName:(NSString*)sName phone:(NSString*)phone
 {
@@ -174,6 +189,20 @@
 	NSString * urlString = [ServerResponce GetRootURL];
 	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"History\" Guid=\"%@\" PageNumber=\"%i\" NumberOfRows=\"%i\" />",
 							   userGuid, pageNumber, numberOfRows]];
+    
+	if (urlString) 
+	{
+		return [self ProcessURLString:urlString withData:requestString];
+	}
+	return false;
+}
+
+- (BOOL) DelOrdersHistoryRequest:(NSString*)userGuid hId:(int)hId
+{
+    [self Clear];
+	NSString * urlString = [ServerResponce GetRootURL];
+	NSString *requestString = [NSString stringWithFormat:@"%@\n%@", [ServerResponce xmlVersionString],[NSString stringWithFormat:@"<Request Type=\"History.Del\" Guid=\"%@\" HistoryId=\"%i\" />",
+                                                                                                       userGuid, hId]];
     
 	if (urlString) 
 	{

@@ -37,8 +37,10 @@
 
 - (BOOL) GetOffersForOrderRequest:(NSString*)orderGuid;
 - (BOOL) SendOrderAcceptWithOfferRequest:(NSString*)guid orderId:(NSString*)orderId carrierId:(NSString*)carrierId;
+- (BOOL) SendOrderRejectRequest:(NSString*)guid orderId:(int)orderId;
 
 - (BOOL) GetOrdersHistoryRequest:(NSString*)userGuid pageNumber:(int)pageNumber numberOfRows:(int)numberOfRows;
+- (BOOL) DelOrdersHistoryRequest:(NSString*)userGuid hId:(int)hId;
 
 - (BOOL) GetAddressListRequest:(NSString*)userGuid;
 

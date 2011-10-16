@@ -33,6 +33,8 @@
 @property (nonatomic, assign) float fromLon;
 @property (nonatomic, assign) float toLon;
 
+@property (nonatomic, assign) int orderId;
+
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
 					 status:(NSString *)status carrier:(NSString *)carrier fromArea:(NSString *)fromArea toArea:(NSString *)toArea 
                         lat:(float)lat lon:(float)lon fromLat:(float)fromLat toLat:(float)toLat fromLon:(float)fromLon toLon:(float)toLon 

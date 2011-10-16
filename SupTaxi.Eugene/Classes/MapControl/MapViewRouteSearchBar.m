@@ -248,8 +248,15 @@
 }
 
 -(void)setFoundPlaceMark:(GoogleResultPlacemark *)placeMark{
-	if (self.currentFieldName)
+	NSString *name;
+	if (self.currentFieldName) {
 		[placeMark setName:self.currentFieldName];
+		name = self.currentFieldName;
+	} else {
+		NSString *customName = [self nameForKnownAdderessByLocation:placeMark.coordinate];
+		name = customName == nil ? [placeMark name] : customName;
+	}
+	
 	if (self.requestedCurrentLocation) {
 		if ([selfLocationPlacemark selfLocation]){			
 			self.selfLocationPlacemark = [placeMark clone];
@@ -267,11 +274,11 @@
 		self.requestedCurrentLocation = NO;
 	} else if (self.currentTextField == fromField){
 		self.placeMarkFrom = placeMark;
-        if (![[placeMark name] isEqualToString:@""]) //
-		[fromField setText:[placeMark name]];
+        if (![name isEqualToString:@""]) //
+			[fromField setText:[placeMark name]];
 	} else {
 		self.placeMarkTo = placeMark;
-        if (![[placeMark name] isEqualToString:@""]) //
+        if (![name isEqualToString:@""]) //
 		[toField setText:[placeMark name]];
 	}
 	self.currentTextField = nil;
@@ -349,7 +356,7 @@
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    if (textField == self.daysField) return;
+    if (textField == self.daysField || [[textField text] isEqualToString:@""]) return;
     
 	GoogleResultPlacemark *placeMark = textField == self.fromField ? placeMarkFrom : placeMarkTo;
 	

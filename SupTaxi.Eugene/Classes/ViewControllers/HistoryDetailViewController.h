@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Order.h"
 #import "Address.h"
+#import "Response.h"
+#import "PreferencesManager.h"
 
 @interface HistoryDetailViewController : UIViewController {
 
+    PreferencesManager * prefManager;
 	Order * orderToView;
-	
+	Response * _response;
 }
 
 @property (nonatomic, retain) IBOutlet UILabel * lblTime;
@@ -25,6 +28,7 @@
 
 @property (nonatomic, retain) IBOutlet UILabel * lblSchedule;
 @property (nonatomic, retain) IBOutlet UILabel * lblCType;
+@property (nonatomic, retain) Response * _response;
 
 - (void) SetOrder:(Order*)order;
 

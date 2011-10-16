@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Response.h";
+#import "Response.h"
 #import "PreferencesManager.h"
 
 @interface CarriersViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     ResponseOffers *_resultResponse;
 	Response	   *_orderResponse;
 	PreferencesManager * prefManager;
+    NSString * currentOrderId;
 }
 
 @property (nonatomic, retain) IBOutlet UIImageView *backgroundImage;
@@ -28,5 +29,6 @@
 @property (nonatomic, retain) Response * _orderResponse;
 
 - (void) setResponce:(ResponseOffers*) obj;
+- (void) setOrderId:(NSString*) orderId;
 
 @end

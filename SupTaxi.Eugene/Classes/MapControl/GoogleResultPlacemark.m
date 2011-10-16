@@ -21,6 +21,8 @@
 #define STREET @"route"
 #define SUBWAY @"subway_station"
 
+#define BUS_STATION @"bus_station"
+
 @implementation GoogleResultPlacemark
 
 #pragma mark Properties
@@ -36,6 +38,7 @@
 @synthesize coordinatesInitialized;
 
 @synthesize subwayStation;
+@synthesize busStation;
 
 -(NSString *)name{
 	if (self.selfLocation) {
@@ -50,6 +53,8 @@
 -(NSString *)shortAddress{
     if ([self subwayStation])
 		return [NSString stringWithFormat:@"ст.метро %@", [self subwayStation]];
+	if ([self busStation])
+		return [NSString stringWithFormat:@"ст.автобуса %@", [self busStation]];
     
     if (shortAddress) {
         return shortAddress;
@@ -111,6 +116,7 @@
 	[shortAddress release];
 	[name release];
     [subwayStation release];
+	[busStation release];
 	[super dealloc];
 }
 
@@ -174,6 +180,9 @@
 		} else if ([types containsObject:STREET]) {
 			[addressDict setValue:value forKey:(NSString *)kABPersonAddressStreetKey];
 			NSLog(@"set %@ = '%@'", (NSString *)kABPersonAddressStreetKey, value);
+		} else if ([types containsObject:BUS_STATION]) {
+			[self setBusStation:value];
+			NSLog(@"set %@ = '%@'", @"BusStation", value);
 		} else
 			NSLog(@"Can't assign anywhere '%@' with types %@", value, types);
 	}

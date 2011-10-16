@@ -92,6 +92,7 @@ didStartElement:(NSString *)elementName
                                                   finishedAt:[attributeDict objectForKey:@"FinishedAt"]
                                                     schedule:[attributeDict objectForKey:@"Schedule"]
                                                        vType:[[attributeDict valueForKey:@"VehicleTypeId"] intValue]];
+        [order setOrderId:[[attributeDict valueForKey:@"Id"] intValue]];
 		ResponseHistory * response = (ResponseHistory *) [_arr objectAtIndex:0];
 		[response addAnOrder:order];
 		[_arr insertObject:response atIndex:0];

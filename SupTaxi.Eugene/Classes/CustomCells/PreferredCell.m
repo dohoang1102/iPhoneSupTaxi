@@ -72,13 +72,13 @@
         self.carrierLogo = img;
         [img release];
         [contentView addSubview:carrierLogo];
-        self.carrierLogo = nil;
+        //self.carrierLogo = nil;
 
         UILabel * lbl = [self newLabel];
         self.lblCarrierName = lbl;
         [lbl release];
         [contentView addSubview:lblCarrierName];
-        self.lblCarrierName = nil;
+        //self.lblCarrierName = nil;
         
         UICustomSwitch * sw = [self newSwitcher];
 		self.switcher = sw;

@@ -86,6 +86,50 @@
 	[pool release];
 }
 
+- (void) SendOrderRejectThreadMethod:(id)obj
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	AppProgress * progress = [AppProgress GetDefaultAppProgress];
+	[progress StartProcessing:@"Отмена заказа"];
+	
+	
+	ServerResponce * responce = [[ServerResponce alloc] init];
+	if (responce) 
+	{
+		NSDictionary * d = (NSDictionary*)obj;
+		NSString * guid = [d objectForKey:USER_GUID_KEY];
+		NSInteger oId = [[d objectForKey:CID_KEY] intValue];
+		
+		if ([responce SendOrderRejectRequest:guid orderId:oId])
+		{
+			NSArray * resultData = [responce GetDataItems];
+			if (resultData) {
+				self._orderResponse = [resultData objectAtIndex:0]; 
+			}
+			
+			[self performSelectorOnMainThread:@selector(ShowOrderRejectResult:) 
+								   withObject:nil 
+								waitUntilDone:NO];
+		}
+		[responce release];
+	}
+	
+	[progress StopProcessing:@"Готово" andHideTime:0.5];
+	
+	[pool release];
+}
+
+- (void) ShowOrderRejectResult:(id)obj
+{
+    if (!_orderResponse)
+		[self showAlertMessage:@"Ошибка при запросе!"];
+	[tableView_ reloadData];
+	if (_orderResponse._result == YES) {
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
 - (void) ShowOrderAcceptResult:(id)obj
 {
 	if (!_orderResponse || _orderResponse._result == NO)
@@ -110,6 +154,7 @@
 
 - (void)dealloc
 {
+    [currentOrderId release];
     [lblFromTo_ release];
     [innerOfferFooterView_ release];
     [headerView_ release];
@@ -170,9 +215,22 @@
     [self.navigationItem setHidesBackButton:YES];
 }
 
+- (void) setOrderId:(NSString*) orderId
+{
+    currentOrderId = orderId;
+}
+
 - (IBAction)backAction:(id)sender
 {
-	[self.navigationController popViewControllerAnimated:YES];
+    NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
+	[d setValue:prefManager.prefs.userGuid forKey:USER_GUID_KEY];
+	[d setValue:[NSString stringWithFormat:@"%i", [currentOrderId intValue]] forKey:CID_KEY];
+	
+	[NSThread detachNewThreadSelector:@selector(SendOrderRejectThreadMethod:)
+							 toTarget:self 
+						   withObject:d];
+    
+	//[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload

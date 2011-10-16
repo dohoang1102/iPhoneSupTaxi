@@ -220,6 +220,7 @@
 		58660D3F142A020300D37D7B /* WildCardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildCardGestureRecognizer.m; sourceTree = "<group>"; };
 		58660D42142A02CA00D37D7B /* MapViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewControllerTouch.h; sourceTree = "<group>"; };
 		58660D43142A02CA00D37D7B /* MapViewControllerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewControllerTouch.m; sourceTree = "<group>"; };
+		58FBD9551449F29300DF8C0F /* KnownAddressesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnownAddressesDelegate.h; sourceTree = "<group>"; };
 		58FF5FB9141608290088166E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		58FF5FBA141608290088166E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		58FF5FBC141608290088166E /* GoogleResultPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleResultPlacemark.h; sourceTree = "<group>"; };
@@ -575,6 +576,7 @@
 				58FF5FC4141608290088166E /* MapViewBaseBar.h */,
 				58FF5FC5141608290088166E /* MapViewBaseBar.m */,
 				58FF5FCF141608290088166E /* MapViewSearchBarDelegate.h */,
+				58FBD9551449F29300DF8C0F /* KnownAddressesDelegate.h */,
 				58FF5FC1141608290088166E /* MapViewAddressSearchBar.h */,
 				58FF5FC2141608290088166E /* MapViewAddressSearchBar.m */,
 				58FF5FC3141608290088166E /* MapViewAddressSearchBar.xib */,

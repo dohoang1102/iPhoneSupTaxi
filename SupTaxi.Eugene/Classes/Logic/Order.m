@@ -29,6 +29,7 @@
 @synthesize finishedAt = _finishedAt;
 @synthesize schedule = _schedule;
 @synthesize vType =_vType;
+@synthesize orderId = _orderId;
 
 - (id)initOrderWithDateTime:(NSString *)dateTime fromPlace:(NSString *)fromPlace toPlace:(NSString *)toPlace comment:(NSString *)comment
 					 status:(NSString *)status carrier:(NSString *)carrier fromArea:(NSString *)fromArea toArea:(NSString *)toArea 

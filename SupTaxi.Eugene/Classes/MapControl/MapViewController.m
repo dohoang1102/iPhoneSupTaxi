@@ -118,7 +118,60 @@
 
 #pragma mark Helping Methods
 
--(void) updateRouteView {
+-(void)resizeMapToFit:(NSArray *)locations{
+	//searching center between our placemarks
+	CLLocationDegrees latitude = 0;
+	CLLocationDegrees longtitude = 0;
+	NSMutableArray * usedLocations = [NSMutableArray array];
+	for (CLLocation *location in locations) {
+		if (!CLLocationCoordinate2DIsValid(location.coordinate))
+			continue;
+        
+		[usedLocations addObject:location];
+		latitude += location.coordinate.latitude;
+		longtitude += location.coordinate.longitude;
+	}
+	if ([usedLocations count] == 0)
+		return;
+	
+	latitude /= [usedLocations count];
+	longtitude /= [usedLocations count];
+	CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake(latitude, longtitude);
+	
+	if (!CLLocationCoordinate2DIsValid(centerCoord))
+		return;
+
+	
+	//calculating scale factor
+	CLLocationDegrees latitudeMapDist = 0.01;
+	CLLocationDegrees longtitudeMapDist = 0.01;
+	if ([usedLocations count] > 1) {
+		latitudeMapDist = 0;
+		longtitudeMapDist = 0;
+		for (CLLocation *location in usedLocations) {
+			CLLocationDegrees latDiff = ABS(location.coordinate.latitude - centerCoord.latitude)*2;
+			CLLocationDegrees lonDiff = ABS(location.coordinate.longitude - centerCoord.longitude)*2;
+			if (latDiff > latitudeMapDist)
+				latitudeMapDist = latDiff;
+			if (lonDiff > longtitudeMapDist)
+				longtitudeMapDist = lonDiff;
+		}
+        
+		latitudeMapDist = latitudeMapDist + latitudeMapDist*4/100;	//increase at 4%
+		longtitudeMapDist = longtitudeMapDist + longtitudeMapDist*4/100;	//increase at 4%
+	}
+	
+	//scaling and moving map
+	MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, MKCoordinateSpanMake(latitudeMapDist, longtitudeMapDist));
+    @try {
+        [mapView setRegion:region animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Ex: %@", exception);
+    }
+}
+
+-(void) updateRouteView:(BOOL)shouldResizeMap{
     CGColorSpaceRef cRef = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = 	CGBitmapContextCreate(nil, 
 												  routeView.frame.size.width, 
@@ -154,6 +207,9 @@
 	
 	routeView.hidden = NO;
 	[routeView setNeedsDisplay];
+	
+	if (shouldResizeMap)
+		[self resizeMapToFit:routes];
 }
 
 #pragma mark MapViewSearchBarDelegate
@@ -173,51 +229,18 @@
 	
 	if ([placeMarks count] == 0)
 		return;
-    
-	//searching center between our placemarks
-	CLLocationDegrees latitude = 0;
-	CLLocationDegrees longtitude = 0;
+
 	NSMutableArray * usedPlaceMarks = [NSMutableArray array];
 	for (GoogleResultPlacemark *placeMark in placeMarks) {
 		if (!CLLocationCoordinate2DIsValid(placeMark.coordinate))
 			continue;
         
 		[usedPlaceMarks addObject:placeMark];
-		latitude += placeMark.coordinate.latitude;
-		longtitude += placeMark.coordinate.longitude;
 	}
 	if ([usedPlaceMarks count] == 0)
 		return;
 	[mapView addAnnotations:usedPlaceMarks];
 
-	latitude /= [usedPlaceMarks count];
-	longtitude /= [usedPlaceMarks count];
-	CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake(latitude, longtitude);
-	
-	if (!CLLocationCoordinate2DIsValid(centerCoord))
-		return;
-	
-	//calculating scale factor
-	CLLocationDegrees latitudeMapDist = 0.001;
-	CLLocationDegrees longtitudeMapDist = 0.001;
-	if ([usedPlaceMarks count] > 1) {
-		latitudeMapDist = 0;
-		longtitudeMapDist = 0;
-		for (GoogleResultPlacemark *placeMark in usedPlaceMarks) {
-			CLLocationDegrees latDiff = ABS(placeMark.coordinate.latitude - centerCoord.latitude)*2;
-			CLLocationDegrees lonDiff = ABS(placeMark.coordinate.longitude - centerCoord.longitude)*2;
-			if (latDiff > latitudeMapDist)
-				latitudeMapDist = latDiff;
-			if (lonDiff > longtitudeMapDist)
-				longtitudeMapDist = lonDiff;
-		}
-        
-		latitudeMapDist = latitudeMapDist + latitudeMapDist*4/100;	//increase at 4%
-		longtitudeMapDist = longtitudeMapDist + longtitudeMapDist*4/100;	//increase at 4%
-	}
-	
-	//showing routes
-	[self updateRouteView];
 	if ([usedPlaceMarks count] > 1) {
 		GoogleResultPlacemark *from = [usedPlaceMarks objectAtIndex:0];
 		GoogleResultPlacemark *to = [usedPlaceMarks objectAtIndex:1];
@@ -229,16 +252,7 @@
 	
 	if (!shouldResizeMap)
 		return;	
-		
-	
-	//scaling and moving map
-	MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, MKCoordinateSpanMake(latitudeMapDist, longtitudeMapDist));
-    @try {
-        [mapView setRegion:region animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Ex: %@", exception);
-    }
+	[self resizeMapToFit:usedPlaceMarks];	
 }
 
 -(void)hideRouteView{
@@ -276,7 +290,7 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-	[self updateRouteView];
+	[self updateRouteView:NO];
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
@@ -299,7 +313,7 @@
 	self.routes = newRoutes;
 	self.distance = newDistance;
 	self.time = newTime;
-	[self updateRouteView];
+	[self updateRouteView:YES];
 }
 
 -(void)onRequestFail{
@@ -307,7 +321,7 @@
 	self.routes = [NSArray array];
 	self.distance = @"";
 	self.time = @"";
-	[self updateRouteView];
+	[self updateRouteView:NO];
 }
 
 #pragma mark Events

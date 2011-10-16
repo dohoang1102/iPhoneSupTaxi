@@ -11,12 +11,14 @@
 #import "GoogleServiceManagerDelegate.h"
 #import "GoogleResultPlacemark.h"
 #import "GoogleServiceManager.h"
+#import "KnownAddressesDelegate.h"
 
 @interface MapViewBaseBar : UIViewController <GoogleServiceManagerDelegate> {
     
 }
 
 @property (nonatomic, assign) id<MapViewSearchBarDelegate> delegate;
+@property (nonatomic, assign) id<KnownAddressesDelegate> knownAddressesDelegate;
 
 @property (nonatomic, retain) IBOutlet UIButton *hideButton;
 
@@ -24,6 +26,9 @@
 @property (nonatomic, retain) GoogleServiceManager *googleManager;
 
 @property (nonatomic, assign) BOOL requestedCurrentLocation;
+
+@property (nonatomic, retain) NSTimer *blinkTimer;
+@property (nonatomic, assign) int blinkCount;
 
 -(void)resignEditFields;
 -(NSArray *)placeMarks;
@@ -38,6 +43,8 @@
 
 -(BOOL)validate;
 -(void)clearData;
+
+-(NSString *)nameForKnownAdderessByLocation:(CLLocationCoordinate2D)location;
 
 -(IBAction)onHidePressed:(id)sender;
 
