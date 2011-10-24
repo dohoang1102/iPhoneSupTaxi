@@ -154,7 +154,6 @@
 
 - (void)dealloc
 {
-    [currentOrderId release];
     [lblFromTo_ release];
     [innerOfferFooterView_ release];
     [headerView_ release];

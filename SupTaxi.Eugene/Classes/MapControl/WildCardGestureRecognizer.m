@@ -26,6 +26,7 @@
     if (self = [super init])
     {
         self.cancelsTouchesInView = NO;
+		curTouchesCount = 0;
     }
     return self;
 }
@@ -37,13 +38,18 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+	[self invalidateTimer];
+	
 	self.justAddedPlacemark = NO;
-//	NSLog(@"Touches began:");
-	if ([touches count] == 1) {
+	
+	curTouchesCount += [touches count];
+//	NSLog(@"Touches began: %i", [touches count]);
+	if (curTouchesCount == 1) {
 		UITouch *touch = [touches anyObject];
 		touchedPoint = [touch locationInView:mapView];
 		self.touchTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(addPlacemark) userInfo:nil repeats:NO];
 	}
+		
 	
 	if ([controller respondsToSelector:@selector(hideRouteView)]) {
 		[controller performSelector:@selector(hideRouteView)];
@@ -52,12 +58,14 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//	NSLog(@"Touches cancelled: %@", touches);
+//	NSLog(@"Touches cancelled: %i", [touches count]);
+	curTouchesCount -= [touches count];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//	NSLog(@"Touches ended: %@", touches);
+//	NSLog(@"Touches ended: %i", [touches count]);
+	curTouchesCount -= [touches count];
 	[self invalidateTimer];
 	
 	if ([controller respondsToSelector:@selector(updateRouteView)]) {

@@ -216,9 +216,13 @@
 
 -(IBAction)onHidePressed:(id)sender{
 	if (hidden)
+    {
+        [((UIButton*)sender) setTitle:@"Скрыть" forState:UIControlStateNormal];
 		[self show];
-	else
+	}else{
+        [((UIButton*)sender) setTitle:@"Показать" forState:UIControlStateNormal];
 		[self hide];
+    }
 }
 
 

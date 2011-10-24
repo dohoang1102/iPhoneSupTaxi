@@ -18,6 +18,7 @@
 	
 	GoogleResultPlacemark *placeMarkFrom; 
 	GoogleResultPlacemark *placeMarkTo;
+    BOOL addressSelect;
 }
 
 
@@ -45,6 +46,7 @@
 @property (nonatomic, retain) UITextField *currentTextField;
 
 @property (nonatomic, assign) BOOL daysVisible;
+@property (nonatomic, assign) BOOL addressSelect;
 
 -(IBAction)onGetFromAddressBook:(id)sender;
 -(IBAction)onReverseDirection:(id)sender;

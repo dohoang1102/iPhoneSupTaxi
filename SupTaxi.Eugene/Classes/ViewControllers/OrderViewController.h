@@ -25,7 +25,6 @@
 	Response *			_orderResponse;
 	PreferencesManager * prefManager;
 	NSTimer * timer;
-	NSString * currentOrderId;
 }
 
 @property (nonatomic, retain) NSDictionary *carTypes;
@@ -39,8 +38,6 @@
 @property (nonatomic, retain) Response * _offerResponse;
 
 @property (nonatomic, retain) NSTimer * timer;
-
-@property (nonatomic, retain) NSString * currentOrderId;
 
 @property (nonatomic, retain) CarriersViewController *cViewController;
 

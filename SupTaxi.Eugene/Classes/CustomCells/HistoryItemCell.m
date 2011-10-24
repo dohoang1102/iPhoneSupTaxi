@@ -22,7 +22,7 @@
 	newLabel.numberOfLines = 2;
 	[newLabel setLineBreakMode:UILineBreakModeWordWrap];
     newLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
-    newLabel.backgroundColor = [UIColor whiteColor];
+    newLabel.backgroundColor = [UIColor clearColor];
     newLabel.opaque = YES;
     
     return newLabel;
@@ -33,7 +33,7 @@
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     newLabel.textAlignment = align;
     newLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0];
-    newLabel.backgroundColor = [UIColor whiteColor];
+    newLabel.backgroundColor = [UIColor clearColor];
     newLabel.opaque = YES;
     
     return newLabel;

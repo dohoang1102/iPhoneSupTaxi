@@ -161,13 +161,13 @@
 
 - (IBAction)btnAddFrom:(id)sender
 {
-    Address * addr = [self getAddress:orderToView.from area:orderToView.fromArea lat:orderToView.fromLon lon:orderToView.fromLat];
+    Address * addr = [self getAddress:orderToView.from area:orderToView.fromArea lat:orderToView.fromLat lon:orderToView.fromLon];
     [self addAddress:addr];
 }
 
 - (IBAction)btnAddTo:(id)sender
 {
-    Address * addr = [self getAddress:orderToView.to area:orderToView.toArea lat:orderToView.toLon lon:orderToView.toLat];
+    Address * addr = [self getAddress:orderToView.to area:orderToView.toArea lat:orderToView.toLat lon:orderToView.toLon];
     [self addAddress:addr];
 }
 

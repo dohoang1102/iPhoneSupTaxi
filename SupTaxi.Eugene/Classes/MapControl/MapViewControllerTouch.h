@@ -17,10 +17,13 @@
 @property (nonatomic, retain) UIBarButtonItem *okButton;
 
 @property (nonatomic, retain) WildCardGestureRecognizer *tapInterceptor;
-@property (nonatomic, retain) NSMutableArray *pointsArray;
+@property (nonatomic, retain) GoogleResultPlacemark *pointFrom;
+@property (nonatomic, retain) GoogleResultPlacemark *pointTo;
 @property (nonatomic, retain) GoogleServiceManager *googleServiceManager;
 
 @property (nonatomic, assign) id<AddressViewControllerDelegate> selectionDelegate;
+
+-(NSArray *)pointsArray;
 
 -(void)setPlaceAt:(NSValue *)pointValue;
 -(void)moveToMoscow;

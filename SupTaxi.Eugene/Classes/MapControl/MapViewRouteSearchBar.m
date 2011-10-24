@@ -40,6 +40,7 @@
 @synthesize parentController;
 
 @synthesize daysVisible;
+@synthesize addressSelect;
 
 - (void) GetNearestThreadMethod:(id)obj
 {
@@ -378,6 +379,7 @@
 #pragma mark AddressViewControllerDelegate
 
 -(void)onAddressSelected:(id)address{
+    [self setAddressSelect:NO];
 	Address *addr = (Address *)address;
 	GoogleResultPlacemark *placeMark = [addr googleResultPlacemark];
 	if (self.currentTextField == fromField) {
@@ -445,6 +447,7 @@
 
 - (void) loadAddressList:(id)sender
 {
+    [self setAddressSelect:YES];
 	self.currentTextField = (sender == fromAddressButton ? fromField : toField);
 	AddressViewController *newVc = [[AddressViewController alloc] init];
 	[newVc setAllowsOnMapSelection:YES];//(sender == fromAddressButton)];

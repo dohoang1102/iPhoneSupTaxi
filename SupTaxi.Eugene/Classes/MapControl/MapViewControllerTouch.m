@@ -16,9 +16,19 @@
 @synthesize okButton;
 
 @synthesize tapInterceptor;
-@synthesize pointsArray;
+@synthesize pointFrom;
+@synthesize pointTo;
 @synthesize selectionDelegate;
 @synthesize googleServiceManager;
+
+-(NSArray *)pointsArray{
+	NSMutableArray *retVal = [NSMutableArray array];
+	if (pointFrom != nil)
+		[retVal addObject:pointFrom];
+	if (pointTo != nil)
+		[retVal addObject:pointTo];
+	return retVal;
+}
 
 #pragma mark Init/Dealloc
 
@@ -27,7 +37,10 @@
 	[googleServiceManager release];
 	[okButton release];
 	[tapInterceptor release];
-	[pointsArray release];
+	
+	[pointFrom release];
+	[pointTo release];
+	
 	[super dealloc];
 }
 
@@ -39,7 +52,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		self.pointsArray = [NSMutableArray arrayWithCapacity:2];
     }
     return self;
 }
@@ -92,7 +104,8 @@
 	
 	
 	
-	GoogleResultPlacemark *placeMark = [GoogleResultPlacemark googleResultPlaceMarkWithCoordinates:coord isStartPoint:[pointsArray count] == 0];
+	GoogleResultPlacemark *placeMark = [GoogleResultPlacemark googleResultPlaceMarkWithCoordinates:coord 
+																					  isStartPoint:(pointFrom == nil)];
 	
 	[self startPlacemarkSearch:placeMark];
 }
@@ -115,13 +128,15 @@
 		[self.mapViewSearchBar setFoundPlaceMark:placeMarkId];
 		[self showPointsOnMap:[NSArray arrayWithObject:placeMarkId] shouldResizeMap:NO];
 	} else {
-		//Remove To coordinate if it is already exists
-		if ([pointsArray count] > 1)
-			[pointsArray removeObjectAtIndex:1];
-		[placeMarkId setStartPoint:([pointsArray count] == 0)];
-		[pointsArray addObject:placeMarkId];
+		if (!pointFrom) {
+			self.pointFrom = placeMarkId;
+			[self.pointFrom setStartPoint:YES];
+		} else {
+			self.pointTo = placeMarkId;
+			[self.pointTo setStartPoint:NO];
+		}
 		
-		[self showPointsOnMap:pointsArray shouldResizeMap:NO];
+		[self showPointsOnMap:self.pointsArray shouldResizeMap:NO];
 	}
 }
 
@@ -134,19 +149,20 @@
 	}
 	//remove placemark
 	GoogleResultPlacemark *placeMark = (GoogleResultPlacemark *)view.annotation;
-	[pointsArray removeObject:placeMark];
+	if (placeMark == pointFrom) {
+		self.pointFrom = nil;
+	} else if (placeMark == pointTo) {
+		self.pointTo = nil;
+	}
 	
-	if ([pointsArray count] > 0)
-		[[pointsArray objectAtIndex:0] setStartPoint:YES];
-	
-	[self showPointsOnMap:pointsArray shouldResizeMap:NO];
+	[self showPointsOnMap:[self pointsArray] shouldResizeMap:NO];
 }
 
 #pragma mark Events
 
 -(void)onOk:(id)sender{
 	[self.navigationController popViewControllerAnimated:NO];
-	[selectionDelegate onPlaceMarksSelected:pointsArray];
+	[selectionDelegate onPlaceMarksSelected:[self pointsArray]];
 }
 
 -(void)onBack:(id)sender{

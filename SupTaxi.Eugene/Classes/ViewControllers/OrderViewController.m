@@ -38,6 +38,9 @@
 - (void) CheckInetAndServerThreadMethod:(id)sender;
 - (void) ShowConnectionAlert:(id)obj;
 
+- (void) setCurrentOrderId:(NSString *)orderId;
+- (NSString *) getCurrentOrderId;
+
 @end
 
 @implementation OrderViewController
@@ -74,14 +77,16 @@
 @synthesize _offerResponse;
 
 @synthesize timer;
-@synthesize currentOrderId;
-
-
 @synthesize cViewController;
 
-+ (SupTaxiAppDelegate *)sharedAppDelegate
+- (void) setCurrentOrderId:(NSString *)orderId
 {
-    return (SupTaxiAppDelegate *) [UIApplication sharedApplication].delegate;
+    [[SupTaxiAppDelegate sharedAppDelegate] setCurrentOrderId:orderId];
+}
+
+- (NSString *) getCurrentOrderId
+{
+    return [SupTaxiAppDelegate sharedAppDelegate].currentOrderId;
 }
 
 - (void) CheckInetAndServerThreadMethod:(id)sender
@@ -150,10 +155,11 @@
 {   
     [cViewController release];
 	cViewController = [[CarriersViewController alloc] initWithNibName:@"CarriersViewController" bundle:nil];
-    [cViewController setOrderId:currentOrderId];
+    [cViewController setOrderId:[self getCurrentOrderId]];
 	[cViewController setResponce: _offerResponse];
     [self setCurrentOrderId:nil];
 	[self.navigationController pushViewController:cViewController animated:YES];
+    [self.tabBarController setSelectedIndex:3];
 }
 
 
@@ -253,7 +259,7 @@
     
 	[NSThread detachNewThreadSelector:@selector(CheckOrderOffersThreadMethod:)
 							 toTarget:self 
-						   withObject:currentOrderId];
+						   withObject:[self getCurrentOrderId]];
     //[self setCurrentOrderId:nil];
 }
 
@@ -353,6 +359,14 @@
 	
 	[self.mapViewRouteSearchBar initWithSelfLocation];
     
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (!self.mapViewRouteSearchBar.addressSelect) {
+        [self clearFields];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -462,7 +476,7 @@
 {
     if ([self textFieldValidate] == NO) return;
 	
-    if (self.currentOrderId != nil) {
+    if ([self getCurrentOrderId] != nil) {
         [self showAlertMessage:@"Вы не можете осуществить заказ пока не прийдет ответ на ваш предыдущий заказ!"];
         return;
     }
@@ -607,7 +621,6 @@
 	[carTypes_ release];
     
 	[timer release];
-	[currentOrderId release];
 	[mapViewController release];
 	[mapViewRouteSearchBar release];
 	[cViewController release];

@@ -48,6 +48,8 @@
 - (void) reloadTableData;
 - (void) ShowConnectionAlert:(id)obj;
 
+- (NSString *) getCurrentOrderId;
+
 @end
 
 
@@ -67,6 +69,11 @@
 @synthesize _loginResponse;
 
 @synthesize tableView = tableView_;
+
+- (NSString *) getCurrentOrderId
+{
+    return [SupTaxiAppDelegate sharedAppDelegate].currentOrderId;
+}
 
 - (void) reloadTableData
 {
@@ -92,6 +99,10 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
+    if ([self getCurrentOrderId] != nil){
+        [textField resignFirstResponder];
+        return;
+    }
     [self.navigationItem setRightBarButtonItem:nil];
 }
 
@@ -115,9 +126,11 @@
 		default:
 			break;
 	}
-    UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
-    UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];
-    self.navigationItem.rightBarButtonItem = saveButton;
+    if ([self getCurrentOrderId] == nil){
+        UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+        UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];
+        self.navigationItem.rightBarButtonItem = saveButton;
+    }
 }
 
 - (void) UpdateThreadMethod:(id)obj
@@ -362,6 +375,8 @@
     [super viewDidAppear:animated];
     [self initPreferences];
     
+    [self reloadTableData];
+    
     if (![prefManager.prefs.userGuid isEqualToString:@""]) {
         NSMutableDictionary * d = [NSMutableDictionary dictionaryWithCapacity:2];
         [d setValue:prefManager.prefs.userEmail forKey:USER_EMAIL_KEY];
@@ -370,7 +385,7 @@
         [NSThread detachNewThreadSelector:@selector(AuthenticateThreadMethod:)
                                  toTarget:self 
                                withObject:d];
-    }else [self reloadTableData];
+    };
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -396,11 +411,17 @@
 	
     [self setUserPhone:prefManager.prefs.userPhone];
     
-	UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
-	
-	UIBarButtonItem *orderButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];
-    self.navigationItem.rightBarButtonItem = orderButton;
-    
+    if ([self getCurrentOrderId] == nil) {
+        UIColor *color = [UIColor colorWithRed:16.0/255.0 green:79.0/255.0 blue:13.0/255.0 alpha:1];
+        
+        UIBarButtonItem *sButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(saveSettings:)];
+        self.navigationItem.rightBarButtonItem = sButton;
+    } else
+    {
+        self.navigationItem.rightBarButtonItem = nil;
+        [self showAlertMessage:@"Вы не можете изменить свои данные пока у вас есть активный заказ!"];
+    }
+    	    
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
     img.backgroundColor = [UIColor clearColor];
 	self.navigationItem.titleView = img;
@@ -565,8 +586,18 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
 {
-	return 40.0;
+    switch (section) {
+		case 0:
+		case 3:
+		{
+			return 40.0;
+			break;
+		}
+        default:
+            return 10.0;
+	}
 }
+ 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   
@@ -613,7 +644,7 @@
 	NSLog(@"Section: %i Row: %i", section, row);
 	if (section >= 0 && section <= 2 ) {
 		SettingsCell *cell = (SettingsCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
-		if (cell == nil) {
+		if (cell == nil || ![cell isKindOfClass:[SettingsCell class]]) {
 			cell = [[[SettingsCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CellId"] autorelease];        
 		}
 				
@@ -654,9 +685,9 @@
 		}
 		
 	}else {
-		SettingsOrderCell *cell1 = (SettingsOrderCell *)[tableView dequeueReusableCellWithIdentifier:@"CellId"];
-		if (cell1 == nil) {
-			cell1 = [[[SettingsOrderCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CellId"] autorelease];        
+		SettingsOrderCell *cell1 = (SettingsOrderCell *)[tableView dequeueReusableCellWithIdentifier:@"SOCellId"];
+		if (cell1 == nil || ![cell1 isKindOfClass:[SettingsOrderCell class]]) {
+			cell1 = [[[SettingsOrderCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"SOCellId"] autorelease];        
 		}
 		
 		switch (section) {
@@ -725,8 +756,6 @@
 		[pViewController release];
 	}
 }
-
-
 
 - (IBAction)changeRegularOrder:(id)sender
 {

@@ -267,6 +267,9 @@
 	if (isHItemCell) 
 	{
 		Order *order = [_hItems objectAtIndex:indexPath.row];
+        
+        NSLog(@">>> LAT:%f \n>>> LON:%f \n>>> TOLON:%f \n>>> TOLAT:%f\n", order.lat, order.lon, order.toLon, order.toLat);
+        
 		[cell.lblFromTo setText:[NSString stringWithFormat:@"%@ - %@", order.from, order.to]];
 		
 		[cell.lblDate setText:order.dateTime];

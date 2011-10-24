@@ -17,6 +17,7 @@
 	
 	id controller;
 	UIView *mapView;
+	int curTouchesCount;
 }
 @property(nonatomic, assign) id controller;
 @property(nonatomic, assign) UIView *mapView;

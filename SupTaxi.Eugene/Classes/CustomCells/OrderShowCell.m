@@ -35,7 +35,7 @@
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     newLabel.textAlignment = UITextAlignmentLeft;
     newLabel.font = [UIFont fontWithName:@"Arial" size:12.0];
-    newLabel.backgroundColor = [UIColor whiteColor];
+    newLabel.backgroundColor = [UIColor clearColor];
     newLabel.opaque = YES;
     
     return newLabel;

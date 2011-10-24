@@ -22,11 +22,10 @@
 
 @implementation SupTaxiAppDelegate
 
-#define CONST_REQTIME 5
-
 @synthesize window;
 @synthesize tabsController;
 @synthesize prefManager;
+@synthesize currentOrderId;
 
 + (SupTaxiAppDelegate *)sharedAppDelegate
 {
@@ -65,9 +64,8 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-	//self.orderQueue = [[NSMutableDictionary alloc] init];
 	
-	prefManager = [[PreferencesManager alloc] init];
+    prefManager = [[PreferencesManager alloc] init];
 	
 	CGRect frame = CGRectMake(0.0, 0.0, self.tabsController.tabBar.bounds.size.width, 48);
     TabBarBackgroundView *bacgroundView = [[TabBarBackgroundView alloc] initWithFrame:frame];
@@ -77,7 +75,7 @@
 	self.window.rootViewController = self.tabsController;
     [self.window addSubview:self.tabsController.view];
     
-    self.tabsController.selectedIndex = 3;//[[NSUserDefaults standardUserDefaults] integerForKey:@"currentTab"];
+    self.tabsController.selectedIndex = 3;
     [self.window makeKeyAndVisible];
     
     AppProgress * progress = [AppProgress GetDefaultAppProgress];
@@ -114,9 +112,9 @@
 
 
 - (void)dealloc {
-        
+    
 	[prefManager release];
-
+    [currentOrderId release];
 	[_offerResponse release];	
 	[tabsController release];
 
@@ -132,6 +130,17 @@
 										   otherButtonTitles:nil];
 	[alert show];
 	[alert release];
+}
+
+#pragma mark -
+#pragma mark TabBar Delegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"TabBar controller class >>> %@", [viewController class]);
+    if (![((UINavigationController*)viewController).topViewController isKindOfClass:[viewController class]]) {
+        [((UINavigationController*)viewController) popToRootViewControllerAnimated:YES];
+    }
 }
 
 @end

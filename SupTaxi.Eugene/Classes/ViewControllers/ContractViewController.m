@@ -137,8 +137,14 @@
     UIBarButtonItem *contractDeclineButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Отмена" andTarget:self andSelector:@selector(contractDecline:)];
     self.navigationItem.leftBarButtonItem = contractDeclineButton;
     
-    UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(contractSave:)];
-    self.navigationItem.rightBarButtonItem = saveButton;
+    if ([[SupTaxiAppDelegate sharedAppDelegate] currentOrderId] == nil) {        
+        UIBarButtonItem *saveButton = [UIBarButtonItem barButtonItemWithTint:color andTitle:@"Сохранить" andTarget:self andSelector:@selector(contractSave:)];
+        self.navigationItem.rightBarButtonItem = saveButton;
+    } else
+    {
+        self.navigationItem.rightBarButtonItem = nil;
+        [self showAlertMessage:@"Вы не можете изменить данные контракта пока у вас есть активный заказ!"];
+    }    
     
 	UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_header.png"]];
     img.backgroundColor = [UIColor clearColor];

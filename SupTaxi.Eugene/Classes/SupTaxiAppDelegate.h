@@ -16,8 +16,7 @@
     UIWindow *window;
 	UITabBarController *tabsController;
     PreferencesManager *prefManager;
-	//NSMutableDictionary * orderQueue; // key = orderId, value = leftTime;
-	
+	NSString * currentOrderId;
 @private
 	ResponseOffers * _offerResponse;
 }
@@ -26,7 +25,7 @@
 @property (nonatomic, retain) IBOutlet UITabBarController *tabsController;
 
 @property (nonatomic, readonly) PreferencesManager *prefManager;
-//@property (nonatomic, retain) NSMutableDictionary * orderQueue;
+@property (nonatomic, retain) NSString * currentOrderId;
 
 + (SupTaxiAppDelegate *)sharedAppDelegate;
 

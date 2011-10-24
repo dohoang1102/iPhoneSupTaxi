@@ -117,8 +117,10 @@
 
 - (void) AddPreferredCarriersResult:(id)obj
 {
-	if (!_response || _response._result == NO)
-		[self showAlertMessage:@"Ошибка добавления адреса, попробуйте, пожалуйста, еще раз!"];
+	if (!_response)
+        [self showAlertMessage:@"Ошибка подключения, попытайтесь немного позже!"];
+    else if (_response._result == NO)
+		[self showAlertMessage:@"Ошибка сервера, попытайтесь немного позже!"];
 	if (_response._result == YES) {
 		//[delegate setNeedReloadData:YES];
 		//[self onBack:nil];
@@ -163,8 +165,10 @@
 
 - (void) DelPreferredCarriersResult:(id)obj
 {
-	if (!_response || _response._result == NO)
-		[self showAlertMessage:@"Не удалось удалить адрес, попробуйте, пожалуйста, еще раз!"];
+	if (!_response)
+        [self showAlertMessage:@"Ошибка подключения, попытайтесь немного позже!"];
+    else if (_response._result == NO)
+		[self showAlertMessage:@"Ошибка сервера, попытайтесь немного позже!"];
 	if (_response._result == YES) {
 		//[delegate setNeedReloadData:YES];
 		//[self onBack:nil];
